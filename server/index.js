@@ -10,18 +10,17 @@ const PORT = 8080
 app.use(cors())
 app.use(bodyParser.json())
 
-// NOTEEEE PLS GITIGNORE .ENV
-app.get('/api/users', async (req, res) => {
+app.get('/api/events', async (req, res) => {
     try {
         const { data, error } = await supabase
-        .from('User')
+        .from('Event')
         .select('*')
         
         if (error) {
             throw error;
         }
         console.log(data)
-        res.json({ User: data })
+        res.json({ events: data })
     } catch (err) {
         res.status(500).json({ error: err.message })
     }
