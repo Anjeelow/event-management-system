@@ -1,7 +1,8 @@
-const express = require('express')
-const cors = require('cors')
-const bodyParser = require('body-parser')
-const supabase = require('./supabase')
+import { supabase } from './supabase.js'
+
+import express from 'express'
+import cors from 'cors'
+import bodyParser from 'body-parser'
 
 const app = express()
 const PORT = 8080
@@ -9,15 +10,18 @@ const PORT = 8080
 app.use(cors())
 app.use(bodyParser.json())
 
-app.get('/api/events', async (req, res) => {
+// NOTEEEE PLS GITIGNORE .ENV
+app.get('/api/users', async (req, res) => {
     try {
         const { data, error } = await supabase
-            .from('events')
-            .select('*')
+        .from('User')
+        .select('*')
+        
         if (error) {
             throw error;
         }
-        res.json({ events: data })
+        console.log(data)
+        res.json({ User: data })
     } catch (err) {
         res.status(500).json({ error: err.message })
     }
