@@ -4,7 +4,7 @@ import Link from "next/link"
 
 export default function Navbar() {
     return (
-        <div className="w-full z-50 flex py-4 justify-around bg-white items-center shadow-md">
+        <div className="w-full px-2 md:px-24 flex py-4 bg-white items-center justify-between shadow-md">
             <h1 className="text-black">Event Management System</h1>
             <div>
                 <div className="flex gap-10 text-black items-center">
