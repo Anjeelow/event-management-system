@@ -5,7 +5,7 @@ export default function Page() {
   return (
     <div className="">
       <main className="">
-        <div className="flex justify-around items-center p-24 bg-black">
+        <div className="flex flex-col-reverse items-center px-2 py-8 bg-black md:px-24 xl:gap-10 xl:grid xl:grid-cols-2">
           <div className="flex-col text-white">
             <div className="flex flex-col gap-2">
               <h1 className="text-5xl font-bold">Create and Join Events Effortlessly</h1>
@@ -16,6 +16,7 @@ export default function Page() {
           <Image 
             src='/main-events.png'
             alt='event with many balloons'
+            className="rounded-xl sm:mb-5 xl:m-0"
             width={500}
             height={500}
             style={{ width: '800px', height: 'auto'}}
