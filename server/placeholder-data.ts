@@ -28,7 +28,7 @@ const users = [
     }
 ];
 
-const events = [
+export const events = [
     {
         event_id: 1,
         title: 'Angelo Pumar Wedding',
@@ -66,7 +66,85 @@ const events = [
         closed_at: "2024-11-30T20:30:00.000+08:00",
         status: 'Closed',
 
-    }
+    },
+
+    {
+      event_id: 3,
+      title: 'Angelo Pumar Wedding',
+      desc: 'Wedding of Angelo Pumar and his fiancee.',
+      date: '2025-01-15T15:30:00.000+08:00',
+      address: 'Shangri-La Mactan',
+      event_image_url: '', // for display
+      start_time: "2025-01-15T15:30:00.000+08:00",
+      end_time: "2025-01-15T22:45:00.000+08:00",
+      max_attendees: 100,
+      is_public: false, // true = searchable, false = link only/manual
+      category_id: 2,
+      created_by: 2,
+      created_at: "2024-11-23T19:55:12.000+08:00",
+      updated_at: "2024-11-23T19:55:12.000+08:00",
+      closed_at: "2024-12-15T19:30:00.000+08:00", // determines when registration period ends.
+      status: 'Open', // whether users can register for an event or not
+  },
+
+  {
+      event_id: 4,
+      title: 'Reeces Pieces',
+      desc: 'Monthly Podcast by Reece Sergei Lim',
+      date: '2024-12-10T19:00:00.000+08:00',
+      address: 'MR Hall, University of San Carlos Talamban Campus',
+      event_image_url: '',
+      start_time: "2024-12-10T19:00:00.000+08:00",
+      end_time: "2024-12-10T20:30:00.000+08:00",
+      max_attendees: 500,
+      is_public: true, 
+      category_id: 3,
+      created_by: 1,
+      created_at: "2024-11-25T19:55:12.000+08:00",
+      updated_at: "2024-11-25T19:55:12.000+08:00",
+      closed_at: "2024-11-30T20:30:00.000+08:00",
+      status: 'Closed',
+
+  },
+
+  {
+    event_id: 5,
+    title: 'Angelo Pumar Wedding',
+    desc: 'Wedding of Angelo Pumar and his fiancee.',
+    date: '2025-01-15T15:30:00.000+08:00',
+    address: 'Shangri-La Mactan',
+    event_image_url: '', // for display
+    start_time: "2025-01-15T15:30:00.000+08:00",
+    end_time: "2025-01-15T22:45:00.000+08:00",
+    max_attendees: 100,
+    is_public: false, // true = searchable, false = link only/manual
+    category_id: 2,
+    created_by: 2,
+    created_at: "2024-11-23T19:55:12.000+08:00",
+    updated_at: "2024-11-23T19:55:12.000+08:00",
+    closed_at: "2024-12-15T19:30:00.000+08:00", // determines when registration period ends.
+    status: 'Open', // whether users can register for an event or not
+},
+
+{
+    event_id: 6,
+    title: 'Reeces Pieces',
+    desc: 'Monthly Podcast by Reece Sergei Lim',
+    date: '2024-12-10T19:00:00.000+08:00',
+    address: 'MR Hall, University of San Carlos Talamban Campus',
+    event_image_url: '',
+    start_time: "2024-12-10T19:00:00.000+08:00",
+    end_time: "2024-12-10T20:30:00.000+08:00",
+    max_attendees: 500,
+    is_public: true, 
+    category_id: 3,
+    created_by: 1,
+    created_at: "2024-11-25T19:55:12.000+08:00",
+    updated_at: "2024-11-25T19:55:12.000+08:00",
+    closed_at: "2024-11-30T20:30:00.000+08:00",
+    status: 'Closed',
+
+}
 ]
 
 const category = [

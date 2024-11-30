@@ -5,7 +5,7 @@ export default function Page() {
   return (
     <div className="">
       <main className="">
-        <div className="flex flex-col-reverse items-center px-2 py-8 bg-black md:px-24 xl:gap-5 xl:grid xl:grid-cols-2">
+        <div className="flex flex-col-reverse items-center gap-5 px-2 py-5 bg-black md:px-24 xl:grid xl:grid-cols-2">
           <div className="flex-col text-white">
             <div className="flex flex-col gap-2">
               <h1 className="text-5xl font-bold">Create and Join Events Effortlessly</h1>
