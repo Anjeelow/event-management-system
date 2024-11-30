@@ -1,4 +1,4 @@
-const users = [
+export const users = [
   {
     id: 1,
     first_name: "Reece",
@@ -37,7 +37,7 @@ const users = [
   },
 ];
 
-const events = [
+export const events = [
   {
     event_id: 1,
     category_id: 2,
@@ -81,9 +81,72 @@ const events = [
     closed_at: "2024-11-30T20:30:00.000+08:00",
     status: "Closed",
   },
+  {
+    event_id: 3,
+    category_id: 1,
+    organizer: 3,
+    title: "Fitness Bootcamp with Philip Go",
+    desc: "An intensive fitness bootcamp to help you achieve your health goals.",
+    date: "2024-12-20T06:00:00.000+08:00",
+    address: "Cebu City Sports Complex",
+    event_image_url: "",
+    event_icon_url: "",
+    start_time: "2024-12-20T06:00:00.000+08:00",
+    end_time: "2024-12-20T09:00:00.000+08:00",
+    duration: 180,
+    max_attendees: 150,
+    attendee_count: 80,
+    is_public: true,
+    created_at: "2024-11-26T10:00:00.000+08:00",
+    updated_at: "2024-11-26T10:00:00.000+08:00",
+    closed_at: "2024-12-15T23:59:00.000+08:00",
+    status: "Open",
+  },
+  {
+    event_id: 4,
+    category_id: 2,
+    organizer: 2,
+    title: "Angelo & Reece Anniversary Party",
+    desc: "Celebrating a year of love and happiness.",
+    date: "2024-12-05T18:00:00.000+08:00",
+    address: "Radisson Blu Cebu",
+    event_image_url: "",
+    event_icon_url: "",
+    start_time: "2024-12-05T18:00:00.000+08:00",
+    end_time: "2024-12-05T23:00:00.000+08:00",
+    duration: 300,
+    max_attendees: 200,
+    attendee_count: 180,
+    is_public: false,
+    created_at: "2024-11-24T09:00:00.000+08:00",
+    updated_at: "2024-11-24T09:00:00.000+08:00",
+    closed_at: "2024-11-30T23:59:00.000+08:00",
+    status: "Open",
+  },
+  {
+    event_id: 5,
+    category_id: 3,
+    organizer: 1,
+    title: "Tech Talk by Reece Lim",
+    desc: "Join Reece Lim as he shares insights on emerging technologies.",
+    date: "2025-01-05T14:00:00.000+08:00",
+    address: "USC Main Auditorium",
+    event_image_url: "",
+    event_icon_url: "",
+    start_time: "2025-01-05T14:00:00.000+08:00",
+    end_time: "2025-01-05T16:00:00.000+08:00",
+    duration: 120,
+    max_attendees: 300,
+    attendee_count: 290,
+    is_public: true,
+    created_at: "2024-11-27T11:00:00.000+08:00",
+    updated_at: "2024-11-27T11:00:00.000+08:00",
+    closed_at: "2025-01-01T23:59:00.000+08:00",
+    status: "Open",
+  }
 ];
 
-const category = [
+export const category = [
   {
     category_id: 1,
     category_name: "Physical and Wellness",
@@ -101,7 +164,7 @@ const category = [
   },
 ];
 
-const rsvps = [
+export const rsvps = [
   {
     rsvp_id: 1,
     user_id: 3,
@@ -128,7 +191,7 @@ const rsvps = [
   },
 ];
 
-const notifications = [
+export const notifications = [
   {
     notification_id: 1,
     user_id: 1,
