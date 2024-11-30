@@ -88,4 +88,44 @@ const category = [
 
 
 ]
+
+const notifications = [
+  {
+    notification_id: 1,
+    user_id: 1,
+    event_id: 1,
+    message: "Your RSVP for Angelo Pumar's Wedding has been confirmed.",
+    status: "unread",
+    sent_at: "2024-11-28T10:30:00.000+08:00",
+    read_at: null
+  },
+  {
+    notification_id: 2,
+    user_id: 2,
+    event_id: 2,
+    message: "Reminder: Reece's Pieces Podcast starts in 1 hour.",
+    status: "read",
+    sent_at: "2024-12-10T18:00:00.000+08:00",
+    read_at: "2024-12-10T18:15:00.000+08:00"
+  }
+]
+
+const rsvps = [
+  {
+    rsvp_id: 1,
+    user_id: 1,
+    event_id: 1,
+    status: "confirmed",
+    rsvp_date: "2024-11-26T09:00:00.000+08:00",
+    notes: "Vegetarian meal requested."
+  },
+  {
+    rsvp_id: 2,
+    user_id: 3,
+    event_id: 2,
+    status: "pending",
+    rsvp_date: "2024-11-27T11:45:00.000+08:00",
+    notes: ""
+  }
+]
 // add the rest of the table data in server/placeholder-data.ts
