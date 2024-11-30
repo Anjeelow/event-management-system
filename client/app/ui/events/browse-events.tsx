@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react"
 import { Event } from '@/app/lib/definitions'
 import { events } from '../../../../server/placeholder-data'
+import { users } from "../../../../server/placeholder-data";
 
 export default function BrowseEvents() {
 
@@ -25,30 +26,41 @@ export default function BrowseEvents() {
             </div>
             <div className="grid gap-5 grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
                 {events ? (
-                    events.map((event, index) => (
-                        <Link 
-                            href="/" 
-                            key={event.event_id} 
-                            className="shadow-lg pb-5 rounded-lg"
-                            >
-                            <Image 
-                                src="/main-events.png"
-                                alt="event with many balloons"
-                                width={500}
-                                height={500}
-                                className="w-full object-cover rounded-t-lg"
-                            />
-                            <div className="px-2 pt-2 h-1/4">
-                                <p className="text-gray-700 font-light">Date</p>
-                                <h3 className="font-bold">{event.title}</h3>
-                                <p className="text-gray-600">Hosted by: Host</p>
-                                <p className="text-blue-700">going</p>
-                            </div>
-                        </Link>
-                    ))
-                ) : (
-                    <p>No events available.</p>
-                )}
+                        events.map((event) => {
+                            // Find the user by matching organizer ID
+                            const organizer = users.find(user => user.id === event.organizer);
+
+                            return (
+                                <Link 
+                                    href="/" 
+                                    key={event.event_id} 
+                                    className="shadow-lg pb-5 rounded-lg"
+                                >
+                                    <Image 
+                                        src="/main-events.png"
+                                        alt="event with many balloons"
+                                        width={500}
+                                        height={500}
+                                        className="w-full object-cover rounded-t-lg"
+                                    />
+                                    <div className="px-2 pt-2 h-1/4">
+                                        <p className="text-gray-700 font-light">
+                                            {new Date(event.date).toLocaleDateString('en-US', {
+                                                month: 'long', 
+                                                day: 'numeric', 
+                                                year: 'numeric' 
+                                            })}
+                                        </p>
+                                        <h3 className="font-bold">{event.title}</h3>
+                                        <p className="text-gray-600">Hosted by: {organizer?.first_name} {organizer?.last_name}</p>
+                                        <p className="text-blue-700">{event.attendee_count} going</p>
+                                    </div>
+                                </Link>
+                            );
+                        })
+                    ) : (
+                        <p>No events available.</p>
+                    )}
             </div>
         </div>
     )
