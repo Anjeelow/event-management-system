@@ -128,12 +128,6 @@ const rsvps = [
   },
 ];
 
-
-// I'll add notifications once notification types are finalized.
-// add the rest of the table data in server/placeholder-data.ts
-=======
-]
-
 const notifications = [
   {
     notification_id: 1,
