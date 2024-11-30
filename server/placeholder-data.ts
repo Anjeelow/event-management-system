@@ -101,14 +101,14 @@ const category = [
   },
 ];
 
-const RSVP = [
+const rsvps = [
   {
     rsvp_id: 1,
     user_id: 3,
     event_id: 1,
     status: "Attending",
     rsvp_date: "2024-11-26T19:00:10.000+08:00",
-    notes: "",
+    notes: "unlimited food please",
   },
   {
     rsvp_id: 2,
@@ -128,5 +128,31 @@ const RSVP = [
   },
 ];
 
+
 // I'll add notifications once notification types are finalized.
 // add the rest of the table data in server/placeholder-data.ts
+=======
+]
+
+const notifications = [
+  {
+    notification_id: 1,
+    user_id: 1,
+    event_id: 1,
+    message: "Your RSVP for Angelo Pumar's Wedding has been confirmed.",
+    status: "unread",
+    sent_at: "2024-11-28T10:30:00.000+08:00",
+    read_at: null
+  },
+  {
+    notification_id: 2,
+    user_id: 2,
+    event_id: 2,
+    message: "Reminder: Reece's Pieces Podcast starts in 1 hour.",
+    status: "read",
+    sent_at: "2024-12-10T18:00:00.000+08:00",
+    read_at: "2024-12-10T18:15:00.000+08:00"
+  }
+]
+// add the rest of the table data in server/placeholder-data.ts
+
