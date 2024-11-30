@@ -18,7 +18,7 @@ export default function BrowseEvents() {
     // }, [])
 
     return (
-        <div className="bg-white px-2 pv-5 md:px-24 bg-gray-100">
+        <div className="bg-white px-2 py-5 md:px-24 bg-gray-100">
             <div className="flex pb-4 space-x-5">
                 <h1>Browsing Events in your area</h1>
                 <h1 className="text-gray-600">San Francisco, CA</h1>
