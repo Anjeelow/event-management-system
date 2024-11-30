@@ -1,6 +1,7 @@
 import Image from "next/image";
+import BrowseEvents from "@/app/ui/events/browse-events";
 
-export default function Home() {
+export default function Page() {
   return (
     <div className="">
       <main className="">
@@ -20,6 +21,7 @@ export default function Home() {
             style={{ width: '800px', height: 'auto'}}
           />
         </div>
+        <BrowseEvents />
       </main>
       <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
         
