@@ -19,7 +19,7 @@ export default function BrowseEvents() {
     // }, [])
 
     return (
-        <div className="bg-white px-2 py-5 md:px-24 bg-gray-100">
+        <div className="px-2 py-5 md:px-24 bg-gray-100">
             <div className="flex pb-4 space-x-5">
                 <h1>Browsing Events in your area</h1>
                 <h1 className="text-gray-600">San Francisco, CA</h1>
@@ -32,16 +32,16 @@ export default function BrowseEvents() {
 
                             return (
                                 <Link 
-                                    href="/" 
+                                    href={`/eventdetails/${event.event_id}`}
                                     key={event.event_id} 
-                                    className="shadow-lg pb-5 rounded-lg"
+                                    className="bg-white shadow-lg pb-5 rounded-lg"
                                 >
                                     <Image 
                                         src="/main-events.png"
                                         alt="event with many balloons"
                                         width={500}
                                         height={500}
-                                        className="w-full object-cover rounded-t-lg"
+                                        className="w-full object-cover rounded-lg"
                                     />
                                     <div className="px-2 pt-2 h-1/4">
                                         <p className="text-gray-700 font-light">
