@@ -14,18 +14,22 @@ export type User = {
 
 export type Event = {
     event_id: number;
-    user_id: number;
+    organizer: number;
     title: string | null;
     description: string | null;
-    date: Date | null;
+    date: Date;
     start_time: Date | null;
     end_time: Date | null;
+    duration: number;
     address: string | null;
     max_attendeed: number | number;
+    attendee_count: number;
     is_public: boolean | null;
     event_image_url: string | null;
+    event_icon_url: string | null;
     category_id: number | null;
     created_at: Date | null;
     updated_at: Date | null;
-    deleted_at: Date | null;
+    closed_at: Date | null;
+    status: string | null;
 }
