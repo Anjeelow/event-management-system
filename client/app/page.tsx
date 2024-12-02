@@ -1,26 +1,28 @@
 import Image from "next/image";
-import BrowseEvents from "@/app/ui/events/browse-events";
+import BrowseEvents from "@/components/browse-events";
 
 export default function Page() {
   return (
     <div className="">
       <main className="">
-        <div className="flex flex-col-reverse items-center gap-5 px-2 py-5 bg-black md:px-24 xl:grid xl:grid-cols-2">
-          <div className="flex-col text-white">
-            <div className="flex flex-col gap-2">
-              <h1 className="text-5xl font-bold">Create and Join Events Effortlessly</h1>
-              <p className="text-gray-400 text-xl">Discover, organize, and RSVP to events that matter to you. It's fast, easy, and fun!</p>
+        <div className="bg-black flex justify-center">
+          <div className="flex flex-col-reverse md:items-center gap-3 px-5 py-5 md:grid md:grid-cols-2" style={{maxWidth: '64rem'}}>
+            <div className="text-white">
+              <div className="flex flex-col gap-1">
+                <h1 className="text-4xl md:text-5xl font-bold">Create and Join Events Effortlessly</h1>
+                <p className="text-gray-400 text-lg md:text-xl">Discover, organize, and RSVP to events that matter to you. It's fast, easy, and fun!</p>
+              </div>
+              <button className="mt-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-blue-300 font-medium rounded-lg px-8 py-3 dark:bg-blue-600 dark:hover:bg-blue-700">Join Us</button>
             </div>
-            <button className="mt-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-blue-300 font-medium rounded-lg text-xl px-8 py-3 dark:bg-blue-600 dark:hover:bg-blue-700">Join Us</button>
+            <Image 
+              src='/main-events.png'
+              alt='event with many balloons'
+              className="rounded-xl object-cover"
+              width={500}
+              height={500}
+              style={{ width: '800px', height: 'auto', maxHeight: '250px'}}
+            />
           </div>
-          <Image 
-            src='/main-events.png'
-            alt='event with many balloons'
-            className="rounded-xl sm:mb-5 xl:m-0"
-            width={500}
-            height={500}
-            style={{ width: '800px', height: 'auto'}}
-          />
         </div>
         <BrowseEvents />
       </main>
