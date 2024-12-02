@@ -1,5 +1,5 @@
 CREATE TABLE `User` (
-  `user_id` integer PRIMARY KEY AUTO_INCREMENT,
+  `user_id` integer PRIMARY KEY,
   `first_name` varchar(255),
   `last_name` varchar(255),
   `email` varchar(255) UNIQUE,
@@ -12,7 +12,7 @@ CREATE TABLE `User` (
 );
 
 CREATE TABLE `Event` (
-  `event_id` integer PRIMARY KEY AUTO_INCREMENT,
+  `event_id` integer PRIMARY KEY,
   `organizer` integer,
   `title` varchar(255),
   `description` text,
@@ -34,7 +34,7 @@ CREATE TABLE `Event` (
 );
 
 CREATE TABLE `RSVP` (
-  `rsvp_id` integer PRIMARY KEY AUTO_INCREMENT,
+  `rsvp_id` integer PRIMARY KEY,
   `user_id` integer,
   `event_id` integer,
   `status` varchar(255) DEFAULT 'pending',
@@ -43,7 +43,7 @@ CREATE TABLE `RSVP` (
 );
 
 CREATE TABLE `IntegratedCalendar` (
-  `integration_id` integer PRIMARY KEY AUTO_INCREMENT,
+  `integration_id` integer PRIMARY KEY,
   `user_id` integer,
   `calendar_type` varchar(255),
   `calendar_sync_date` timestamp,
@@ -51,13 +51,13 @@ CREATE TABLE `IntegratedCalendar` (
 );
 
 CREATE TABLE `Category` (
-  `category_id` integer PRIMARY KEY AUTO_INCREMENT,
+  `category_id` integer PRIMARY KEY,
   `category_name` varchar(255),
   `description` text
 );
 
 CREATE TABLE `Notification_User` (
-  `notification_id` integer PRIMARY KEY AUTO_INCREMENT,
+  `notification_id` integer PRIMARY KEY,
   `user_id` integer,
   `event_id` integer,
   `notification_type` varchar(255),
