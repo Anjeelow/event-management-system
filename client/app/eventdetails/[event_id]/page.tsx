@@ -1,5 +1,5 @@
-import { events } from '../../../../server/placeholder-data';
-import { users } from '../../../../server/placeholder-data';
+import { events, users, rsvps } from '../../../../server/placeholder-data';
+
 import { IoLocationOutline, IoCalendarClearOutline, IoTimeOutline, IoPeople } from "react-icons/io5";
 
 export default function EventDetails({ params }: { 
@@ -9,7 +9,9 @@ export default function EventDetails({ params }: {
 
   const event = events.find((event) => event.event_id === Number(params.event_id));
   const organizer = users.find(user => user.id === event?.organizer);
-
+  const eventRSVPs = rsvps.filter(rsvp => rsvp.event_id === event?.event_id);
+  const attendees = eventRSVPs.map(rsvp => users.find(user => user.id === rsvp.user_id)).filter(Boolean);
+  
   if (!event) return <div>Event not found</div>;
 
   return (
@@ -31,7 +33,7 @@ export default function EventDetails({ params }: {
                 </p>
             </div>
         </div>
-        <div className="grid gap-5 md:grid-cols-[3fr_2fr] xl:grid-cols-[4fr_1fr]">
+        <div className="grid gap-5 md:grid-cols-[3fr_2fr] xl:grid-cols-[4fr_2fr]">
             <div className='flex flex-col gap-5'>
                 <div className="bg-white shadow-lg px-5 py-4 rounded-lg space-y-3">
                     <h1 className="text-lg font-semibold">About this event</h1>
@@ -61,9 +63,10 @@ export default function EventDetails({ params }: {
                     <h1 className='text-lg font-semibold'>Organizer</h1>
                     <div className='bg-gray-100 inline-flex flex-col items-center justify-center p-4 rounded-lg border'>
                         <div
-                            className='h-[50px] w-[50px] rounded-full border border-blue-700'
+                            className="min-h-[50px] min-w-[50px] rounded-full border border-blue-700 bg-center"
                             style={{
                                 backgroundImage: 'url("/main-events.png")',
+                                backgroundSize: 'cover',
                             }}
                         />
                         <p>{organizer?.first_name} {organizer?.last_name}</p>
@@ -78,29 +81,35 @@ export default function EventDetails({ params }: {
                         <h1 className='text-lg font-semibold'>Attendees</h1>
                         <p className='text-gray-600'>{event.attendee_count}/{event.max_attendees}</p>
                     </div>
-                    <div className="bg-gray-100 flex flex-row items-center p-4 rounded-lg border gap-2">
-                        <div
-                            className="min-h-[50px] min-w-[50px] rounded-full border border-blue-700 bg-center"
-                            style={{
-                            backgroundImage: 'url("/main-events.png")',
-                            backgroundSize: 'cover',
-                            }}
-                        />
-                        <div>
-                            <p>{organizer?.first_name} {organizer?.last_name}</p>
-                            <p className='text-gray-600'>
-
-                                {/* Used Organizer For Temp Display */}
-                                Registered {organizer?.created_at && !isNaN(new Date(organizer?.created_at).getTime()) 
-                                ? new Date(organizer?.created_at).toLocaleDateString('en-GB', { 
-                                    day: '2-digit', 
-                                    month: '2-digit', 
-                                    year: 'numeric' 
-                                    })
-                                : 'Invalid date'}
-                            </p>
-                        </div>
-                    </div>
+                    {attendees.length > 0 ? (
+                        attendees.map((attendee, index) => (
+                            <div key={index} className='bg-gray-100 flex flex-row items-center p-4 rounded-lg border gap-2 my-2'>
+                                <div
+                                    className="min-h-[50px] min-w-[50px] rounded-full border border-blue-700 bg-center"
+                                    style={{
+                                        backgroundImage: 'url("/main-events.png")',
+                                        backgroundSize: 'cover',
+                                    }}
+                                />
+                                <div>
+                                    <p>{attendee?.first_name} {attendee?.last_name}</p>
+                                    <p className="text-gray-600">
+                                    Registered{' '}
+                                    {attendee?.created_at &&
+                                    !isNaN(new Date(attendee?.created_at).getTime())
+                                        ? new Date(attendee.created_at).toLocaleDateString('en-GB', {
+                                            day: '2-digit',
+                                            month: '2-digit',
+                                            year: 'numeric',
+                                        })
+                                        : 'Invalid date'}
+                                    </p>
+                                </div>
+                            </div>
+                        ))
+                    ):(
+                        <p>No Attendees</p>
+                    )}              
                 </div>
             </div>
         </div>
