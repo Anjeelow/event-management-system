@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { useEffect, useState } from "react"
-import { User, Event } from '@/app/lib/definitions'
+import { User, Event } from '../../server/lib/definitions'
 
 export default function BrowseEvents() {
 
