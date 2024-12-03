@@ -39,7 +39,7 @@ export default function BrowseEvents() {
                                 <Link
                                     href={`/eventdetails/${event.event_id}`}
                                     key={event.event_id}
-                                    className="bg-white shadow-lg pb-5 rounded-lg overflow-hidden"
+                                    className="bg-white border shadow-lg pb-5 rounded-lg overflow-hidden"
                                 >
                                     <Image
                                         src="/main-events.png"

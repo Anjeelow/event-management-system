@@ -38,7 +38,7 @@ export default function EventDetails({ params }: {
                 </div>
                 <div className="grid gap-5 md:grid-cols-[3fr_2fr] xl:grid-cols-[4fr_2fr]">
                     <div className='flex flex-col gap-5'>
-                        <div className="bg-white shadow-lg px-5 py-4 rounded-lg space-y-3">
+                        <div className="border bg-white shadow-lg px-5 py-4 rounded-lg space-y-3">
                             <h1 className="text-lg font-semibold">About this event</h1>
                             <div>
                                 <div className='flex flex-row items-center gap-2'>
@@ -62,7 +62,7 @@ export default function EventDetails({ params }: {
                             </div>
                             <p className="text-gray-600">{event.desc}</p>
                         </div>
-                        <div className="bg-white shadow-lg px-5 py-4 rounded-lg space-y-3">
+                        <div className="border bg-white shadow-lg px-5 py-4 rounded-lg space-y-3">
                             <h1 className='text-lg font-semibold'>Organizer</h1>
                             <div className='bg-gray-100 inline-flex flex-col items-center justify-center p-4 rounded-lg border'>
                                 <div
@@ -77,7 +77,7 @@ export default function EventDetails({ params }: {
                             </div>
                         </div>
                     </div>
-                    <div className='h-auto bg-white shadow-lg p-5 rounded-lg'>
+                    <div className='h-auto border bg-white shadow-lg p-5 rounded-lg'>
                         <div>
                             <div className='flex flex-row items-center gap-2'>
                                 <IoPeople />
