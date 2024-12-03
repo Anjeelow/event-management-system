@@ -39,16 +39,16 @@ export default function BrowseEvents() {
                                 <Link
                                     href={`/eventdetails/${event.event_id}`}
                                     key={event.event_id}
-                                    className="bg-white shadow-lg pb-5 rounded-lg"
+                                    className="bg-white shadow-lg pb-5 rounded-lg overflow-hidden"
                                 >
                                     <Image
                                         src="/main-events.png"
                                         alt="event with many balloons"
                                         width={500}
                                         height={500}
-                                        className="w-full object-cover rounded-lg"
+                                        className="w-full object-cover"
                                     />
-                                    <div className="px-2 pt-2 h-1/4">
+                                    <div className="px-2 pt-2">
                                         <p className="text-gray-700 font-light">
                                             {new Date(event.date).toLocaleDateString('en-US', {
                                                 month: 'long',
