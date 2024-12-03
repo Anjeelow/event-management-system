@@ -6,7 +6,7 @@ export default function Page() {
     <div className="">
       <main className="">
         <div className="bg-black flex justify-center">
-          <div className="flex flex-col-reverse md:items-center gap-3 px-5 py-5 md:grid md:grid-cols-2" style={{maxWidth: '64rem'}}>
+          <div className="w-full flex flex-col-reverse md:items-center gap-3 px-5 py-5 md:grid md:grid-cols-2" style={{maxWidth: '64rem'}}>
             <div className="text-white">
               <div className="flex flex-col gap-1">
                 <h1 className="text-4xl md:text-5xl font-bold">Create and Join Events Effortlessly</h1>
