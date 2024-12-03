@@ -23,25 +23,25 @@ export default function BrowseEvents() {
     }, [])
 
     return (
-        <div className="px-2 py-5 md:px-24 bg-gray-100">
-            <div className="flex pb-4 space-x-5">
-                <h1>Browsing Events in your area</h1>
-                <h1 className="text-gray-600">San Francisco, CA</h1>
-            </div>
-            <div className="grid gap-5 grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
-                {events ? (
+        <div className="flex bg-gray-100 justify-center min-h-screen">
+            <div className="px-5 py-5 w-full" style={{ maxWidth: '64rem' }}>
+                <div className="flex pb-4 space-x-5">
+                    <h1>Browsing Events in your area</h1>
+                    <h1 className="text-gray-600">San Francisco, CA</h1>
+                </div>
+                <div className="grid gap-5 grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+                    {Array.isArray(events) && events.length > 0 ? (
                         events.map((event) => {
-                            // Find the user by matching organizer ID
-                            const organizer = events.find(user => user.event_id === event.organizer);
-                            const host = users.find(user => organizer?.organizer === user.user_id)
-
+                            const organizer = events.find((user) => user.event_id === event.organizer);
+                            const host = users.find((user) => organizer?.organizer === user.user_id);
+    
                             return (
-                                <Link 
+                                <Link
                                     href={`/eventdetails/${event.event_id}`}
-                                    key={event.event_id} 
+                                    key={event.event_id}
                                     className="bg-white shadow-lg pb-5 rounded-lg"
                                 >
-                                    <Image 
+                                    <Image
                                         src="/main-events.png"
                                         alt="event with many balloons"
                                         width={500}
@@ -51,22 +51,29 @@ export default function BrowseEvents() {
                                     <div className="px-2 pt-2 h-1/4">
                                         <p className="text-gray-700 font-light">
                                             {new Date(event.date).toLocaleDateString('en-US', {
-                                                month: 'long', 
-                                                day: 'numeric', 
-                                                year: 'numeric' 
+                                                month: 'long',
+                                                day: 'numeric',
+                                                year: 'numeric',
                                             })}
                                         </p>
                                         <h3 className="font-bold">{event.title}</h3>
-                                        <p className="text-gray-600">Hosted by: {host?.first_name} {host?.last_name}</p>
+                                        <p className="text-gray-600">
+                                            Hosted by: {host?.first_name} {host?.last_name}
+                                        </p>
                                         <p className="text-blue-700">{event.attendee_count} going</p>
                                     </div>
                                 </Link>
                             );
                         })
                     ) : (
-                        <p>No events available.</p>
+                        <div className="col-span-full text-center py-5 bg-white shadow-lg rounded-lg">
+                            <h2 className="text-2xl font-semibold text-gray-800">No events available</h2>
+                            <p className="text-gray-600">Check back later for more events in your area.</p>
+                        </div>
                     )}
+                </div>
             </div>
         </div>
-    )
+    );
+    
 }
