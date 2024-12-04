@@ -1,5 +1,9 @@
-import { events, users, rsvps } from "../../../../server/placeholder-data";
+'use client'
+
 import BottomNavbar from "@/app/ui/bottomnavbar";
+import { useState, useEffect } from "react";
+import { User, Event, Rsvp } from "../../../../server/lib/definitions";
+import { useParams } from "next/navigation";
 
 import {
   IoLocationOutline,
@@ -8,21 +12,63 @@ import {
   IoPeople,
 } from "react-icons/io5";
 
-export default function EventDetails({
-  params,
-}: {
-  params: { event_id: number };
-}) {
-  if (!params) return <div>Loading...</div>;
+export default function EventDetails() {
+  
+  const params = useParams();
+  const [events, setEvents] = useState<Event[]>([])
+  const [users, setUsers] = useState<User[]>([])
+  const [rsvps, setRsvps] = useState<Rsvp[]>([])
 
-  const event = events.find(
+  useEffect(() => {
+    fetch('http://localhost:8080/api/events')
+      .then(response => response.json())
+      .then(data => setEvents(data.events))
+      .catch(error => console.error('Error fetching events:', error))
+
+    fetch('http://localhost:8080/api/users')
+      .then(response => response.json())
+      .then(data => setUsers(data.users))
+      .catch(error => console.error('Error fetching users:', error))
+
+    fetch('http://localhost:8080/api/rsvps')
+      .then(response => response.json())
+      .then(data => setRsvps(data.rsvps))
+      .catch(error => console.error('Error fetching rsvps:', error))
+  }, [])
+
+  const event = events?.find(
     (event) => event.event_id === Number(params.event_id)
   );
-  const organizer = users.find((user) => user.id === event?.organizer);
-  const eventRSVPs = rsvps.filter((rsvp) => rsvp.event_id === event?.event_id);
-  const attendees = eventRSVPs
-    .map((rsvp) => users.find((user) => user.id === rsvp.user_id))
+  const organizer = users?.find((user) => user.user_id === event?.organizer);
+  const eventRSVPs = rsvps?.filter((rsvp) => rsvp.event_id === event?.event_id);
+  const attendees = (eventRSVPs || [])
+    .map((rsvp) => users?.find((user) => user.user_id === rsvp.user_id))
     .filter(Boolean);
+
+  const startDate = event?.start_time ? new Date(event.start_time) : null;
+  const endDate = event?.end_time ? new Date(event.end_time) : null;
+
+  const startDateString = startDate?.toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+  })
+
+  const endDateString = 
+    startDate?.getDay() !== endDate?.getDay()
+      ? endDate?.toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+      })
+    : endDate?.toLocaleTimeString("en-US", {
+        hour: "numeric",
+        minute: "numeric",
+      })
 
   if (!event) return <div>Event not found</div>;
 
@@ -60,27 +106,7 @@ export default function EventDetails({
                   <div className="flex flex-row items-center gap-2">
                     <IoCalendarClearOutline className="text-blue-500" />
                     <p>
-                      {new Date(event.start_time).toLocaleDateString("en-US", {
-                        month: "long",
-                        day: "numeric",
-                        year: "numeric",
-                        hour: "numeric",
-                        minute: "numeric",
-                      })}
-                      {" — "}
-                      {new Date(event.start_time).getDay() !=
-                      new Date(event.end_time).getDay()
-                        ? new Date(event.end_time).toLocaleDateString("en-US", {
-                            month: "long",
-                            day: "numeric",
-                            year: "numeric",
-                            hour: "numeric",
-                            minute: "numeric",
-                          })
-                        : new Date(event.end_time).toLocaleTimeString("en-US", {
-                            hour: "numeric",
-                            minute: "numeric",
-                          })}
+                      {startDateString}{" — "}{endDateString}
                     </p>
                   </div>
                   <div className="flex flex-row items-center gap-2">
@@ -95,7 +121,7 @@ export default function EventDetails({
                     </p>
                   </div>
                 </div>
-                <p className="text-gray-600">{event.desc}</p>
+                <p className="text-gray-600">{event.description}</p>
               </div>
               <div className="border bg-white shadow-lg px-5 py-4 rounded-lg space-y-3">
                 <h1 className="text-lg font-semibold">Organizer</h1>

@@ -1,14 +1,32 @@
 'use client'
+
 import Image from "next/image";
 import Link from "next/link";
-import { events, users } from "../../../server/placeholder-data";
-import { useState } from 'react';
+import { User, Event } from "../../../server/lib/definitions";
+import { useState, useEffect } from 'react';
 
 export default function BrowseEvents() {
 
     const [location, setLocation] = useState<string>('San Francisco, CA');
     const [date, setDate] = useState<{ month: string; day: string }>({ month: '', day: '' });
     const [category, setCategory] = useState<string>('Networking');
+    const [mounted, setMounted] = useState(false)
+
+    const [users, setUsers] = useState<User[]>([])
+    const [events, setEvents] = useState<Event[]>([])
+
+    useEffect(() => {
+        setMounted(true)
+        fetch('http://localhost:8080/api/events')
+            .then(response => response.json())
+            .then(data => setEvents(data.events))
+            .catch(error => console.error('Error fetching events:', error))
+
+        fetch('http://localhost:8080/api/users')
+            .then(response => response.json())
+            .then(data => setUsers(data.users))
+            .catch(error => console.error('Error fetching users:', error))
+    }, [])
 
     const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
         setLocation(e.target.value);
@@ -18,6 +36,10 @@ export default function BrowseEvents() {
 
     const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
         setCategory(e.target.value);
+
+    if (!mounted) {
+        return null
+    }
 
     return (
         <div className="flex bg-gray-100 justify-center min-h-screen">
@@ -84,7 +106,7 @@ export default function BrowseEvents() {
                 <div className="flex flex-col bg-white p-5 gap-5 justify-content align-center">
                     {Array.isArray(events) && events.length > 0 ? (
                         events.map((event) => {
-                            const host = users.find(user => user.id === event?.organizer);
+                            const host = users?.find(user => user.user_id === event?.organizer);
     
                             return (
                                 <Link
