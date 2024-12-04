@@ -8,14 +8,19 @@ export default function Navbar() {
     const [isLoginModalOpen, setLoginModalOpen] = useState(false);
 
     useEffect(() => {
+        const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+
         if (isSignUpModalOpen || isLoginModalOpen) {
             document.body.style.overflow = 'hidden'; // Disable scrolling
+            document.body.style.paddingRight = `${scrollbarWidth}px`; // Prevent shift by adding padding
         } else {
             document.body.style.overflow = ''; // Restore scrolling
+            document.body.style.paddingRight = ''; // Remove extra padding
         }
 
         return () => {
             document.body.style.overflow = ''; // Clean up when component unmounts
+            document.body.style.paddingRight = ''; // Remove any extra padding
         };
     }, [isSignUpModalOpen, isLoginModalOpen]);
 
