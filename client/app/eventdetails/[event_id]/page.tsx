@@ -70,7 +70,13 @@ export default function EventDetails() {
         minute: "numeric",
       })
 
-  if (!event) return <div>Event not found</div>;
+  if (!event) return <div className="flex flex-col items-center p-5 gap-5">
+                    <div className="w-full mt-5 col-span-full text-center py-5 bg-white shadow-lg rounded-lg" style={{ maxWidth: "64rem" }}>
+                      <h2 className="text-2xl font-semibold text-gray-800">Event Not Found</h2>
+                      <p className="text-gray-600">Check back later for more events in your area.</p>
+                    </div>
+                  </div>;
+
 
   return (
     <div>
