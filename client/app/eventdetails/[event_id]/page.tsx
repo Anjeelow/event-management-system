@@ -1,6 +1,5 @@
 'use client'
 
-import { rsvps } from "../../../../server/placeholder-data";
 import BottomNavbar from "@/app/ui/bottomnavbar";
 import { useState, useEffect } from "react";
 import { User, Event, Rsvp } from "../../../../server/lib/definitions";
@@ -16,9 +15,9 @@ import {
 export default function EventDetails() {
   
   const params = useParams();
-  const [events, setEvents] = useState<Event[]>()
-  const [users, setUsers] = useState<User[]>()
-  const [rsvps, setRsvps] = useState<Rsvp[]>()
+  const [events, setEvents] = useState<Event[]>([])
+  const [users, setUsers] = useState<User[]>([])
+  const [rsvps, setRsvps] = useState<Rsvp[]>([])
 
   useEffect(() => {
     fetch('http://localhost:8080/api/events')
