@@ -3,7 +3,7 @@
 export default function LoginModal({ setLoginModalOpen, setSignUpModalOpen }: { setLoginModalOpen: (open: boolean) => void, setSignUpModalOpen: (open: boolean) => void }) {
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center px-5 z-50">
-            <div className="bg-white p-6 rounded-lg shadow-lg w-96 flex flex-col gap-5">
+            <div className="bg-white p-6 shadow-lg w-96 flex flex-col gap-5">
                 <div className="w-full flex flex-col items-center">
                     <h2 className="text-xl font-bold mb-2">Log In</h2>
                     <p>

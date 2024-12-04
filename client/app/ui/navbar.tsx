@@ -13,7 +13,7 @@ export default function Navbar() {
         <div className="flex justify-center shadow-md">
             <div
                 className="w-full px-5 flex py-4 bg-white items-center justify-between"
-                style={{ maxWidth: '64rem' }}
+                style={{ maxWidth: '64rem', height: '60px' }}
             >
                 <h1 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-300">
                     LOGO
