@@ -22,7 +22,7 @@ export type Event = {
     end_time: Date | null;
     duration: number;
     address: string | null;
-    max_attendeed: number | number;
+    max_attendees: number | number;
     attendee_count: number;
     is_public: boolean | null;
     event_image_url: string | null;
@@ -32,4 +32,13 @@ export type Event = {
     updated_at: Date | null;
     closed_at: Date | null;
     status: string | null;
+}
+
+export type Rsvp = {
+    rsvp_id: number;
+    user_id: number;
+    event_id: number;
+    status: string;
+    rsvp_date: Date;
+    notes: string;
 }
