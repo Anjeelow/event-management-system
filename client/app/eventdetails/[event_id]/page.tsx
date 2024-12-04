@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import BottomNavbar from "@/app/ui/bottomnavbar";
 import { useState, useEffect } from "react";
@@ -13,28 +13,27 @@ import {
 } from "react-icons/io5";
 
 export default function EventDetails() {
-  
   const params = useParams();
-  const [events, setEvents] = useState<Event[]>([])
-  const [users, setUsers] = useState<User[]>([])
-  const [rsvps, setRsvps] = useState<Rsvp[]>([])
+  const [events, setEvents] = useState<Event[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
+  const [rsvps, setRsvps] = useState<Rsvp[]>([]);
 
   useEffect(() => {
-    fetch('http://localhost:8080/api/events')
-      .then(response => response.json())
-      .then(data => setEvents(data.events))
-      .catch(error => console.error('Error fetching events:', error))
+    fetch("http://localhost:8080/api/events")
+      .then((response) => response.json())
+      .then((data) => setEvents(data.events))
+      .catch((error) => console.error("Error fetching events:", error));
 
-    fetch('http://localhost:8080/api/users')
-      .then(response => response.json())
-      .then(data => setUsers(data.users))
-      .catch(error => console.error('Error fetching users:', error))
+    fetch("http://localhost:8080/api/users")
+      .then((response) => response.json())
+      .then((data) => setUsers(data.users))
+      .catch((error) => console.error("Error fetching users:", error));
 
-    fetch('http://localhost:8080/api/rsvps')
-      .then(response => response.json())
-      .then(data => setRsvps(data.rsvps))
-      .catch(error => console.error('Error fetching rsvps:', error))
-  }, [])
+    fetch("http://localhost:8080/api/rsvps")
+      .then((response) => response.json())
+      .then((data) => setRsvps(data.rsvps))
+      .catch((error) => console.error("Error fetching rsvps:", error));
+  }, []);
 
   const event = events?.find(
     (event) => event.event_id === Number(params.event_id)
@@ -54,29 +53,38 @@ export default function EventDetails() {
     year: "numeric",
     hour: "numeric",
     minute: "numeric",
-  })
+  });
 
-  const endDateString = 
+  const endDateString =
     startDate?.getDay() !== endDate?.getDay()
       ? endDate?.toLocaleDateString("en-US", {
-        month: "long",
-        day: "numeric",
-        year: "numeric",
-        hour: "numeric",
-        minute: "numeric",
-      })
-    : endDate?.toLocaleTimeString("en-US", {
-        hour: "numeric",
-        minute: "numeric",
-      })
+          month: "long",
+          day: "numeric",
+          year: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+        })
+      : endDate?.toLocaleTimeString("en-US", {
+          hour: "numeric",
+          minute: "numeric",
+        });
 
-  if (!event) return <div className="flex flex-col items-center p-5 gap-5">
-                    <div className="w-full mt-5 col-span-full text-center py-5 bg-white shadow-lg rounded-lg" style={{ maxWidth: "64rem" }}>
-                      <h2 className="text-2xl font-semibold text-gray-800">Event Not Found</h2>
-                      <p className="text-gray-600">Check back later for more events in your area.</p>
-                    </div>
-                  </div>;
-
+  if (!event)
+    return (
+      <div className="flex flex-col items-center p-5 gap-5">
+        <div
+          className="w-full mt-5 col-span-full text-center py-5 bg-white shadow-lg rounded-lg"
+          style={{ maxWidth: "64rem" }}
+        >
+          <h2 className="text-2xl font-semibold text-gray-800">
+            Event Not Found
+          </h2>
+          <p className="text-gray-600">
+            Check back later for more events in your area.
+          </p>
+        </div>
+      </div>
+    );
 
   return (
     <div>
@@ -112,7 +120,9 @@ export default function EventDetails() {
                   <div className="flex flex-row items-center gap-2">
                     <IoCalendarClearOutline className="text-blue-500" />
                     <p>
-                      {startDateString}{" — "}{endDateString}
+                      {startDateString}
+                      {" — "}
+                      {endDateString}
                     </p>
                   </div>
                   <div className="flex flex-row items-center gap-2">

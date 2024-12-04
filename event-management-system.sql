@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Dec 02, 2024 at 03:50 PM
+-- Host: 127.0.0.1
+-- Generation Time: Dec 04, 2024 at 10:26 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -98,10 +98,10 @@ CREATE TABLE `integratedcalendar` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `notification_user`
+-- Table structure for table `notification`
 --
 
-CREATE TABLE `notification_user` (
+CREATE TABLE `notification` (
   `notification_id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
   `event_id` int(11) DEFAULT NULL,
@@ -110,6 +110,17 @@ CREATE TABLE `notification_user` (
   `status` varchar(255) DEFAULT 'unread',
   `sent_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `read_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `notification_user`
+--
+
+CREATE TABLE `notification_user` (
+  `user_id` int(11) NOT NULL,
+  `event_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -181,10 +192,18 @@ ALTER TABLE `integratedcalendar`
   ADD KEY `user_id` (`user_id`);
 
 --
+-- Indexes for table `notification`
+--
+ALTER TABLE `notification`
+  ADD PRIMARY KEY (`notification_id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `event_id` (`event_id`);
+
+--
 -- Indexes for table `notification_user`
 --
 ALTER TABLE `notification_user`
-  ADD PRIMARY KEY (`notification_id`),
+  ADD PRIMARY KEY (`user_id`,`event_id`),
   ADD KEY `user_id` (`user_id`),
   ADD KEY `event_id` (`event_id`);
 
@@ -219,6 +238,13 @@ ALTER TABLE `event`
 --
 ALTER TABLE `integratedcalendar`
   ADD CONSTRAINT `integratedcalendar_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
+
+--
+-- Constraints for table `notification`
+--
+ALTER TABLE `notification`
+  ADD CONSTRAINT `notification_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
+  ADD CONSTRAINT `notification_ibfk_2` FOREIGN KEY (`event_id`) REFERENCES `event` (`event_id`);
 
 --
 -- Constraints for table `notification_user`
