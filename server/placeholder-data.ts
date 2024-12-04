@@ -35,6 +35,78 @@ export const users = [
     updated_at: "2024-11-29T15:12:56.000+08:00",
     status: "Active",
   },
+  {
+    id: 4,
+    first_name: "John",
+    last_name: "Doe",
+    email: "John@gmail.com",
+    profile_picture_url: "",
+    phone_number: "+63 777 888 9999",
+    password_hash: "hashed_password",
+    created_at: "2024-11-26T10:15:00.000+08:00",
+    updated_at: "2024-11-30T08:20:00.000+08:00",
+    status: "Active",
+  },
+  {
+    id: 5,
+    first_name: "Jane",
+    last_name: "Smith",
+    email: "Jane@gmail.com",
+    profile_picture_url: "",
+    phone_number: "+63 123 456 7890",
+    password_hash: "hashed_password",
+    created_at: "2024-11-27T14:45:30.000+08:00",
+    updated_at: "2024-12-01T12:30:00.000+08:00",
+    status: "Closed",
+  },
+  {
+    id: 6,
+    first_name: "Alice",
+    last_name: "Johnson",
+    email: "Alice@gmail.com",
+    profile_picture_url: "",
+    phone_number: "+63 987 654 3210",
+    password_hash: "hashed_password",
+    created_at: "2024-11-28T09:05:45.000+08:00",
+    updated_at: "2024-12-02T16:10:25.000+08:00",
+    status: "Active",
+  },
+  {
+    id: 7,
+    first_name: "Michael",
+    last_name: "Brown",
+    email: "Michael@gmail.com",
+    profile_picture_url: "",
+    phone_number: "+63 101 202 3030",
+    password_hash: "hashed_password",
+    created_at: "2024-11-29T08:30:15.000+08:00",
+    updated_at: "2024-12-03T10:45:00.000+08:00",
+    status: "Active",
+  },
+  {
+    id: 8,
+    first_name: "Emily",
+    last_name: "Davis",
+    email: "Emily@gmail.com",
+    profile_picture_url: "",
+    phone_number: "+63 404 505 6060",
+    password_hash: "hashed_password",
+    created_at: "2024-11-30T12:15:45.000+08:00",
+    updated_at: "2024-12-03T14:25:30.000+08:00",
+    status: "Closed",
+  },
+  {
+    id: 9,
+    first_name: "Chris",
+    last_name: "Taylor",
+    email: "Chris@gmail.com",
+    profile_picture_url: "",
+    phone_number: "+63 707 808 9090",
+    password_hash: "hashed_password",
+    created_at: "2024-12-01T09:50:10.000+08:00",
+    updated_at: "2024-12-04T11:20:00.000+08:00",
+    status: "Active",
+  },
 ];
 
 export const events = [
@@ -143,7 +215,7 @@ export const events = [
     updated_at: "2024-11-27T11:00:00.000+08:00",
     closed_at: "2025-01-01T23:59:00.000+08:00",
     status: "Open",
-  }
+  },
 ];
 
 export const category = [
@@ -189,6 +261,38 @@ export const rsvps = [
     rsvp_date: "2024-11-28T14:23:30.000+08:00",
     notes: "Hi Angelo.",
   },
+  {
+    rsvp_id: 4,
+    user_id: 4,
+    event_id: 1,
+    status: "Attending",
+    rsvp_date: "2024-11-29T14:23:30.000+08:00",
+    notes: "Hi Angelo.",
+  },
+  {
+    rsvp_id: 5,
+    user_id: 6,
+    event_id: 1,
+    status: "Attending",
+    rsvp_date: "2024-11-30T14:23:30.000+08:00",
+    notes: "Hi Angelo.",
+  },
+  {
+    rsvp_id: 6,
+    user_id: 7,
+    event_id: 1,
+    status: "Attending",
+    rsvp_date: "2024-12-01T14:23:30.000+08:00",
+    notes: "Hi Angelo.",
+  },
+  {
+    rsvp_id: 7,
+    user_id: 9,
+    event_id: 1,
+    status: "Attending",
+    rsvp_date: "2024-12-01T14:23:30.000+08:00",
+    notes: "Hi Angelo.",
+  },
 ];
 
 export const notifications = [
@@ -199,7 +303,7 @@ export const notifications = [
     message: "Your RSVP for Angelo Pumar's Wedding has been confirmed.",
     status: "unread",
     sent_at: "2024-11-28T10:30:00.000+08:00",
-    read_at: null
+    read_at: null,
   },
   {
     notification_id: 2,
@@ -208,8 +312,16 @@ export const notifications = [
     message: "Reminder: Reece's Pieces Podcast starts in 1 hour.",
     status: "read",
     sent_at: "2024-12-10T18:00:00.000+08:00",
-    read_at: "2024-12-10T18:15:00.000+08:00"
-  }
-]
+    read_at: "2024-12-10T18:15:00.000+08:00",
+  },
+  {
+    notification_id: 3,
+    user_id: 3,
+    event_id: 1,
+    message: "Your RSVP for Angelo Pumar's Wedding has been confirmed.",
+    status: "unread",
+    sent_at: "2024-12-14T10:30:00.000+08:00",
+    read_at: null,
+  },
+];
 // add the rest of the table data in server/placeholder-data.ts
-
