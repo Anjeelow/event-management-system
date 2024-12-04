@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 04, 2024 at 10:26 AM
+-- Generation Time: Dec 04, 2024 at 09:13 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -79,7 +79,8 @@ INSERT INTO `event` (`event_id`, `organizer`, `title`, `description`, `date`, `s
 (2, 1, 'Reeces Pieces', 'Monthly Podcast by Reece Sergei Lim', '2024-12-10 11:00:00', '2024-12-10 11:00:00', '2024-12-10 12:30:00', 90, 'MR Hall, University of San Carlos Talamban Campus', 500, 493, 1, '', '', 3, '2024-11-25 11:55:12', '2024-11-25 11:55:12', '2024-11-30 12:30:00', 'Closed'),
 (3, 3, 'Fitness Bootcamp with Philip Go', 'An intensive fitness bootcamp to help you achieve your health goals.', '2024-12-19 22:00:00', '2024-12-19 22:00:00', '2024-12-20 01:00:00', 180, 'Cebu City Sports Complex', 150, 80, 1, '', '', 1, '2024-11-26 02:00:00', '2024-11-26 02:00:00', '2024-12-15 15:59:00', 'Open'),
 (4, 2, 'Angelo & Reece Anniversary Party', 'Celebrating a year of love and happiness.', '2024-12-05 10:00:00', '2024-12-05 10:00:00', '2024-12-05 15:00:00', 300, 'Radisson Blu Cebu', 200, 180, 0, '', '', 2, '2024-11-24 01:00:00', '2024-11-24 01:00:00', '2024-11-30 15:59:00', 'Open'),
-(5, 1, 'Tech Talk by Reece Lim', 'Join Reece Lim as he shares insights on emerging technologies.', '2025-01-05 06:00:00', '2025-01-05 06:00:00', '2025-01-05 08:00:00', 120, 'USC Main Auditorium', 300, 290, 1, '', '', 3, '2024-11-27 03:00:00', '2024-11-27 03:00:00', '2025-01-01 15:59:00', 'Open');
+(5, 1, 'Tech Talk by Reece Lim', 'Join Reece Lim as he shares insights on emerging technologies.', '2025-01-05 06:00:00', '2025-01-05 06:00:00', '2025-01-05 08:00:00', 120, 'USC Main Auditorium', 300, 290, 1, '', '', 3, '2024-11-27 03:00:00', '2024-11-27 03:00:00', '2025-01-01 15:59:00', 'Open'),
+(6, 3, 'January Networking Event', 'A networking event to kick off 2025 with industry leaders.', '2025-01-15 01:00:00', '2025-01-15 01:00:00', '2025-01-16 09:00:00', 1920, '456 Business Park, Cityville', 200, 150, 1, 'https://example.com/january_event.jpg', 'https://example.com/january_icon.png', 2, '2025-01-10 09:00:00', '2025-01-10 09:00:00', '2025-01-17 10:00:00', 'Open');
 
 -- --------------------------------------------------------
 
