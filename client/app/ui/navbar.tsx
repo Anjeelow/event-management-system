@@ -7,23 +7,6 @@ export default function Navbar() {
     const [isSignUpModalOpen, setSignUpModalOpen] = useState(false);
     const [isLoginModalOpen, setLoginModalOpen] = useState(false);
 
-    useEffect(() => {
-        const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-
-        if (isSignUpModalOpen || isLoginModalOpen) {
-            document.body.style.overflow = 'hidden'; // Disable scrolling
-            document.body.style.paddingRight = `${scrollbarWidth}px`; // Prevent shift by adding padding
-        } else {
-            document.body.style.overflow = ''; // Restore scrolling
-            document.body.style.paddingRight = ''; // Remove extra padding
-        }
-
-        return () => {
-            document.body.style.overflow = ''; // Clean up when component unmounts
-            document.body.style.paddingRight = ''; // Remove any extra padding
-        };
-    }, [isSignUpModalOpen, isLoginModalOpen]);
-
     return (
         <div className="flex justify-center shadow-md">
             <div
@@ -55,7 +38,7 @@ export default function Navbar() {
 
             {/* Log In Modal */}
             {isLoginModalOpen && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center px-5">
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center px-5 z-50">
                     <div
                         className="bg-white p-6 rounded-lg shadow-lg w-96 flex flex-col gap-5"
                     >
@@ -110,7 +93,7 @@ export default function Navbar() {
 
             {/* Sign Up Modal */}
             {isSignUpModalOpen && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center px-5">
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center px-5 z-50">
                     <div
                         className="bg-white p-6 rounded-lg shadow-lg w-96 flex flex-col gap-5"
                     >

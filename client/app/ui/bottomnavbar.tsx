@@ -4,7 +4,7 @@ import Link from "next/link"
 
 export default function BottomNavbar() {
     return (
-        <div className="border bg-white flex justify-center fixed bottom-0 w-full z-50">
+        <div className="border bg-white flex justify-center fixed bottom-0 w-full z-40">
             <div className="flex flex-col px-5 gap-5 py-5 w-full" style={{maxWidth: '64rem'}}>
                 <div className="grid gap-5 md:grid-cols-[3fr_2fr] xl:grid-cols-[4fr_2fr]">
                     <div className="hidden md:block">
