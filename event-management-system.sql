@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Dec 04, 2024 at 09:13 PM
+-- Host: localhost
+-- Generation Time: Dec 06, 2024 at 08:55 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -139,6 +139,19 @@ CREATE TABLE `rsvp` (
   `notes` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `rsvp`
+--
+
+INSERT INTO `rsvp` (`rsvp_id`, `user_id`, `event_id`, `status`, `rsvp_date`, `notes`) VALUES
+(1, 3, 1, 'Attending', '2024-11-26 11:00:10', 'unlimited food please'),
+(2, 3, 2, 'Attending', '2024-11-26 11:12:24', 'Hi Reece.'),
+(3, 1, 1, 'Attending', '2024-11-28 06:23:30', 'Hi Angelo.'),
+(4, 4, 1, 'Attending', '2024-11-29 06:23:30', 'Hi Angelo.'),
+(5, 6, 1, 'Attending', '2024-11-30 06:23:30', 'Hi Angelo.'),
+(6, 7, 1, 'Attending', '2024-12-01 06:23:30', 'Hi Angelo.'),
+(7, 9, 1, 'Attending', '2024-12-01 06:23:30', 'Hi Angelo.');
+
 -- --------------------------------------------------------
 
 --
@@ -154,7 +167,7 @@ CREATE TABLE `user` (
   `profile_picture_url` text DEFAULT NULL,
   `phone_number` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `status` varchar(255) DEFAULT 'active'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -163,9 +176,15 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `first_name`, `last_name`, `email`, `password_hash`, `profile_picture_url`, `phone_number`, `created_at`, `updated_at`, `status`) VALUES
-(1, 'Reece', 'Lim', 'reece@gmail.com', 'temp', '', '+63 999 888 7777', '2024-11-17 05:47:22', '2024-11-26 01:25:47', 'Active'),
-(2, 'Angelo', 'Pumar', 'gelo@gmail.com', 'pass', '', '+63 222 111 3333', '2024-11-19 11:22:43', '2024-11-19 11:22:43', 'Active'),
-(3, 'Philip', 'Go', 'philip@gmail.com', 'word', '', '+63 444 555 6666', '2024-11-25 09:01:02', '2024-11-29 07:12:56', 'Active');
+(1, 'Reece', 'Lim', 'reece@gmail.com', '$2b$10$9ktXcN9czonQyHakcmuzPujZDs24.NcelJYD9qEfjiIBki.X1tHY2', NULL, NULL, '2024-12-06 07:49:46', '2024-12-06 07:49:46', 'active'),
+(2, 'Angelo', 'Pumar', 'gelo@gmail.com', '$2b$10$l/YuvWE01EEvB3EDIeqKZuMF7jfm4ULzqONJHCw9eWfiNHUsoQm2K', NULL, NULL, '2024-12-06 07:50:20', '2024-12-06 07:50:20', 'active'),
+(3, 'Philip', 'Go', 'philip@gmail.com', '$2b$10$mYXNM5TiwS/SlceMUTJgGOeoTs7TrLxBdxgfYS6IinqX8CrZld75C', NULL, NULL, '2024-12-06 07:50:45', '2024-12-06 07:50:45', 'active'),
+(4, 'John', 'Doe', 'john@gmail.com', '$2b$10$qdh0t1hLnmX.TGlzb3VRL.GGyIk4QojRb4tcda/ybHkFmTCexh28e', NULL, NULL, '2024-12-06 07:52:06', '2024-12-06 07:52:06', 'active'),
+(5, 'Jane', 'Smith', 'jane@gmail.com', '$2b$10$XGmLfccQPYTgmoVwT2L0nOSKagEW0Ma0tRHAUuQuU1HKU9ZgOPZym', NULL, NULL, '2024-12-06 07:52:48', '2024-12-06 07:52:48', 'active'),
+(6, 'Alice', 'Johnson', 'alice@gmail.com', '$2b$10$pKk/3TCm5DW8UHVRPPdXR.q1ZROtObFHowgONbLU7ySI1C5lmXU6S', NULL, NULL, '2024-12-06 07:53:12', '2024-12-06 07:53:12', 'active'),
+(7, 'Michael', 'Brown', 'michael@gmail.com', '$2b$10$qjqy6dxijLe4wPjas/uVUOZ/dgC/ksCoojijLVqEsdd1EMA./5gz.', NULL, NULL, '2024-12-06 07:53:44', '2024-12-06 07:53:44', 'active'),
+(8, 'Emily', 'Davis', 'emily@gmail.com', '$2b$10$l4cOev/sMdRIvdQweDMlRuq/0Sgz2.sokhNcLTdnVuVgXTS8A5WAO', NULL, NULL, '2024-12-06 07:53:58', '2024-12-06 07:53:58', 'active'),
+(9, 'Chris', 'Taylor', 'chris@gmail.com', '$2b$10$L1vnQ/8JKsprZWlN7Q1l6uzT1w7C.D1kdt7uL9BuV3JjspHsjjY9G', NULL, NULL, '2024-12-06 07:54:13', '2024-12-06 07:54:13', 'active');
 
 --
 -- Indexes for dumped tables
@@ -178,88 +197,20 @@ ALTER TABLE `category`
   ADD PRIMARY KEY (`category_id`);
 
 --
--- Indexes for table `event`
---
-ALTER TABLE `event`
-  ADD PRIMARY KEY (`event_id`),
-  ADD KEY `organizer` (`organizer`),
-  ADD KEY `category_id` (`category_id`);
-
---
--- Indexes for table `integratedcalendar`
---
-ALTER TABLE `integratedcalendar`
-  ADD PRIMARY KEY (`integration_id`),
-  ADD KEY `user_id` (`user_id`);
-
---
--- Indexes for table `notification`
---
-ALTER TABLE `notification`
-  ADD PRIMARY KEY (`notification_id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `event_id` (`event_id`);
-
---
--- Indexes for table `notification_user`
---
-ALTER TABLE `notification_user`
-  ADD PRIMARY KEY (`user_id`,`event_id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `event_id` (`event_id`);
-
---
--- Indexes for table `rsvp`
---
-ALTER TABLE `rsvp`
-  ADD PRIMARY KEY (`rsvp_id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `event_id` (`event_id`);
-
---
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`user_id`),
-  ADD UNIQUE KEY `email` (`email`);
+  ADD PRIMARY KEY (`user_id`);
 
 --
--- Constraints for dumped tables
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- Constraints for table `event`
+-- AUTO_INCREMENT for table `user`
 --
-ALTER TABLE `event`
-  ADD CONSTRAINT `event_ibfk_1` FOREIGN KEY (`organizer`) REFERENCES `user` (`user_id`),
-  ADD CONSTRAINT `event_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`);
-
---
--- Constraints for table `integratedcalendar`
---
-ALTER TABLE `integratedcalendar`
-  ADD CONSTRAINT `integratedcalendar_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
-
---
--- Constraints for table `notification`
---
-ALTER TABLE `notification`
-  ADD CONSTRAINT `notification_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
-  ADD CONSTRAINT `notification_ibfk_2` FOREIGN KEY (`event_id`) REFERENCES `event` (`event_id`);
-
---
--- Constraints for table `notification_user`
---
-ALTER TABLE `notification_user`
-  ADD CONSTRAINT `notification_user_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
-  ADD CONSTRAINT `notification_user_ibfk_2` FOREIGN KEY (`event_id`) REFERENCES `event` (`event_id`);
-
---
--- Constraints for table `rsvp`
---
-ALTER TABLE `rsvp`
-  ADD CONSTRAINT `rsvp_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
-  ADD CONSTRAINT `rsvp_ibfk_2` FOREIGN KEY (`event_id`) REFERENCES `event` (`event_id`);
+ALTER TABLE `user`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

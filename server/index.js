@@ -1,7 +1,6 @@
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
-import { query } from "./db-service.js";
 import router from "./routes/index.js";
 
 const app = express();
