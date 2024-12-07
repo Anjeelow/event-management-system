@@ -37,6 +37,7 @@ export default function SignUpModal({
         try {
             const response = await axios.post('http://localhost:8080/api/signup', { firstName, lastName, email, password })
             localStorage.setItem('token', response.data.token)
+            localStorage.setItem('user_id', response.data.user.user_id)
             setIsAuthenticated(true)
             setSuccess(response.data.message)
             setFirstName('')

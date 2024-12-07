@@ -29,6 +29,7 @@ export default function LoginModal({
         try {
             const response = await axios.post('http://localhost:8080/api/login', { email, password })
             localStorage.setItem('token', response.data.token)
+            localStorage.setItem('user_id', response.data.user.user_id)
             setIsAuthenticated(true)
             setSuccess(response.data.message)
             setEmail('')

@@ -7,7 +7,7 @@ const authenticateToken = (req, res, next) => {
         return res.status(401).json({ message: 'Access Denied' })
     }
     
-    jwt.verify(token, 'jwt-top-secret', (err, user) => {
+    jwt.verify(token, 'jwt_top_secret', (err, user) => {
         if (err) {
             return res.status(403).json({ message: 'Invalid token' })
         }

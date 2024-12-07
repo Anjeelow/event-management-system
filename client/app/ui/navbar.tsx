@@ -11,16 +11,24 @@ export default function Navbar() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [isSignUpModalOpen, setSignUpModalOpen] = useState(false);
     const [isLoginModalOpen, setLoginModalOpen] = useState(false);
+    const [userId, setUserId] = useState<number | undefined>(undefined)
 
     const router = useRouter();
 
     useEffect(() => {
         const token = localStorage.getItem('token')
+        const storedUserId = localStorage.getItem('user_id')
+
+        if (storedUserId) {
+            setUserId(Number(storedUserId))
+        }
+
         setIsAuthenticated(!!token)
-    }, [])
+    }, [isSignUpModalOpen, isLoginModalOpen])
 
     const handleLogout = () => {
         localStorage.removeItem('token')
+        localStorage.removeItem('user_id')
         setIsAuthenticated(false)
         router.push('/')
     }
@@ -36,9 +44,9 @@ export default function Navbar() {
                 </h1>
                 <div>
                     <div className="flex gap-10 text-black items-center">
+                        <Link href="/events">Events</Link>
                         {!isAuthenticated ? (
                             <>
-                                <Link href="/events">Events</Link>
                                 <button
                                     onClick={() => setLoginModalOpen(true)}
                                     className="text-black"
@@ -56,7 +64,8 @@ export default function Navbar() {
                             </>
                         ) : (
                             <>
-                                <Link href="/profile">Profile</Link>
+                                <Link href="/notifications">Notifications</Link>
+                                <Link href={`/profile/${userId}`}>Profile</Link>
                                 <button
                                     onClick={handleLogout}
                                     type="button"
