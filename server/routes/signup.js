@@ -1,6 +1,7 @@
 import express from 'express'
 import { query } from '../db-service.js'
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 
 const router = express.Router()
 
@@ -24,7 +25,13 @@ router.post('/api/signup', async (req, res) => {
         `
         await query(sql, [firstName, lastName, email, hashedPassword])
 
-        res.status(201).json({ message: 'User registered successfully' })
+        const lastPerson = await query('SELECT LAST_INSERT_ID() AS user_id')
+        const lastUserId = lastPerson[0].user_id
+
+        const token = jwt.sign({ lastUserId }, 'jwt_top_secret', { expiresIn: '1h' })
+        console.log(lastPerson)
+
+        res.status(201).json({ token, message: 'User registered successfully' })
         
     } catch (error) {
         res.status(500).json({ message: 'An error occured during signup' })

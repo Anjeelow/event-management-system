@@ -9,7 +9,7 @@ export default function LoginModal({
     setIsAuthenticated 
 }: { 
     setLoginModalOpen: (open: boolean) => void, 
-    setSignUpModalOpen: (open: boolean) => void 
+    setSignUpModalOpen: (open: boolean) => void,
     setIsAuthenticated: (authenticated: boolean) => void
 }) {
 
@@ -28,7 +28,6 @@ export default function LoginModal({
 
         try {
             const response = await axios.post('http://localhost:8080/api/login', { email, password })
-            console.log(response)
             localStorage.setItem('token', response.data.token)
             setIsAuthenticated(true)
             setSuccess(response.data.message)

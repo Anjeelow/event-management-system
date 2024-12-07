@@ -84,6 +84,7 @@ export default function Navbar() {
                 <SignUpModal
                     setSignUpModalOpen={setSignUpModalOpen}
                     setLoginModalOpen={setLoginModalOpen}
+                    setIsAuthenticated={setIsAuthenticated}
                 />
             )}
         </div>
