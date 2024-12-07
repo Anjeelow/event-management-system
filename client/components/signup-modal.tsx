@@ -3,7 +3,15 @@
 import axios from "axios";
 import { useState } from "react";
 
-export default function SignUpModal({ setSignUpModalOpen, setLoginModalOpen }: { setSignUpModalOpen: (open: boolean) => void, setLoginModalOpen: (open: boolean) => void }) {
+export default function SignUpModal({ 
+    setSignUpModalOpen, 
+    setLoginModalOpen,
+    setIsAuthenticated
+}: { 
+    setSignUpModalOpen: (open: boolean) => void, 
+    setLoginModalOpen: (open: boolean) => void, 
+    setIsAuthenticated: (authenticated: boolean) => void
+}) {
 
     const [firstName, setFirstName] = useState<string>('')
     const [lastName, setLastName] = useState<string>('')
@@ -28,6 +36,8 @@ export default function SignUpModal({ setSignUpModalOpen, setLoginModalOpen }: {
 
         try {
             const response = await axios.post('http://localhost:8080/api/signup', { firstName, lastName, email, password })
+            localStorage.setItem('token', response.data.token)
+            setIsAuthenticated(true)
             setSuccess(response.data.message)
             setFirstName('')
             setLastName('')
