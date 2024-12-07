@@ -1,13 +1,29 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import LoginModal from '../../components/login-modal'; 
 import SignUpModal from '../../components/signup-modal';  
+import { useRouter } from 'next/navigation';
 
 export default function Navbar() {
+
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [isSignUpModalOpen, setSignUpModalOpen] = useState(false);
     const [isLoginModalOpen, setLoginModalOpen] = useState(false);
+
+    const router = useRouter();
+
+    useEffect(() => {
+        const token = localStorage.getItem('token')
+        setIsAuthenticated(!!token)
+    }, [])
+
+    const handleLogout = () => {
+        localStorage.removeItem('token')
+        setIsAuthenticated(false)
+        router.push('/')
+    }
 
     return (
         <div className="flex justify-center shadow-md">
@@ -20,21 +36,36 @@ export default function Navbar() {
                 </h1>
                 <div>
                     <div className="flex gap-10 text-black items-center">
-                        <Link href="/events">Events</Link>
-                        <button
-                            onClick={() => setLoginModalOpen(true)}
-                            className="text-black"
-                        >
-                            Log In
-                        </button>
-                        
-                        <button
-                            onClick={() => setSignUpModalOpen(true)}
-                            type="button"
-                            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700"
-                        >
-                            Sign Up
-                        </button>
+                        {!isAuthenticated ? (
+                            <>
+                                <Link href="/events">Events</Link>
+                                <button
+                                    onClick={() => setLoginModalOpen(true)}
+                                    className="text-black"
+                                >
+                                    Log In
+                                </button>
+                                
+                                <button
+                                    onClick={() => setSignUpModalOpen(true)}
+                                    type="button"
+                                    className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700"
+                                >
+                                    Sign Up
+                                </button>
+                            </>
+                        ) : (
+                            <>
+                                <Link href="/profile">Profile</Link>
+                                <button
+                                    onClick={handleLogout}
+                                    type="button"
+                                    className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700"
+                                >
+                                    Sign Out
+                                </button>
+                            </>
+                        )}
                     </div>
                 </div>
             </div>
@@ -44,6 +75,7 @@ export default function Navbar() {
                 <LoginModal
                     setLoginModalOpen={setLoginModalOpen}
                     setSignUpModalOpen={setSignUpModalOpen}
+                    setIsAuthenticated={setIsAuthenticated}
                 />
             )}
 
