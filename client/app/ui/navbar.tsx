@@ -5,6 +5,7 @@ import Link from 'next/link';
 import LoginModal from '../../components/login-modal'; 
 import SignUpModal from '../../components/signup-modal';  
 import { useRouter } from 'next/navigation';
+import axios from 'axios';
 
 export default function Navbar() {
 
@@ -18,7 +19,22 @@ export default function Navbar() {
     useEffect(() => {
         const token = localStorage.getItem('token')
         const storedUserId = localStorage.getItem('user_id')
-
+        
+        if (token) {
+            axios.post('http://localhost:8080/api/verify-token',
+                {},
+                { headers: { Authorization: `Bearer ${token}` } }
+            )
+            .then((res) => {
+                console.log(res.data)
+                setIsAuthenticated(true)
+            })
+            .catch(() => {
+                handleLogout()
+            })
+        } else {
+            setIsAuthenticated(false)
+        }
         if (storedUserId) {
             setUserId(Number(storedUserId))
         }
@@ -30,6 +46,7 @@ export default function Navbar() {
         localStorage.removeItem('token')
         localStorage.removeItem('user_id')
         setIsAuthenticated(false)
+        setUserId(undefined)
         router.push('/')
     }
 

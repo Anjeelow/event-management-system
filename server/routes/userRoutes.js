@@ -1,6 +1,7 @@
 import express from "express";
 import { query } from "../db-service.js";
 import authenticateToken from "../middleware/authMiddleware.js";
+import bcrypt from 'bcrypt'
 
 const router = express.Router();
 
@@ -33,6 +34,30 @@ router.get("/api/users/:id", authenticateToken, async (req, res) => {
   } catch (error) {
     console.error('Error fetching user:', error)
     return res.status(500).json({ message: 'Internal server error' })
+  }
+})
+
+router.post('/api/reset-password', authenticateToken, async (req, res) => {
+  const { currentPassword, newPassword } = req.body
+  const userId = req.user.user_id
+  try {
+    const sql = 'SELECT * FROM User WHERE user_id = ?'
+    const result = await query(sql, [userId])
+    const user = result[0]
+    const isPasswordValid = await bcrypt.compare(currentPassword, user.password_hash)
+
+    if (!isPasswordValid) {
+      return res.status(400).json({ message: 'Current password is incorrect' })
+    }
+
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10)
+    const updateSql = 'UPDATE User SET password_hash = ? WHERE user_id = ?'
+    await query(updateSql, [hashedNewPassword, userId])
+
+    return res.status(200).json({ message: 'Password successfully updated' })
+
+  } catch (err) {
+    return res.status(500).json({ message: 'Error processing the request' })
   }
 })
 
