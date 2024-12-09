@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from "react"
 import axios from "axios"
-import { useParams } from "next/navigation"
+import { useParams, useRouter } from "next/navigation"
 
 export default function Profile() {
 
     const params = useParams()
+    const router = useRouter()
     const [user, setUser] = useState<any>(null)
     const [error, setError] = useState<string | null>(null)
     const [loggedInUser, setLoggedInUser] = useState<string | null>(null)
@@ -55,6 +56,10 @@ export default function Profile() {
         }
     }
 
+    const handleResetPassword = () => {
+        router.push('/reset-password')
+    }
+
     if (error) {
         return <div>Error: {error}</div>
     }
@@ -69,6 +74,7 @@ export default function Profile() {
                 <h1>{user.user_id}</h1>
                 <h1>{user.first_name} {user.last_name}</h1>
                 <h1>{user.email}</h1>
+                <button onClick={handleResetPassword} className="text-white bg-red-700 hover:bg-red-800 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-red-600 dark:hover:bg-red-700">Reset password</button>
             </div>
         </div>
     )
