@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get("/api/events", async (req, res) => {
   try {
-    const data = await query("SELECT * FROM event");
+    const data = await query("SELECT * FROM EVENT");
     res.json({ events: data });
   } catch (err) {
     res.status(500).json({ error: err.message });

@@ -8,20 +8,22 @@ import { AuthContext } from "../authContext";
 import { useRouter } from "next/navigation";
 
 export default function BrowseEvents() {
-  const [location, setLocation] = useState<string>("San Francisco, CA");
+  const [location, setLocation] = useState<string>("");
   const [date, setDate] = useState<{ month: string; day: string }>({
     month: "",
     day: "",
   });
-  const [category, setCategory] = useState<string>("Networking");
+  const [category, setCategory] = useState<string>("");
+  const [categoryID, setCategoryID] = useState<number>(0);
   const [mounted, setMounted] = useState(false);
 
   const [users, setUsers] = useState<User[]>([]);
   const [events, setEvents] = useState<Event[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
+  const [searchTitle, setSearchTitle] = useState<string>("");
 
-  const { isAuthenticated, userId } = useContext(AuthContext)
-  const router = useRouter()
+  const { isAuthenticated, userId } = useContext(AuthContext);
+  const router = useRouter();
 
   useEffect(() => {
     setMounted(true);
@@ -39,12 +41,25 @@ export default function BrowseEvents() {
       .catch((error) => console.error("Error fetching categories:", error));
   }, []);
 
-  const handleSearchPress = () => {};
+  const handleSearchPress = () => {
+    const queryParams = new URLSearchParams({
+      title: searchTitle || "",
+      location: location || "",
+      date: date ? date.toString() : "",
+      category: categoryID ? categoryID.toString() : "",
+    });
+    fetch(
+      "http://localhost:8080/api/events/search?".concat(queryParams.toString())
+    )
+      .then((response) => response.json())
+      .then((data) => setEvents(data.events))
+      .catch((error) => console.error("Error fetching events:", error));
+  };
   // todo: send an express query once search button is pressed
 
-  const handleSearchParams = () => {};
-  // todo: collect location, date, and category + search string
-  // todo: bundle it up into an express query string that will be used in handleSearchPress()
+  const handleSearchChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSearchTitle(e.target.value);
+  };
 
   const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
     setLocation(e.target.value);
@@ -52,12 +67,14 @@ export default function BrowseEvents() {
   const handleDateChange = (type: "month" | "day", value: string) =>
     setDate((prev) => ({ ...prev, [type]: value }));
 
-  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCategory(e.target.value);
+    setCategoryID(e.target.selectedIndex);
+  };
 
   const handleMyEventsClick = () => {
-    router.push('/my-events')
-  }
+    router.push("/my-events");
+  };
 
   if (!mounted) {
     return null;
@@ -67,8 +84,11 @@ export default function BrowseEvents() {
     <div className="flex bg-gray-100 justify-center min-h-screen">
       <div className="px-5 py-5 space-y-2 w-full" style={{ maxWidth: "64rem" }}>
         <div className="flex mb-4">
-          { isAuthenticated && (
-            <button onClick={() => handleMyEventsClick()} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700">
+          {isAuthenticated && (
+            <button
+              onClick={() => handleMyEventsClick()}
+              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700"
+            >
               My Events
             </button>
           )}
@@ -80,9 +100,17 @@ export default function BrowseEvents() {
                 type="text"
                 placeholder="Search"
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                onChange={() => {}}
+                onChange={handleSearchChange}
                 // todo: create function which collects search data
               />
+              <button
+                onClick={() => {
+                  handleSearchPress();
+                }}
+                className="text-blue-700 underline"
+              >
+                Search
+              </button>
             </div>
             <div>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
@@ -91,6 +119,7 @@ export default function BrowseEvents() {
                   onChange={handleLocationChange}
                   className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 >
+                  <option> </option>
                   <option>San Francisco, CA</option>
                   <option>New York, NY</option>
                   <option>Los Angeles, CA</option>
@@ -125,7 +154,7 @@ export default function BrowseEvents() {
                   onChange={handleCategoryChange}
                   className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 >
-                  <option>Category</option>
+                  <option value="">Category</option>
                   {categories.map((category) => (
                     <option
                       key={category.category_id}
@@ -161,11 +190,16 @@ export default function BrowseEvents() {
                   />
                   <div className="px-2">
                     <p className="text-gray-700 font-light">
-                      {event.start_time ? new Date(event.start_time).toLocaleDateString("en-US", {
-                        month: "long",
-                        day: "numeric",
-                        year: "numeric",
-                      }) : 'No date available'}
+                      {event.start_time
+                        ? new Date(event.start_time).toLocaleDateString(
+                            "en-US",
+                            {
+                              month: "long",
+                              day: "numeric",
+                              year: "numeric",
+                            }
+                          )
+                        : "No date available"}
                     </p>
                     <h3 className="font-bold">{event.title}</h3>
                     <p className="text-gray-600">
