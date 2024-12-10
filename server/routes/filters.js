@@ -4,7 +4,6 @@ import { query } from "../db-service.js";
 const router = express.Router();
 
 router.get("/api/events/search", async (req, res) => {
-  console.log(req.query);
   const params = req.query;
   var sql = "SELECT * FROM EVENT WHERE ";
   if (req.query != {}) {
@@ -17,11 +16,11 @@ router.get("/api/events/search", async (req, res) => {
     sql = !params.category
       ? sql.concat("1 AND ")
       : sql.concat("category_id = ".concat(params.category.concat(" AND ")));
+    sql = !params.category
+      ? sql.concat("1 AND ")
+      : sql.concat("organizer = ".concat(params.userID.concat(" AND ")));
   }
-
   sql = sql.concat("1");
-  console.log(sql);
-
   try {
     const data = await query(sql);
     res.json({ events: data });
