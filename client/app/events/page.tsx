@@ -18,6 +18,8 @@ export default function BrowseEvents() {
   const [events, setEvents] = useState<Event[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
 
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+
   useEffect(() => {
     setMounted(true);
     fetch("http://localhost:8080/api/events")
