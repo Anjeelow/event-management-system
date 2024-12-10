@@ -30,16 +30,4 @@ router.get("/api/category", async (req, res) => {
   }
 });
 
-// router.get("api/events?filters*", async (req, res) => {
-//   try {
-//     const userquery = req.query;
-
-//     const data = await query("SELECT * FROM event");
-
-//     res.json({ events: data });
-//   } catch (err) {
-//     res.status(500).json({ error: err.message });
-//   }
-// })
-
 export default router;

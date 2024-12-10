@@ -34,6 +34,13 @@ export default function BrowseEvents() {
       .catch((error) => console.error("Error fetching categories:", error));
   }, []);
 
+  const handleSearchPress = () => {};
+  // todo: send an express query once search button is pressed
+
+  const handleSearchParams = () => {};
+  // todo: collect location, date, and category + search string
+  // todo: bundle it up into an express query string that will be used in handleSearchPress()
+
   const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
     setLocation(e.target.value);
 
@@ -57,6 +64,8 @@ export default function BrowseEvents() {
                 type="text"
                 placeholder="Search"
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                onChange={() => {}}
+                // todo: create function which collects search data
               />
             </div>
             <div>
