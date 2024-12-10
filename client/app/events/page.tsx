@@ -3,7 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { User, Event, Category } from "../../../server/lib/definitions";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../authContext";
+import { useRouter } from "next/navigation";
 
 export default function BrowseEvents() {
   const [location, setLocation] = useState<string>("San Francisco, CA");
@@ -18,7 +20,8 @@ export default function BrowseEvents() {
   const [events, setEvents] = useState<Event[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
 
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const { isAuthenticated, userId } = useContext(AuthContext)
+  const router = useRouter()
 
   useEffect(() => {
     setMounted(true);
@@ -45,6 +48,10 @@ export default function BrowseEvents() {
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
     setCategory(e.target.value);
 
+  const handleMyEventsClick = () => {
+    router.push('/my-events')
+  }
+
   if (!mounted) {
     return null;
   }
@@ -52,6 +59,13 @@ export default function BrowseEvents() {
   return (
     <div className="flex bg-gray-100 justify-center min-h-screen">
       <div className="px-5 py-5 space-y-2 w-full" style={{ maxWidth: "64rem" }}>
+        <div className="flex mb-4">
+          { isAuthenticated && (
+            <button onClick={() => handleMyEventsClick()} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700">
+              My Events
+            </button>
+          )}
+        </div>
         <div className="p-5 bg-white rounded-t-lg">
           <div className="grid gap-5">
             <div>
