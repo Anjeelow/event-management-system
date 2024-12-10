@@ -53,9 +53,9 @@ CREATE TABLE `event` (
   `organizer` int(11) DEFAULT NULL,
   `title` varchar(255) DEFAULT NULL,
   `description` text DEFAULT NULL,
-  `date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `start_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `end_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date` varchar(255) DEFAULT NULL,
+  `start_time` varchar(255) DEFAULT NULL,
+  `end_time` varchar(255) DEFAULT NULL,
   `duration` int(11) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
   `max_attendees` int(11) DEFAULT NULL,
@@ -64,9 +64,9 @@ CREATE TABLE `event` (
   `event_image_url` text DEFAULT NULL,
   `event_icon_url` text DEFAULT NULL,
   `category_id` int(11) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `closed_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_at` varchar(255) DEFAULT NULL,
+  `updated_at` varchar(255) DEFAULT NULL,
+  `closed_at` varchar(255) DEFAULT NULL,
   `status` varchar(255) DEFAULT 'open'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -75,12 +75,12 @@ CREATE TABLE `event` (
 --
 
 INSERT INTO `event` (`event_id`, `organizer`, `title`, `description`, `date`, `start_time`, `end_time`, `duration`, `address`, `max_attendees`, `attendee_count`, `is_public`, `event_image_url`, `event_icon_url`, `category_id`, `created_at`, `updated_at`, `closed_at`, `status`) VALUES
-(1, 2, 'Angelo Pumar Wedding', 'Wedding of Angelo Pumar and his fiancee.', '2025-01-15 07:30:00', '2025-01-15 07:30:00', '2025-01-15 14:45:00', 435, 'Shangri-La Mactan', 100, 27, 0, '', '', 2, '2024-11-23 11:55:12', '2024-11-23 11:55:12', '2024-12-15 11:30:00', 'Open'),
-(2, 1, 'Reeces Pieces', 'Monthly Podcast by Reece Sergei Lim', '2024-12-10 11:00:00', '2024-12-10 11:00:00', '2024-12-10 12:30:00', 90, 'MR Hall, University of San Carlos Talamban Campus', 500, 493, 1, '', '', 3, '2024-11-25 11:55:12', '2024-11-25 11:55:12', '2024-11-30 12:30:00', 'Closed'),
-(3, 3, 'Fitness Bootcamp with Philip Go', 'An intensive fitness bootcamp to help you achieve your health goals.', '2024-12-19 22:00:00', '2024-12-19 22:00:00', '2024-12-20 01:00:00', 180, 'Cebu City Sports Complex', 150, 80, 1, '', '', 1, '2024-11-26 02:00:00', '2024-11-26 02:00:00', '2024-12-15 15:59:00', 'Open'),
-(4, 2, 'Angelo & Reece Anniversary Party', 'Celebrating a year of love and happiness.', '2024-12-05 10:00:00', '2024-12-05 10:00:00', '2024-12-05 15:00:00', 300, 'Radisson Blu Cebu', 200, 180, 0, '', '', 2, '2024-11-24 01:00:00', '2024-11-24 01:00:00', '2024-11-30 15:59:00', 'Open'),
-(5, 1, 'Tech Talk by Reece Lim', 'Join Reece Lim as he shares insights on emerging technologies.', '2025-01-05 06:00:00', '2025-01-05 06:00:00', '2025-01-05 08:00:00', 120, 'USC Main Auditorium', 300, 290, 1, '', '', 3, '2024-11-27 03:00:00', '2024-11-27 03:00:00', '2025-01-01 15:59:00', 'Open'),
-(6, 3, 'January Networking Event', 'A networking event to kick off 2025 with industry leaders.', '2025-01-15 01:00:00', '2025-01-15 01:00:00', '2025-01-16 09:00:00', 1920, '456 Business Park, Cityville', 200, 150, 1, 'https://example.com/january_event.jpg', 'https://example.com/january_icon.png', 2, '2025-01-10 09:00:00', '2025-01-10 09:00:00', '2025-01-17 10:00:00', 'Open');
+(1, 2, 'Angelo Pumar Wedding', 'Wedding of Angelo Pumar and his fiancee.', '2025-01-15T07:30:00.000Z', '2025-01-15T07:30:00.000Z', '2025-01-15T14:45:00.000Z', 435, 'Shangri-La Mactan', 100, 27, 0, '', '', 2, '2024-11-23 11:55:12', '2024-11-23 11:55:12', '2024-12-15 11:30:00', 'Open'),
+(2, 1, 'Reeces Pieces', 'Monthly Podcast by Reece Sergei Lim', '2024-12-10T11:00:00.000Z', '2024-12-10T11:00:00.000Z', '2024-12-10T12:30:00.000Z', 90, 'MR Hall, University of San Carlos Talamban Campus', 500, 493, 1, '', '', 3, '2024-11-25 11:55:12', '2024-11-25 11:55:12', '2024-11-30 12:30:00', 'Closed'),
+(3, 3, 'Fitness Bootcamp with Philip Go', 'An intensive fitness bootcamp to help you achieve your health goals.', '2024-12-19T22:00:00.000Z', '2024-12-19T22:00:00.000Z', '2024-12-20T01:00:00.000Z', 180, 'Cebu City Sports Complex', 150, 80, 1, '', '', 1, '2024-11-26 02:00:00', '2024-11-26 02:00:00', '2024-12-15 15:59:00', 'Open'),
+(4, 2, 'Angelo & Reece Anniversary Party', 'Celebrating a year of love and happiness.', '2024-12-05T10:00:00.000Z', '2024-12-05T10:00:00.000Z', '2024-12-05T15:00:00.000Z', 300, 'Radisson Blu Cebu', 200, 180, 0, '', '', 2, '2024-11-24 01:00:00', '2024-11-24 01:00:00', '2024-11-30 15:59:00', 'Open'),
+(5, 1, 'Tech Talk by Reece Lim', 'Join Reece Lim as he shares insights on emerging technologies.', '2025-01-05T06:00:00.000Z', '2025-01-05T06:00:00.000Z', '2025-01-05T08:00:00.000Z', 120, 'USC Main Auditorium', 300, 290, 1, '', '', 3, '2024-11-27 03:00:00', '2024-11-27 03:00:00', '2025-01-01 15:59:00', 'Open'),
+(6, 3, 'January Networking Event', 'A networking event to kick off 2025 with industry leaders.', '2025-01-15T01:00:00.000Z', '2025-01-15T01:00:00.000Z', '2025-01-16T09:00:00.000Z', 1920, '456 Business Park, Cityville', 200, 150, 1, 'https://example.com/january_event.jpg', 'https://example.com/january_icon.png', 2, '2025-01-10 09:00:00', '2025-01-10 09:00:00', '2025-01-17 10:00:00', 'Open');
 
 -- --------------------------------------------------------
 
@@ -202,6 +202,8 @@ ALTER TABLE `category`
 ALTER TABLE `user`
   ADD PRIMARY KEY (`user_id`);
 
+ALTER TABLE `event`
+  ADD PRIMARY KEY (`event_id`);
 --
 -- AUTO_INCREMENT for dumped tables
 --
@@ -211,6 +213,10 @@ ALTER TABLE `user`
 --
 ALTER TABLE `user`
   MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+COMMIT;
+
+ALTER TABLE `event`
+ MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
