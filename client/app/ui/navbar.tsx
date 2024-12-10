@@ -1,54 +1,19 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Link from 'next/link';
 import LoginModal from '../../components/login-modal'; 
 import SignUpModal from '../../components/signup-modal';  
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
+import { AuthContext } from '../authContext';
 
 export default function Navbar() {
 
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const { isAuthenticated, handleLogout } = useContext(AuthContext)
     const [isSignUpModalOpen, setSignUpModalOpen] = useState(false);
     const [isLoginModalOpen, setLoginModalOpen] = useState(false);
     const [userId, setUserId] = useState<number | undefined>(undefined)
-
-    const router = useRouter();
-
-    useEffect(() => {
-        const token = localStorage.getItem('token')
-        const storedUserId = localStorage.getItem('user_id')
-        
-        if (token) {
-            axios.post('http://localhost:8080/api/verify-token',
-                {},
-                { headers: { Authorization: `Bearer ${token}` } }
-            )
-            .then((res) => {
-                console.log(res.data)
-                setIsAuthenticated(true)
-            })
-            .catch(() => {
-                handleLogout()
-            })
-        } else {
-            setIsAuthenticated(false)
-        }
-        if (storedUserId) {
-            setUserId(Number(storedUserId))
-        }
-
-        setIsAuthenticated(!!token)
-    }, [isSignUpModalOpen, isLoginModalOpen])
-
-    const handleLogout = () => {
-        localStorage.removeItem('token')
-        localStorage.removeItem('user_id')
-        setIsAuthenticated(false)
-        setUserId(undefined)
-        router.push('/')
-    }
 
     return (
         <div className="flex justify-center shadow-md">
@@ -82,7 +47,7 @@ export default function Navbar() {
                         ) : (
                             <>
                                 <Link href="/notifications">Notifications</Link>
-                                <Link href={`/profile/${userId}`}>Profile</Link>
+                                <Link href={`/profile`}>Profile</Link>
                                 <button
                                     onClick={handleLogout}
                                     type="button"
@@ -101,7 +66,6 @@ export default function Navbar() {
                 <LoginModal
                     setLoginModalOpen={setLoginModalOpen}
                     setSignUpModalOpen={setSignUpModalOpen}
-                    setIsAuthenticated={setIsAuthenticated}
                 />
             )}
 
@@ -110,7 +74,6 @@ export default function Navbar() {
                 <SignUpModal
                     setSignUpModalOpen={setSignUpModalOpen}
                     setLoginModalOpen={setLoginModalOpen}
-                    setIsAuthenticated={setIsAuthenticated}
                 />
             )}
         </div>

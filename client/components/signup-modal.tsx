@@ -1,18 +1,18 @@
 'use client';
 
+import { AuthContext } from "@/app/authContext";
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 export default function SignUpModal({ 
     setSignUpModalOpen, 
-    setLoginModalOpen,
-    setIsAuthenticated
+    setLoginModalOpen
 }: { 
     setSignUpModalOpen: (open: boolean) => void, 
-    setLoginModalOpen: (open: boolean) => void, 
-    setIsAuthenticated: (authenticated: boolean) => void
+    setLoginModalOpen: (open: boolean) => void
 }) {
 
+    const { setIsAuthenticated, setUserId } = useContext(AuthContext)
     const [firstName, setFirstName] = useState<string>('')
     const [lastName, setLastName] = useState<string>('')
     const [email, setEmail] = useState<string>('')
@@ -39,6 +39,7 @@ export default function SignUpModal({
             localStorage.setItem('token', response.data.token)
             localStorage.setItem('user_id', response.data.user.user_id)
             setIsAuthenticated(true)
+            setUserId(response.data.user.user_id)
             setSuccess(response.data.message)
             setFirstName('')
             setLastName('')
