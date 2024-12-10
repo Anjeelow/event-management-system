@@ -18,11 +18,11 @@ export const EventImage: React.FC<EventImageProps> = ({ event }) => {
           {event.title}
         </h1>
         <p className="font-medium text-2xl m-0">
-          {new Date(event.date).toLocaleDateString("en-US", {
+          {event.start_time ? new Date(event.start_time).toLocaleDateString("en-US", {
             month: "long",
             day: "numeric",
             year: "numeric",
-          })}
+          }) : 'No date available'}
         </p>
       </div>
     </div>

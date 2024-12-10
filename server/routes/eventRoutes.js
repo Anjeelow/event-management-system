@@ -30,6 +30,24 @@ router.get("/api/category", async (req, res) => {
   }
 });
 
+router.post("/api/events/edit", async (req, res) => {
+  try {
+    const { eventId, title, description, start, end } = req.body
+    const sql = `
+    UPDATE Event
+    SET title = ?, description = ?, start_time = ?, end_time = ?
+    WHERE event_id = ?
+    `
+    
+    const data = await query(sql, [title, description, start, end, eventId])
+    console.log(data)
+    res.status(200).json({ message: 'Event updated successfully' })
+
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+})
+
 // router.get("api/events?filters*", async (req, res) => {
 //   try {
 //     const userquery = req.query;

@@ -14,18 +14,33 @@ export default function EditModal({
     currentEvent: any
 }) {
 
+    const eventId = currentEvent.event_id
     const { setIsAuthenticated, setUserId } = useContext(AuthContext)
     const [title, setTitle] = useState<string>('')
-    const [password, setPassword] = useState<string>('')
+    const [description, setDescription] = useState<string>('')
     const [start, setStart] = useState<Date | null>(null)
     const [end, setEnd] = useState<Date | null>(null)
     const [error, setError] = useState<string | null>(null)
     const [success, setSuccess] = useState<string | null>(null)
 
+    useEffect(() => {
+        setTitle(currentEvent.title)
+        setDescription(currentEvent.description)
+        setStart(currentEvent.start_time)
+        setEnd(currentEvent.end_time)
+    }, [])
+
     const handleEdit = async (e: React.FormEvent) => {
         e.preventDefault()
 
-        
+        try {
+            const response = await axios.post('http://localhost:8080/api/events/edit', { eventId, title, description, start, end })
+            console.log('success')
+        } catch (error: any) {
+            setError(
+                error.response?.data?.message || 'An unexpected error occurred. Please try again'
+            )
+        }
     }
 
     return (
@@ -40,7 +55,7 @@ export default function EditModal({
                         <input
                             type="text"
                             name="title"
-                            value={currentEvent.title}
+                            value={title}
                             placeholder="Title"
                             className="w-full mb-3 p-2 border rounded"
                             onChange={(e) => setTitle(e.target.value)}
@@ -50,23 +65,23 @@ export default function EditModal({
                         <h4 className="font-bold">Description</h4>
                         <textarea
                             name="description"
-                            value={currentEvent.description}
+                            value={description}
                             placeholder="Description"
                             className="w-full mb-3 p-2 border rounded"
-                            onChange={(e) => setPassword(e.target.value)}
+                            onChange={(e) => setDescription(e.target.value)}
                         />
                     </div>
                     <div>
                         <h4 className="font-bold">Start</h4>
                         <CalendarInput 
-                            date={currentEvent.start_time}
+                            date={start}
                             setDate={setStart}
                         />
                     </div>
                     <div>
                         <h4 className="font-bold">End</h4>
                         <CalendarInput 
-                            date={currentEvent.end_time} 
+                            date={end} 
                             setDate={setEnd} 
                         />
                     </div>

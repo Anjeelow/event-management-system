@@ -12,12 +12,15 @@ export default function CalendarInput({
     setDate: (date: Date | null) => void
 }) {
 
-    const [defaultDate, setDefaultDate] = useState(new Date(date))
+    const [defaultDate, setDefaultDate] = useState<Date | null>(null);
 
     useEffect(() => {
-        const newDate = new Date(date)
-        setDefaultDate(newDate)
-    }, [date])
+        if (date) {
+            setDefaultDate(new Date(date));
+        } else {
+            setDefaultDate(null);
+        }
+    }, [date]);
 
     const handleClick = (newDate: any) => {
         setDate(newDate)
