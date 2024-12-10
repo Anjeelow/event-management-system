@@ -10,6 +10,7 @@ import React from "react";
 import { FaRegSquarePlus } from "react-icons/fa6";
 import { MdOutlineModeEdit } from "react-icons/md";
 import EditModal from "@/components/edit-event-modal";
+import CreateModal from "@/components/create-event-modal";
 
 export default function MyEvents() {
 
@@ -17,6 +18,7 @@ export default function MyEvents() {
     const [events, setEvents] = useState<Event[]>([]);
     const [currentEvent, setCurrentEvent] = useState<Event[]>([])
     const [editModalOpen, setEditModalOpen] = useState(false)
+    const [createModalOpen, setCreateModalOpen] = useState(false)
 
     const { isAuthenticated, userId } = useContext(AuthContext)
 
@@ -39,8 +41,9 @@ export default function MyEvents() {
         router.back()
     }
 
-    const handleCreate = () => {
-
+    const handleCreate = (e: any) => {
+        e.preventDefault()
+        setCreateModalOpen(true)
     }
 
     const handleEdit = (e: any, event: any) => {
@@ -57,7 +60,7 @@ export default function MyEvents() {
                         <button onClick={() => handleGoBack()} className="flex text-white mb-4 bg-blue-700 hover:bg-blue-800 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700">
                             Go Back
                         </button>
-                        <FaRegSquarePlus size={30} onClick={() => handleCreate()} className="cursor-pointer">
+                        <FaRegSquarePlus size={30} onClick={(e) => handleCreate(e)} className="cursor-pointer">
                             Create
                         </FaRegSquarePlus>
                     </div>
@@ -82,11 +85,11 @@ export default function MyEvents() {
                             />
                             <div className="px-2">
                                 <p className="text-gray-700 font-light">
-                                {new Date(event.date).toLocaleDateString("en-US", {
+                                {event.start_time ? new Date(event.start_time).toLocaleDateString("en-US", {
                                     month: "long",
                                     day: "numeric",
                                     year: "numeric",
-                                })}
+                                }): 'No date available'}
                                 </p>
                                 <h3 className="font-bold">{event.title}</h3>
                                 <p className="text-gray-600">
@@ -118,6 +121,10 @@ export default function MyEvents() {
             { editModalOpen && (
                 <EditModal setEditModalOpen={setEditModalOpen} currentEvent={currentEvent} />
             )}
+
+            { createModalOpen && (
+                <CreateModal setCreateModalOpen={setCreateModalOpen} />
+            ) }
         </div>
     )
 }
