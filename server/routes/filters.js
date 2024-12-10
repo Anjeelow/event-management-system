@@ -16,7 +16,7 @@ router.get("/api/events/search", async (req, res) => {
     sql = !params.category
       ? sql.concat("1 AND ")
       : sql.concat("category_id = ".concat(params.category.concat(" AND ")));
-    sql = !params.category
+    sql = !params.userID
       ? sql.concat("1 AND ")
       : sql.concat("organizer = ".concat(params.userID.concat(" AND ")));
   }
