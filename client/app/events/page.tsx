@@ -152,11 +152,11 @@ export default function BrowseEvents() {
                   />
                   <div className="px-2">
                     <p className="text-gray-700 font-light">
-                      {new Date(event.date).toLocaleDateString("en-US", {
+                      {event.start_time ? new Date(event.start_time).toLocaleDateString("en-US", {
                         month: "long",
                         day: "numeric",
                         year: "numeric",
-                      })}
+                      }) : 'No date available'}
                     </p>
                     <h3 className="font-bold">{event.title}</h3>
                     <p className="text-gray-600">
