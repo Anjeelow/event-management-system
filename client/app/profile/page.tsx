@@ -1,36 +1,38 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import axios from "axios"
 import { useParams, useRouter } from "next/navigation"
+import { AuthContext } from "../authContext"
 
 export default function Profile() {
 
+    const { userId, isAuthenticated } = useContext(AuthContext)
     const params = useParams()
     const router = useRouter()
     const [user, setUser] = useState<any>(null)
     const [error, setError] = useState<string | null>(null)
     const [loggedInUser, setLoggedInUser] = useState<string | null>(null)
-    const userId = params.user_id
     
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-            const storedUserId = localStorage.getItem('user_id')
-            setLoggedInUser(storedUserId)            
-        }
-    }, [])
+    // useEffect(() => {
+    //     if (typeof window !== 'undefined') {
+    //         const storedUserId = localStorage.getItem('user_id')
+    //         setLoggedInUser(storedUserId)            
+    //     }
+    // }, [])
 
     useEffect(() => {
-        if (loggedInUser && userId && userId !== loggedInUser) {
-            setError('You do not have permission to view this profile')
+        if (!isAuthenticated) {
+            setError('User is not authenticated')
+            router.push('/')
         }
 
-        if (typeof userId === 'string') {
+        if (userId) {
             fetchUserData(userId)
         }
-    }, [loggedInUser, userId])
+    }, [isAuthenticated, userId])
 
-    const fetchUserData = async (userId: string) => {
+    const fetchUserData = async (userId: number) => {
         try {
             const token = localStorage.getItem('token')
 
