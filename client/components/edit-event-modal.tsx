@@ -91,6 +91,7 @@ export default function EditModal({
                             value={description}
                             placeholder="Description"
                             className="w-full mb-3 p-2 border rounded"
+                            style={{maxHeight: "150px"}}
                             onChange={(e) => setDescription(e.target.value)}
                         />
                     </div>

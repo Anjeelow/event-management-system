@@ -8,9 +8,11 @@ import { useRouter } from "next/navigation";
 import { useContext, useState, useEffect } from "react";
 import React from "react";
 import { FaRegSquarePlus } from "react-icons/fa6";
+import { MdDeleteOutline } from "react-icons/md";
 import { MdOutlineModeEdit } from "react-icons/md";
 import EditModal from "@/components/edit-event-modal";
 import CreateModal from "@/components/create-event-modal";
+import DeleteModal from "@/components/delete-event-modal";
 
 export default function MyEvents() {
   const [users, setUsers] = useState<User[]>([]);
@@ -18,6 +20,7 @@ export default function MyEvents() {
   const [currentEvent, setCurrentEvent] = useState<Event[]>([]);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [createModalOpen, setCreateModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false)
   const [fetchTime, setFetchTime] = useState(false)
 
   const { isAuthenticated, userId } = useContext(AuthContext);
@@ -72,6 +75,12 @@ export default function MyEvents() {
     setCurrentEvent(event);
     setEditModalOpen(true);
   };
+
+  const handleDelete = (e: any, event: any) => {
+    e.preventDefault();
+    setCurrentEvent(event)
+    setDeleteModalOpen(true)
+  }
 
   return (
     <div className="flex bg-gray-100 justify-center min-h-screen">
@@ -135,11 +144,19 @@ export default function MyEvents() {
                       {event.attendee_count} going
                     </p>
                   </div>
-                  <MdOutlineModeEdit
-                    onClick={(e) => handleEdit(e, event)}
-                    size={20}
-                    className="ml-auto cursor-pointer m-2"
-                  />
+                  
+                  <div className="flex ml-auto gap-2">
+                    <MdOutlineModeEdit
+                      onClick={(e) => handleEdit(e, event)}
+                      size={25}
+                      className="ml-auto cursor-pointer m-2"
+                    />
+                    <MdDeleteOutline 
+                      onClick={(e) => handleDelete(e, event)}
+                      size={25}
+                      className="ml-auto cursor-pointer m-2"
+                    />
+                  </div>
                 </Link>
               );
             })
@@ -169,6 +186,14 @@ export default function MyEvents() {
       {createModalOpen && (
         <CreateModal 
           setCreateModalOpen={setCreateModalOpen} 
+          setFetchTime={setFetchTime}
+        />
+      )}
+
+      {deleteModalOpen && (
+        <DeleteModal 
+          setDeleteModalOpen={setDeleteModalOpen} 
+          currentEvent={currentEvent}
           setFetchTime={setFetchTime}
         />
       )}
