@@ -7,6 +7,7 @@ import SignUpModal from '../../components/signup-modal';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { AuthContext } from '../authContext';
+import { IoSearch } from 'react-icons/io5';
 
 export default function Navbar() {
 
@@ -17,15 +18,33 @@ export default function Navbar() {
 
     return (
         <div className="flex justify-center shadow-md">
-            <div
-                className="w-full px-5 flex py-4 bg-white items-center justify-between"
-                style={{ maxWidth: '64rem', height: '60px' }}
+           <div
+                className="w-full px-5 py-4 bg-white"
+                style={{ maxWidth: '64rem', height: 'auto' }}
             >
-                <Link href="/" className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-300">
-                    LOGO
-                </Link>
-                <div>
-                    <div className="flex gap-10 text-black items-center">
+                <div className="grid md:grid-cols-2 space-y-2 md:space-y-0">
+
+                    <div className='flex flex-row gap-5 items-center'>
+                        <Link href='/' className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-300">
+                            LOGO
+                        </Link>
+            
+                        <div className="relative w-full">
+                            <input
+                                type="text"
+                                placeholder="Search"
+                                className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            />
+                            <button
+                                onClick={() => {}}
+                                className="absolute inset-y-0 right-2 flex items-center text-gray-400"
+                            >
+                                <IoSearch size={20} />
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className="w-full flex gap-5 text-black items-center justify-between md:justify-end">
                         <Link href="/events">Events</Link>
                         {!isAuthenticated ? (
                             <>
@@ -35,7 +54,7 @@ export default function Navbar() {
                                 >
                                     Log In
                                 </button>
-                                
+
                                 <button
                                     onClick={() => setSignUpModalOpen(true)}
                                     type="button"
@@ -60,6 +79,7 @@ export default function Navbar() {
                     </div>
                 </div>
             </div>
+
 
             {/* Log In Modal */}
             {isLoginModalOpen && (
