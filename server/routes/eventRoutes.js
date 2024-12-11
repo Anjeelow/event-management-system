@@ -32,11 +32,11 @@ router.get("/api/category", async (req, res) => {
 
 router.post("/api/events/create", async (req, res) => {
   try {
-    const { userId, title, description, start, end, duration, address } =
+    const { userId, title, description, start, end, duration, address, maxAttendees, attendeeCount, currentDay } =
       req.body;
     const sql = `
-      INSERT INTO Event (organizer, title, description, start_time, end_time, duration, address)
-      VALUES (?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO Event (organizer, title, description, start_time, end_time, duration, address, max_attendees, attendee_count, created_at, updated_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
     const data = await query(sql, [
       userId,
@@ -46,6 +46,10 @@ router.post("/api/events/create", async (req, res) => {
       end,
       duration,
       address,
+      maxAttendees,
+      attendeeCount,
+      currentDay,
+      currentDay
     ]);
     res.status(200).json({ message: "Event added successfully" });
   } catch (err) {
@@ -55,20 +59,33 @@ router.post("/api/events/create", async (req, res) => {
 
 router.post("/api/events/edit", async (req, res) => {
   try {
-    const { eventId, title, description, start, end } = req.body;
+    const { eventId, title, description, start, end, address, maxAttendees } = req.body;
     const sql = `
     UPDATE Event
-    SET title = ?, description = ?, start_time = ?, end_time = ?
+    SET title = ?, description = ?, start_time = ?, end_time = ?, address = ?, max_attendees = ?
     WHERE event_id = ?
     `;
 
-    const data = await query(sql, [title, description, start, end, eventId]);
-    console.log(data);
+    const data = await query(sql, [title, description, start, end, address, maxAttendees, eventId]);
     res.status(200).json({ message: "Event updated successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
+
+router.post("/api/events/delete", async (req, res) => {
+  try {
+    const { eventId } = req.body
+    const sql = `
+      DELETE FROM Event WHERE event_id = ?
+    `
+    const data = await query(sql, [eventId])
+    console.log(data)
+    res.status(200).json({ message: 'Event successfully deleted' })
+  } catch (err) {
+    res.status(500).json({ message: err.message} )
+  }
+})
 
 // router.get("api/events?filters*", async (req, res) => {
 //   try {
