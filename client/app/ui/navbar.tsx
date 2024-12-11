@@ -25,9 +25,9 @@ export default function Navbar() {
                 <div className="grid md:grid-cols-2 space-y-2 md:space-y-0">
 
                     <div className='flex flex-row gap-5 items-center'>
-                        <h1 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-300">
+                        <Link href='/' className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-300">
                             LOGO
-                        </h1>
+                        </Link>
             
                         <div className="relative w-full">
                             <input

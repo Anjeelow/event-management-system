@@ -8,10 +8,12 @@ import { Event } from "../../server/lib/definitions";
 
 export default function EditModal({ 
     setEditModalOpen,
-    currentEvent
+    currentEvent,
+    setFetchTime
 }: { 
     setEditModalOpen: (open: boolean) => void,
-    currentEvent: any
+    currentEvent: any,
+    setFetchTime: (fetchTime: boolean) => void
 }) {
 
     const eventId = currentEvent.event_id
@@ -20,6 +22,8 @@ export default function EditModal({
     const [description, setDescription] = useState<string>('')
     const [start, setStart] = useState<Date | null>(null)
     const [end, setEnd] = useState<Date | null>(null)
+    const [address, setAddress] = useState<string>('')
+    const [maxAttendees, setMaxAttendees] = useState<number | string>(1)
     const [error, setError] = useState<string | null>(null)
     const [success, setSuccess] = useState<string | null>(null)
 
@@ -28,13 +32,16 @@ export default function EditModal({
         setDescription(currentEvent.description)
         setStart(currentEvent.start_time)
         setEnd(currentEvent.end_time)
+        setAddress(currentEvent.address)
+        setMaxAttendees(currentEvent.max_attendees)
     }, [])
 
     const handleEdit = async (e: React.FormEvent) => {
         e.preventDefault()
 
         try {
-            const response = await axios.post('http://localhost:8080/api/events/edit', { eventId, title, description, start, end })
+            const response = await axios.post('http://localhost:8080/api/events/edit', { eventId, title, description, start, end, address, maxAttendees })
+            setFetchTime(true)
             console.log('success')
         } catch (error: any) {
             setError(
@@ -42,6 +49,22 @@ export default function EditModal({
             )
         }
     }
+
+    const handleZero = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value.trim();
+    
+        if (value === "") {
+            return;
+        }
+
+        const numericValue = Number(value);
+    
+        if (numericValue > 0) {
+            setMaxAttendees(numericValue);
+        } else if (numericValue === 0 && maxAttendees !== 0) {
+            return;
+        }
+    };
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center px-5 z-50">
@@ -68,6 +91,7 @@ export default function EditModal({
                             value={description}
                             placeholder="Description"
                             className="w-full mb-3 p-2 border rounded"
+                            style={{maxHeight: "150px"}}
                             onChange={(e) => setDescription(e.target.value)}
                         />
                     </div>
@@ -83,6 +107,29 @@ export default function EditModal({
                         <CalendarInput 
                             date={end} 
                             setDate={setEnd} 
+                        />
+                    </div>
+                    <div>
+                        <h4 className="font-bold">Address</h4>
+                        <input
+                            type="text"
+                            name="address"
+                            value={address}
+                            placeholder="Address"
+                            className="w-full mb-3 p-2 border rounded"
+                            onChange={(e) => setAddress(e.target.value)}
+                        />
+                    </div>
+                    <div>
+                        <h4 className="font-bold">Max Attendees</h4>
+                        <input
+                            type="number"
+                            name="max-attendees"
+                            value={maxAttendees === "" ? "" : maxAttendees}
+                            min="1"
+                            placeholder={String(maxAttendees)}
+                            className="w-full mb-3 p-2 border rounded placeholder-gray-400"
+                            onChange={(e) => handleZero(e)}
                         />
                     </div>
                     {error && <p>{error}</p>}
