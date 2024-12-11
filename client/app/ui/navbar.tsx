@@ -21,9 +21,9 @@ export default function Navbar() {
                 className="w-full px-5 flex py-4 bg-white items-center justify-between"
                 style={{ maxWidth: '64rem', height: '60px' }}
             >
-                <h1 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-300">
+                <Link href="/" className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-300">
                     LOGO
-                </h1>
+                </Link>
                 <div>
                     <div className="flex gap-10 text-black items-center">
                         <Link href="/events">Events</Link>

@@ -8,10 +8,12 @@ import { Event } from "../../server/lib/definitions";
 
 export default function EditModal({ 
     setEditModalOpen,
-    currentEvent
+    currentEvent,
+    setFetchTime
 }: { 
     setEditModalOpen: (open: boolean) => void,
-    currentEvent: any
+    currentEvent: any,
+    setFetchTime: (fetchTime: boolean) => void
 }) {
 
     const eventId = currentEvent.event_id
@@ -35,6 +37,7 @@ export default function EditModal({
 
         try {
             const response = await axios.post('http://localhost:8080/api/events/edit', { eventId, title, description, start, end })
+            setFetchTime(true)
             console.log('success')
         } catch (error: any) {
             setError(

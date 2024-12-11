@@ -18,6 +18,7 @@ export default function MyEvents() {
   const [currentEvent, setCurrentEvent] = useState<Event[]>([]);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [createModalOpen, setCreateModalOpen] = useState(false);
+  const [fetchTime, setFetchTime] = useState(false)
 
   const { isAuthenticated, userId } = useContext(AuthContext);
 
@@ -39,7 +40,8 @@ export default function MyEvents() {
       .then((response) => response.json())
       .then((data) => setUsers(data.users))
       .catch((error) => console.error("Error fetching users:", error));
-  }, []);
+    setFetchTime(false)
+  }, [fetchTime]);
 
   // useEffect(() => {
 
@@ -160,11 +162,15 @@ export default function MyEvents() {
         <EditModal
           setEditModalOpen={setEditModalOpen}
           currentEvent={currentEvent}
+          setFetchTime={setFetchTime}
         />
       )}
 
       {createModalOpen && (
-        <CreateModal setCreateModalOpen={setCreateModalOpen} />
+        <CreateModal 
+          setCreateModalOpen={setCreateModalOpen} 
+          setFetchTime={setFetchTime}
+        />
       )}
     </div>
   );

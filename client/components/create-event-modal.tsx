@@ -7,9 +7,11 @@ import CalendarInput from "./date-picker";
 import { Event } from "../../server/lib/definitions";
 
 export default function CreateModal({ 
-    setCreateModalOpen
+    setCreateModalOpen,
+    setFetchTime
 }: { 
     setCreateModalOpen: (open: boolean) => void
+    setFetchTime: (fetchTime: boolean) => void
 }) {
 
     const { userId } = useContext(AuthContext)
@@ -18,15 +20,41 @@ export default function CreateModal({
     const [start, setStart] = useState<Date | null>(null)
     const [end, setEnd] = useState<Date | null>(null)
     const [address, setAddress] = useState<string>('')
+    const [maxAttendees, setMaxAttendees] = useState<number>(1)
+    const [attendeeCount, setAttendeeCount] = useState<number>(0)
     const [error, setError] = useState<string | null>(null)
     const [success, setSuccess] = useState<string | null>(null)
+
+    const handleZero = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value.trim();
+    
+        if (value === "") {
+            return;
+        }
+
+        const numericValue = Number(value);
+    
+        if (numericValue > 0) {
+            setMaxAttendees(numericValue);
+        } else if (numericValue === 0 && maxAttendees !== 0) {
+            return;
+        }
+    };
+    
 
     const handleCreate = async (e: React.FormEvent) => {
         e.preventDefault()
 
         try {
-            const duration = Math.floor((end?.getTime() - start?.getTime()) / 60000)
-            const response = await axios.post('http://localhost:8080/api/events/create', { userId, title, description, start, end, duration, address })
+            if ((maxAttendees ?? 0) < 1) {
+                setError('Must have attendees for your event')
+                return
+            }
+            const currentDay = new Date().toISOString()
+            const duration = Math.floor(((end?.getTime() ?? 0) - (start?.getTime() ?? 0)) / 60000)
+            const response = await axios.post('http://localhost:8080/api/events/create', { userId, title, description, start, end, duration, address, maxAttendees, attendeeCount, currentDay })
+            setFetchTime(true)
+            setSuccess('Successfully created an event')
             console.log('success')
         } catch (error: any) {
             setError(
@@ -86,6 +114,18 @@ export default function CreateModal({
                             placeholder="Address"
                             className="w-full mb-3 p-2 border rounded"
                             onChange={(e) => setAddress(e.target.value)}
+                        />
+                    </div>
+                    <div>
+                        <h4 className="font-bold">Max Attendees</h4>
+                        <input
+                            type="number"
+                            name="max-attendees"
+                            value={maxAttendees}
+                            min="1"
+                            placeholder="1"
+                            className="w-full mb-3 p-2 border rounded placeholder-gray-400"
+                            onChange={(e) => handleZero(e)}
                         />
                     </div>
                     {error && <p>{error}</p>}
