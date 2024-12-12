@@ -10,6 +10,7 @@ import { AboutEvent } from "../../../components/about-event";
 import { Organizer } from "../../../components/organizer";
 import { Attendees } from "../../../components/attendees";
 import { AuthContext } from "@/app/authContext";
+import axios from "axios";
 
 export default function EventDetails() {
   const params = useParams();
@@ -20,21 +21,25 @@ export default function EventDetails() {
   const [fetchTime, setFetchTime] = useState(false)
 
   useEffect(() => {
-    fetch('http://localhost:8080/api/events')
-      .then(response => response.json())
-      .then(data => setEvents(data.events))
-      .catch(error => console.error('Error fetching events:', error))
+    const fetchData = async () => {
+      try {
+        const [eventsResponse, usersResponse, rsvpsResponse] = await Promise.all([
+          axios.get('http://localhost:8080/api/events'),
+          axios.get('http://localhost:8080/api/users'),
+          axios.get('http://localhost:8080/api/rsvps'),
+        ])
 
-    fetch('http://localhost:8080/api/users')
-      .then(response => response.json())
-      .then(data => setUsers(data.users))
-      .catch(error => console.error('Error fetching users:', error))
+        setEvents(eventsResponse.data.events)
+        setUsers(usersResponse.data.users)
+        setRsvps(rsvpsResponse.data.rsvps)
+      } catch (error) {
+        console.error('Error fetching data', error)
+      } finally {
+        setFetchTime(false)
+      }
+    }
 
-    fetch('http://localhost:8080/api/rsvps')
-      .then(response => response.json())
-      .then(data => setRsvps(data.rsvps))
-      .catch(error => console.error('Error fetching rsvps:', error))
-    setFetchTime(false)
+    fetchData()
   }, [fetchTime])
 
   const event = events?.find(

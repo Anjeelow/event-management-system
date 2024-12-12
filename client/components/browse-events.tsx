@@ -4,6 +4,7 @@ import Link from "next/link";
 
 import { useEffect, useState } from "react"
 import { User, Event } from '../../server/lib/definitions'
+import axios from "axios";
 
 export default function BrowseEvents() {
 
@@ -11,15 +12,22 @@ export default function BrowseEvents() {
     const [users, setUsers] = useState<User[]>([])
 
     useEffect(() => {
-        fetch('http://localhost:8080/api/events')
-            .then(response => response.json())
-            .then(data => setEvents(data.events))
-            .catch(error => console.error('Error fetching events:', error))
+        const fetchData = async () => {
+            try {     
+                const [eventsResponse, usersResponse] = await Promise.all([
+                    axios.get('http://localhost:8080/api/events'),
+                    axios.get('http://localhost:8080/api/users'),
+                ])
 
-        fetch('http://localhost:8080/api/users')
-            .then(response => response.json())
-            .then(data => setUsers(data.users))
-            .catch(error => console.error('Error fetching users:', error))
+                setEvents(eventsResponse.data.events)
+                setUsers(usersResponse.data.users)
+
+            } catch (error) {
+                console.error('Error fetching data', error)
+            }
+        }
+
+        fetchData()
     }, [])
 
     return (
