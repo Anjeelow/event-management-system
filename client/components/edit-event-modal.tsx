@@ -54,7 +54,7 @@ export default function EditModal({
                 },
                 axios.post('http://localhost:8080/api/events/notify', {
                     eventId,
-                    message: `This event has been edited. Please check the updated details`,
+                    message: `The event has been edited. Please check the updated details`,
                 }),
             ])
 

@@ -12,6 +12,7 @@ export default function Notifications() {
     const [notifications, setNotifications] = useState<Notification[]>()
     const filteredNotifications = notifications
         ?.filter((notification) => notification.user_id === userId)
+        .reverse()
 
     useEffect(() => {
         const fetchData = async () => {
@@ -49,7 +50,7 @@ export default function Notifications() {
                                 return (
                                     <div
                                         key={notification?.notification_id || index}
-                                        className={`flex flex-row items-center p-3 space-x-2 border-b-2 last:border-none pb-4 ${bgClass} hover:bg-blue-100 transition-colors duration-200`}
+                                        className={`flex flex-row items-center p-3 space-x-3 border-b-2 last:border-none ${bgClass} hover:bg-blue-100 transition-colors duration-200`}
                                     >
                                         <div
                                             className="h-10 w-10 flex items-center justify-center rounded-sm border border-blue-700 overflow-hidden"
