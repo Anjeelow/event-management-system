@@ -75,7 +75,7 @@ export default function Profile() {
     <div className="flex justify-center">
       <div
         className="w-full flex flex-col-reverse md:items-center gap-3 px-5 py-5 md:grid md:grid-cols-2"
-        style={{ maxWidth: "64rem" }}
+        style={{ maxWidth: "76rem" }}
       >
         <h1>{user.user_id}</h1>
         <h1>
