@@ -101,7 +101,7 @@ export default function Navbar() {
                         </div>
                     </div>
                     {/* Full-size navigation */}
-                    <div className="hidden w-full sm:flex gap-6 text-black items-center sm:justify-end">
+                    <div className="hidden w-full sm:flex gap-6 text-black items-center sm:justify-end pr-2">
                         <Link className="text-sm font-medium" href="/events">Events</Link>
                         {!isAuthenticated ? (
                             <>
