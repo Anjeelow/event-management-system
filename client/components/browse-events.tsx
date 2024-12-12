@@ -31,8 +31,8 @@ export default function BrowseEvents() {
     }, [])
 
     return (
-        <div className="flex bg-gray-100 justify-center min-h-screen">
-            <div className="px-5 py-5 w-full" style={{ maxWidth: '64rem' }}>
+        <div className="flex bg-gray-100 justify-center">
+            <div className="px-5 py-5 w-full" style={{ maxWidth: '76rem', height: 'auto' }}>
                 <div className="flex pb-4 space-x-5">
                     <h1>Browsing Events in your area</h1>
                     <h1 className="text-gray-600">San Francisco, CA</h1>

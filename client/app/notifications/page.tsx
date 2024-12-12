@@ -29,7 +29,7 @@ export default function Notifications() {
 
     return (
         <div className="flex bg-gray-100 justify-center min-h-screen">
-            <div className="px-5 py-5 space-y-2 w-full" style={{ maxWidth: "64rem" }}>
+            <div className="px-5 py-5 space-y-2 w-full" style={{ maxWidth: "76rem" }}>
                 <div className="border bg-white shadow-lg px-5 py-4 rounded-lg space-y-3">
                 <div className="flex justify-between items-center">
                     <h1 className="text-lg font-semibold">Notifications</h1>

@@ -108,7 +108,7 @@ export default function BrowseEvents() {
 
   return (
     <div className="flex bg-gray-100 justify-center min-h-screen">
-      <div className="px-5 py-5 space-y-2 w-full" style={{ maxWidth: "64rem" }}>
+      <div className="px-5 py-5 space-y-2 w-full" style={{ maxWidth: "76rem" }}>
         <div className="flex mb-4">
           {isAuthenticated && (
             <button
@@ -121,24 +121,6 @@ export default function BrowseEvents() {
         </div>
         <div className="p-5 bg-white rounded-t-lg">
           <div className="grid gap-5">
-            <div>
-              <input
-                type="text"
-                placeholder="Search"
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                onChange={handleSearchChange}
-                // todo: create function which collects search data
-              />
-              <button
-                onClick={() => {
-                  handleSearchPress();
-                }}
-                className="text-blue-700 underline"
-              >
-                Search
-              </button>
-            </div>
-            <div>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 <select
                   value={location}
@@ -191,7 +173,6 @@ export default function BrowseEvents() {
                   ))}
                 </select>
               </div>
-            </div>
           </div>
         </div>
         <div className="flex flex-col bg-white p-5 gap-5 justify-content align-center">

@@ -93,7 +93,7 @@ export default function MyEvents() {
       {isAuthenticated ? (
         <div
           className="px-5 py-5 space-y-2 w-full"
-          style={{ maxWidth: "64rem" }}
+          style={{ maxWidth: "76rem" }}
         >
           <div className="flex justify-between">
             <button
