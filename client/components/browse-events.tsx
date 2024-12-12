@@ -32,9 +32,9 @@ export default function BrowseEvents() {
                 <div className="grid gap-5 grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
                     {Array.isArray(events) && events.length > 0 ? (
                         events.map((event) => {
-                            const organizer = events.find((user) => user.event_id === event.organizer);
+                            const organizer = events.find((user) => user.organizer === event.organizer);
                             const host = users.find((user) => organizer?.organizer === user.user_id);
-    
+    console.log(organizer)
                             return (
                                 <Link
                                     href={`/eventdetails/${event.event_id}`}

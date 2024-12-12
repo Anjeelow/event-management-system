@@ -1,7 +1,7 @@
 'use client'
 
 import BottomNavbar from "@/app/ui/bottomnavbar";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { User, Event, Rsvp } from "../../../../server/lib/definitions";
 import { useParams } from "next/navigation";
 
@@ -9,9 +9,11 @@ import { EventImage } from "../../../components/event-image";
 import { AboutEvent } from "../../../components/about-event";
 import { Organizer } from "../../../components/organizer";
 import { Attendees } from "../../../components/attendees";
+import { AuthContext } from "@/app/authContext";
 
 export default function EventDetails() {
   const params = useParams();
+  const { isAuthenticated, userId } = useContext(AuthContext)
   const [events, setEvents] = useState<Event[]>([])
   const [users, setUsers] = useState<User[]>([])
   const [rsvps, setRsvps] = useState<Rsvp[]>([])
@@ -36,11 +38,13 @@ export default function EventDetails() {
   const event = events?.find(
     (event) => event.event_id === Number(params.event_id)
   );
+  const currentEvent = event?.event_id
   const organizer = users?.find((user) => user.user_id === event?.organizer);
   const eventRSVPs = rsvps?.filter((rsvp) => rsvp.event_id === event?.event_id);
   const attendees = (eventRSVPs || [])
     .map((rsvp) => users?.find((user) => user.user_id === rsvp.user_id))
     .filter(Boolean);
+  const isAttending = (attendees.find((user) => user?.user_id === userId)) ? true : false;
 
   const startDate = event?.start_time ? new Date(event.start_time) : null;
   const endDate = event?.end_time ? new Date(event.end_time) : null;
@@ -102,7 +106,11 @@ export default function EventDetails() {
         </div>
       </div>
       <div>
-        <BottomNavbar />
+        <BottomNavbar 
+          organizer={organizer} 
+          isAttending={isAttending}
+          currentEvent={currentEvent}
+        />
       </div>
     </div>
   );
