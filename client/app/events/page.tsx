@@ -6,6 +6,7 @@ import { User, Event, Category } from "../../../server/lib/definitions";
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../authContext";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 export default function BrowseEvents() {
   const [location, setLocation] = useState<string>("");
@@ -26,34 +27,59 @@ export default function BrowseEvents() {
   const router = useRouter();
 
   useEffect(() => {
-    setMounted(true);
-    fetch("http://localhost:8080/api/events")
-      .then((response) => response.json())
-      .then((data) => setEvents(data.events))
-      .catch((error) => console.error("Error fetching events:", error));
-    fetch("http://localhost:8080/api/users")
-      .then((response) => response.json())
-      .then((data) => setUsers(data.users))
-      .catch((error) => console.error("Error fetching users:", error));
-    fetch("http://localhost:8080/api/category")
-      .then((response) => response.json())
-      .then((data) => setCategories(data.category))
-      .catch((error) => console.error("Error fetching categories:", error));
+    // setMounted(true);
+    // fetch("http://localhost:8080/api/events")
+    //   .then((response) => response.json())
+    //   .then((data) => setEvents(data.events))
+    //   .catch((error) => console.error("Error fetching events:", error));
+    // fetch("http://localhost:8080/api/users")
+    //   .then((response) => response.json())
+    //   .then((data) => setUsers(data.users))
+    //   .catch((error) => console.error("Error fetching users:", error));
+    // fetch("http://localhost:8080/api/category")
+    //   .then((response) => response.json())
+    //   .then((data) => setCategories(data.category))
+    //   .catch((error) => console.error("Error fetching categories:", error));
+    const fetchData = async () => {
+      try {
+        setMounted(true)
+        const [eventsResponse, usersResponse, categoriesResponse] = await Promise.all([
+          axios.get('http://localhost:8080/api/events'),
+          axios.get('http://localhost:8080/api/users'),
+          axios.get('http://localhost:8080/api/category'),
+        ])
+
+        setEvents(eventsResponse.data.events)
+        setUsers(usersResponse.data.users)
+        setCategories(categoriesResponse.data.category)
+      } catch (error) {
+        console.log('Error fetching data', error)
+      }
+    }
+
+    fetchData()
   }, []);
 
   const handleSearchPress = () => {
-    const queryParams = new URLSearchParams({
-      title: searchTitle || "",
-      location: location || "",
-      date: date ? date.toString() : "",
-      category: categoryID ? categoryID.toString() : "",
-    });
-    fetch(
-      "http://localhost:8080/api/events/search?".concat(queryParams.toString())
-    )
-      .then((response) => response.json())
-      .then((data) => setEvents(data.events))
-      .catch((error) => console.error("Error fetching events:", error));
+      const fetchEvents = async () => {
+        const queryParams = new URLSearchParams({
+          title: searchTitle || "",
+          location: location || "",
+          date: date ? date.toString() : "",
+          category: categoryID ? categoryID.toString() : "",
+        });
+        
+        try {
+          const response = await axios.get(`http://localhost:8080/api/events/search?${queryParams.toString()}`)
+          const events = response.data.events || []
+          setEvents(events)
+      
+        } catch (error) {
+          console.log('Error fetching events:', error)
+        }
+    }
+
+    fetchEvents()
   };
   // todo: send an express query once search button is pressed
 

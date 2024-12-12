@@ -4,7 +4,8 @@ import { AuthContext } from "@/app/authContext";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import CalendarInput from "./date-picker";
-import { Event } from "../../server/lib/definitions";
+import { Event, Rsvp } from "../../server/lib/definitions";
+import { rsvps } from "../../server/placeholder-data";
 
 export default function EditModal({ 
     setEditModalOpen,
@@ -40,9 +41,26 @@ export default function EditModal({
         e.preventDefault()
 
         try {
-            const response = await axios.post('http://localhost:8080/api/events/edit', { eventId, title, description, start, end, address, maxAttendees })
+            // const response = await axios.post('http://localhost:8080/api/events/edit', { eventId, title, description, start, end, address, maxAttendees })
+            await Promise.all([
+                axios.post('http://localhost:8080/api/events/edit'), {
+                    eventId,
+                    title,
+                    description,
+                    start,
+                    end,
+                    address,
+                    maxAttendees
+                },
+                axios.post('http://localhost:8080/api/events/notify', {
+                    eventId,
+                    message: `The event has been edited. Please check the updated details`,
+                }),
+            ])
+
             setFetchTime(true)
             console.log('success')
+            setEditModalOpen(false)
         } catch (error: any) {
             setError(
                 error.response?.data?.message || 'An unexpected error occurred. Please try again'
