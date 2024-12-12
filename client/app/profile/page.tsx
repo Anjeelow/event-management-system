@@ -6,6 +6,7 @@ import { useParams, useRouter } from "next/navigation"
 import { AuthContext } from "../authContext"
 import { MdHeight } from "react-icons/md"
 import Image from "next/image"
+import { IoCreateOutline } from "react-icons/io5"
 
 export default function Profile() {
 
@@ -68,7 +69,7 @@ export default function Profile() {
     return (
         <div className="flex bg-gray-100 justify-center min-h-screen">
             <div className="px-5 py-5 w-full" style={{ maxWidth: '76rem', height: 'auto' }}>
-                <div className="flex w-full border bg-white shadow-lg rounded-lg space-y-3 overflow-hidden">
+                <div className="flex w-full border bg-white shadow-lg rounded-lg overflow-hidden">
 
                     {/*IMAGE*/}
                     <div className="hidden md:block md:w-2/3 xl:w-full">
@@ -82,11 +83,11 @@ export default function Profile() {
                     </div>
 
                     {/*PROFILE*/}
-                    <div className="w-full flex flex-col py-6 px-6 sm:px-16 gap-8">
-
+                    <div className="w-full flex flex-col py-5 px-5 gap-8">
+                        <h1 className="font-semibold text-lg">Profile</h1>
                         {/*PROFILE PIC*/}
                         <div className="flex gap-5 items-center">
-                            <div className="w-24 h-24 rounded-full overflow-hidden">
+                            <div className="w-14 h-14 rounded-full overflow-hidden">
                                 <Image
                                     src="/main-events.png"
                                     alt="event with many balloons"
@@ -96,8 +97,8 @@ export default function Profile() {
                                 />
                             </div>
                             <div>
-                                <h1 className="text-xl font-medium">{user.first_name} {user.last_name}</h1>
-                                <h1 className="text-gray-600">{user.email}</h1>
+                                <h1 className="font-medium">{user.first_name} {user.last_name}</h1>
+                                <h1 className="text-gray-600 font-light">{user.email}</h1>
                             </div>
                         </div>
 
@@ -114,30 +115,27 @@ export default function Profile() {
                         </div>
 
                         {/*PROFILE DETAILS*/}
-                        <div className="flex flex-col gap-10">
-                            <div className="grid grid-cols-2 gap-10">
-                                <div className="border-b">
-                                    <h1 className="text-gray-600">First Name</h1>
-                                    <p>{user.first_name}</p>
-                                </div>
-                                <div className="border-b">
-                                    <h1 className="text-gray-600">Last Name</h1>
-                                    <p>{user.last_name}</p>
-                                </div>
+                        <div className="flex flex-col gap-5">
+                            <div className="space-y-2">
+                                <h1 className="text-gray-600">First Name</h1>
+                                <p className="p-2 border rounded-lg">{user.first_name}</p>
                             </div>
-                            <div className="grid">
-                                <div className="border-b">
-                                    <h1 className="text-gray-600">E-mail Address</h1>
-                                    <p>{user.email}</p>
-                                </div>
+                            <div className="space-y-2">
+                                <h1 className="text-gray-600">Last Name</h1>
+                                <p className="p-2 border rounded-lg">{user.last_name}</p>
+                            </div>
+                            <div className="space-y-2">
+                                <h1 className="text-gray-600">Email</h1>
+                                <p className="p-2 border rounded-lg">{user.email}</p>
                             </div>
                         </div>
-                        <div className="flex justify-end">
+                        <div className="flex">
                             <button
                                 onClick={handleResetPassword}
-                                className="w-sm text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5"
+                                className="flex gap-2 items-center w-sm text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5"
                             >
-                                Reset password
+                                <IoCreateOutline className="text-lg text-white"/>
+                                Edit
                             </button>
                         </div>
                     </div>
