@@ -134,23 +134,23 @@ CREATE TABLE `rsvp` (
   `rsvp_id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
   `event_id` int(11) DEFAULT NULL,
-  `status` varchar(255) DEFAULT 'pending',
+  `status` varchar(255) DEFAULT 'attending',
   `rsvp_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `notes` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `rsvp`
---
+-- 2025-01-15T07:30:00.000Z
 
 INSERT INTO `rsvp` (`rsvp_id`, `user_id`, `event_id`, `status`, `rsvp_date`, `notes`) VALUES
-(1, 3, 1, 'Attending', '2024-11-26 11:00:10', 'unlimited food please'),
-(2, 3, 2, 'Attending', '2024-11-26 11:12:24', 'Hi Reece.'),
-(3, 1, 1, 'Attending', '2024-11-28 06:23:30', 'Hi Angelo.'),
-(4, 4, 1, 'Attending', '2024-11-29 06:23:30', 'Hi Angelo.'),
-(5, 6, 1, 'Attending', '2024-11-30 06:23:30', 'Hi Angelo.'),
-(6, 7, 1, 'Attending', '2024-12-01 06:23:30', 'Hi Angelo.'),
-(7, 9, 1, 'Attending', '2024-12-01 06:23:30', 'Hi Angelo.');
+(1, 3, 1, 'attending', '2024-11-26T11:00:10.000Z', 'unlimited food please'),
+(2, 3, 2, 'attending', '2024-11-26T11:12:24.000Z', 'Hi Reece.'),
+(3, 1, 1, 'attending', '2024-11-28T06:23:30.000Z', 'Hi Angelo.'),
+(4, 4, 1, 'attending', '2024-11-29T06:23:30.000Z', 'Hi Angelo.'),
+(5, 6, 1, 'attending', '2024-11-30T06:23:30.000Z', 'Hi Angelo.'),
+(6, 7, 1, 'attending', '2024-12-01T06:23:30.000Z', 'Hi Angelo.'),
+(7, 9, 1, 'attending', '2024-12-01T06:23:30.000Z', 'Hi Angelo.');
 
 -- --------------------------------------------------------
 
@@ -204,6 +204,9 @@ ALTER TABLE `user`
 
 ALTER TABLE `event`
   ADD PRIMARY KEY (`event_id`);
+
+ALTER TABLE `rsvp`
+  ADD PRIMARY KEY (`rsvp_id`);
 --
 -- AUTO_INCREMENT for dumped tables
 --
@@ -217,6 +220,10 @@ COMMIT;
 
 ALTER TABLE `event`
  MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+COMMIT;
+
+ALTER TABLE `rsvp`
+  MODIFY `rsvp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
