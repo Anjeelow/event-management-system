@@ -22,11 +22,6 @@ export default function Profile() {
     // }, [])
 
     useEffect(() => {
-        if (!isAuthenticated) {
-            setError('User is not authenticated')
-            router.push('/')
-        }
-
         if (userId) {
             fetchUserData(userId)
         }

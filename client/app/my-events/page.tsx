@@ -13,6 +13,7 @@ import { MdOutlineModeEdit } from "react-icons/md";
 import EditModal from "@/components/edit-event-modal";
 import CreateModal from "@/components/create-event-modal";
 import DeleteModal from "@/components/delete-event-modal";
+import axios from "axios";
 
 export default function MyEvents() {
   const [users, setUsers] = useState<User[]>([]);
@@ -28,22 +29,27 @@ export default function MyEvents() {
   const router = useRouter();
 
   useEffect(() => {
-    const userEventParams = new URLSearchParams({
-      userID: userId?.toString() || "",
-    });
-    fetch(
-      "http://localhost:8080/api/events/search?".concat(
-        userEventParams.toString()
-      )
-    )
-      .then((response) => response.json())
-      .then((data) => setEvents(data.events))
-      .catch((error) => console.error("Error fetching events:", error));
-    fetch("http://localhost:8080/api/users")
-      .then((response) => response.json())
-      .then((data) => setUsers(data.users))
-      .catch((error) => console.error("Error fetching users:", error));
-    setFetchTime(false)
+    const fetchData = async () => {
+      try {
+        const userEventParams = new URLSearchParams({
+          userID: userId?.toString() || "",
+        }).toString()
+
+        const [eventsResponse, usersResponse] = await Promise.all([
+          axios.get(`http://localhost:8080/api/events/search?${userEventParams}`),
+          axios.get('http://localhost:8080/api/users'),
+        ])
+
+        setEvents(eventsResponse.data.events)
+        setUsers(usersResponse.data.users)
+      } catch (error) {
+        console.error('Error fetching data', error)
+      } finally {
+        setFetchTime(false)
+      }
+    }
+
+    fetchData()
   }, [fetchTime]);
 
   // useEffect(() => {
