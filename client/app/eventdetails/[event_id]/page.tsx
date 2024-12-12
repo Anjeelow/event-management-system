@@ -17,6 +17,7 @@ export default function EventDetails() {
   const [events, setEvents] = useState<Event[]>([])
   const [users, setUsers] = useState<User[]>([])
   const [rsvps, setRsvps] = useState<Rsvp[]>([])
+  const [fetchTime, setFetchTime] = useState(false)
 
   useEffect(() => {
     fetch('http://localhost:8080/api/events')
@@ -33,7 +34,8 @@ export default function EventDetails() {
       .then(response => response.json())
       .then(data => setRsvps(data.rsvps))
       .catch(error => console.error('Error fetching rsvps:', error))
-  }, [])
+    setFetchTime(false)
+  }, [fetchTime])
 
   const event = events?.find(
     (event) => event.event_id === Number(params.event_id)
@@ -110,6 +112,7 @@ export default function EventDetails() {
           organizer={organizer} 
           isAttending={isAttending}
           currentEvent={currentEvent}
+          setFetchTime={setFetchTime}
         />
       </div>
     </div>

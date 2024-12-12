@@ -1,21 +1,25 @@
 'use client'
 
 import Link from "next/link"
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { AuthContext } from "../authContext"
 import axios from "axios"
+import LeaveEventModal from "@/components/leave-event-modal"
 
 export default function BottomNavbar({ 
     organizer,
     isAttending,
-    currentEvent
+    currentEvent,
+    setFetchTime
 } : { 
     organizer: any,
     isAttending: boolean,
-    currentEvent: any
+    currentEvent: any,
+    setFetchTime: (fetchTime: boolean) => void
 }) {
 
     const { isAuthenticated, userId } = useContext(AuthContext)
+    const [leaveModalOpen, setLeaveModalOpen] = useState(false)
 
     const handleRsvp = async (e: any) => {
         e.preventDefault();
@@ -25,6 +29,7 @@ export default function BottomNavbar({
         try {
             const currentDay = new Date().toISOString()
             const data = await axios.post('http://localhost:8080/api/rsvp/attend', { currentEvent, userId, currentDay })
+            setFetchTime(true)
             console.log('Successfully joined this event')
         } catch (err) {
             console.log('Error in attending this event', err)
@@ -33,13 +38,7 @@ export default function BottomNavbar({
 
     const handleLeave = async (e: any) => {
         e.preventDefault();
-
-        try {
-            const data = await axios.post('http://localhost:8080/api/rsvp/leave', { currentEvent, userId })
-            console.log('Successfully left this event')
-        } catch (err) {
-            console.log('Error in leaving this event')
-        }
+        setLeaveModalOpen(true)
     }
 
     return (
@@ -71,7 +70,7 @@ export default function BottomNavbar({
                                         <button
                                             type="button"
                                             className="w-full text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600"
-                                            onClick={handleLeave}
+                                            onClick={(e) => handleLeave(e)}
                                         >
                                             Leave
                                         </button>
@@ -99,6 +98,14 @@ export default function BottomNavbar({
                     </div>
                 </div>
             </div>
+
+            {leaveModalOpen && (
+                <LeaveEventModal 
+                    setLeaveModalOpen={setLeaveModalOpen}
+                    currentEvent={currentEvent}
+                    setFetchTime={setFetchTime}
+                />
+            )}
         </div>
     )
 }
