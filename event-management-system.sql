@@ -207,6 +207,9 @@ ALTER TABLE `event`
 
 ALTER TABLE `rsvp`
   ADD PRIMARY KEY (`rsvp_id`);
+
+ALTER TABLE `notification`
+  ADD PRIMARY KEY (`notification_id`);
 --
 -- AUTO_INCREMENT for dumped tables
 --
@@ -224,6 +227,10 @@ COMMIT;
 
 ALTER TABLE `rsvp`
   MODIFY `rsvp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+COMMIT;
+
+ALTER TABLE `notification`
+  MODIFY `notification_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

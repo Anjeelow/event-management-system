@@ -1,8 +1,26 @@
+'use client'
+
+import { useEffect, useState } from "react";
+import { Notification } from "../../../server/lib/definitions";
 import { notifications, events } from "../../../server/placeholder-data";
+import axios from "axios";
 
 export default function Notifications() {
 
-    
+    const [notifications, setNotifications] = useState<Notification[]>()
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const notificationsResponse = await axios.get('http://localhost:8080/api/notifications')
+                setNotifications(notificationsResponse.data.notifications)
+            } catch (error) {
+                console.error('Error fetching notifications', error)
+            }
+        }
+
+        fetchData()
+    }, [])
 
     return (
         <div className="flex bg-gray-100 justify-center min-h-screen">

@@ -33,7 +33,7 @@ export default function EventDetails() {
         setUsers(usersResponse.data.users)
         setRsvps(rsvpsResponse.data.rsvps)
       } catch (error) {
-        console.error('Error fetching data', error)
+        console.log('Error fetching data', error)
       } finally {
         setFetchTime(false)
       }

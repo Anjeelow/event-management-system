@@ -23,7 +23,7 @@ export default function BrowseEvents() {
                 setUsers(usersResponse.data.users)
 
             } catch (error) {
-                console.error('Error fetching data', error)
+                console.log('Error fetching data', error)
             }
         }
 
