@@ -45,7 +45,7 @@ export default function BottomNavbar({
         <div className="border bg-white flex justify-center fixed bottom-0 w-full z-40">
             <div
                 className="flex flex-col px-5 gap-5 w-full justify-center"
-                style={{ maxWidth: '64rem', height: '60px' }}
+                style={{ maxWidth: '76rem', height: '60px' }}
             >
                 <div className="grid gap-5 md:grid-cols-[3fr_2fr] xl:grid-cols-[4fr_2fr] h-full">
                     <div className="hidden md:block"></div>
