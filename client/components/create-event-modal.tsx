@@ -45,6 +45,11 @@ export default function CreateModal({
     const handleCreate = async (e: React.FormEvent) => {
         e.preventDefault()
 
+        if (!title || !description || start === null || end === null || !address || !maxAttendees) {
+            setError('All fields are required')
+            return
+        }
+
         try {
             if ((maxAttendees ?? 0) < 1) {
                 setError('Must have attendees for your event')
@@ -56,6 +61,8 @@ export default function CreateModal({
             setFetchTime(true)
             setSuccess('Successfully created an event')
             console.log('success')
+            setError('')
+            setCreateModalOpen(false)
         } catch (error: any) {
             setError(
                 error.response?.data?.message || 'An unexpected error occurred. Please try again'
@@ -78,6 +85,7 @@ export default function CreateModal({
                             value={title}
                             placeholder="Title"
                             className="w-full mb-3 p-2 border rounded"
+                            required
                             onChange={(e) => setTitle(e.target.value)}
                         />
                     </div>
@@ -89,6 +97,7 @@ export default function CreateModal({
                             placeholder="Description"
                             className="w-full mb-3 p-2 border rounded"
                             style={{maxHeight: "150px"}}
+                            required
                             onChange={(e) => setDescription(e.target.value)}
                         />
                     </div>
@@ -114,6 +123,7 @@ export default function CreateModal({
                             value={address}
                             placeholder="Address"
                             className="w-full mb-3 p-2 border rounded"
+                            required
                             onChange={(e) => setAddress(e.target.value)}
                         />
                     </div>
@@ -126,6 +136,7 @@ export default function CreateModal({
                             min="1"
                             placeholder="1"
                             className="w-full mb-3 p-2 border rounded placeholder-gray-400"
+                            required
                             onChange={(e) => handleZero(e)}
                         />
                     </div>
