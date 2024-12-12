@@ -45,7 +45,6 @@ export default function EventDetails() {
   const event = events?.find(
     (event) => event.event_id === Number(params.event_id)
   );
-  const currentEvent = event?.event_id
   const organizer = users?.find((user) => user.user_id === event?.organizer);
   const eventRSVPs = rsvps?.filter((rsvp) => rsvp.event_id === event?.event_id);
   const attendees = (eventRSVPs || [])
@@ -116,7 +115,7 @@ export default function EventDetails() {
         <BottomNavbar 
           organizer={organizer} 
           isAttending={isAttending}
-          currentEvent={currentEvent}
+          currentEvent={event}
           setFetchTime={setFetchTime}
         />
       </div>
