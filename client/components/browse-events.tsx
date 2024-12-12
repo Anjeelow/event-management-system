@@ -34,7 +34,7 @@ export default function BrowseEvents() {
                         events.map((event) => {
                             const organizer = events.find((user) => user.organizer === event.organizer);
                             const host = users.find((user) => organizer?.organizer === user.user_id);
-    console.log(organizer)
+                            
                             return (
                                 <Link
                                     href={`/eventdetails/${event.event_id}`}
