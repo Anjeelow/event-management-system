@@ -7,6 +7,7 @@ import { AuthContext } from "../authContext"
 import { MdHeight } from "react-icons/md"
 import Image from "next/image"
 import { IoCreateOutline } from "react-icons/io5"
+import LoadingSpinner from "../ui/loadingSpinner"
 
 export default function Profile() {
 
@@ -16,6 +17,7 @@ export default function Profile() {
     const [user, setUser] = useState<any>(null)
     const [error, setError] = useState<string | null>(null)
     const [loggedInUser, setLoggedInUser] = useState<string | null>(null)
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         if (userId) {
@@ -46,11 +48,17 @@ export default function Profile() {
             }
         } catch (error) {
             setError('Error fetching user data')
+        } finally {
+            setLoading(false)
         }
     }
 
     const handleResetPassword = () => {
         router.push('/reset-password')
+    }
+
+    if (loading) {
+        return <LoadingSpinner />
     }
 
     if (error) {

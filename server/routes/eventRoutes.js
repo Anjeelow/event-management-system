@@ -12,6 +12,23 @@ router.get("/api/events", async (req, res) => {
   }
 });
 
+router.post("/api/joined-events", async (req, res) => {
+  try {
+    const { userId } = req.body
+    console.log(userId)
+    const joinedEvents = await query(`
+      SELECT e.* 
+      FROM Event e
+      JOIN Rsvp r ON e.event_id = r.event_id
+      WHERE r.user_id = ?
+    `, [userId]);
+    res.status(200).json({ joinedEvents: joinedEvents })
+    
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
+})
+
 router.get("/api/rsvps", async (req, res) => {
   try {
     const data = await query("SELECT * FROM rsvp");
@@ -62,12 +79,12 @@ router.post("/api/events/edit", async (req, res) => {
   try {
     const { eventId, title, description, start, end, address, maxAttendees } = req.body;
     const sql = `
-    UPDATE Event
-    SET title = ?, description = ?, start_time = ?, end_time = ?, address = ?, max_attendees = ?
-    WHERE event_id = ?
+      UPDATE Event
+      SET title = ?, description = ?, start_time = ?, end_time = ?, address = ?, max_attendees = ?, closed_at = ?
+      WHERE event_id = ?
     `;
 
-    const data = await query(sql, [title, description, start, end, address, maxAttendees, eventId]);
+    const data = await query(sql, [title, description, start, end, address, maxAttendees, end, eventId]);
     res.status(200).json({ message: "Event updated successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });
