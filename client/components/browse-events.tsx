@@ -4,6 +4,7 @@ import Link from "next/link";
 
 import { useEffect, useState } from "react"
 import { User, Event } from '../../server/lib/definitions'
+import axios from "axios";
 
 export default function BrowseEvents() {
 
@@ -11,20 +12,31 @@ export default function BrowseEvents() {
     const [users, setUsers] = useState<User[]>([])
 
     useEffect(() => {
-        fetch('http://localhost:8080/api/events')
-            .then(response => response.json())
-            .then(data => setEvents(data.events))
-            .catch(error => console.error('Error fetching events:', error))
+        const fetchData = async () => {
+            try {     
+                const [eventsResponse, usersResponse] = await Promise.all([
+                    axios.get('http://localhost:8080/api/events'),
+                    axios.get('http://localhost:8080/api/users'),
+                ])
 
-        fetch('http://localhost:8080/api/users')
-            .then(response => response.json())
-            .then(data => setUsers(data.users))
-            .catch(error => console.error('Error fetching users:', error))
+                const currentDate = new Date()
+
+                const activeEvents = eventsResponse.data.events.filter((event: any) => new Date(event.closed_at) >= currentDate)
+
+                setEvents(activeEvents)
+                setUsers(usersResponse.data.users)
+
+            } catch (error) {
+                console.log('Error fetching data', error)
+            }
+        }
+
+        fetchData()
     }, [])
 
     return (
-        <div className="flex bg-gray-100 justify-center min-h-screen">
-            <div className="px-5 py-5 w-full" style={{ maxWidth: '64rem' }}>
+        <div className="flex bg-gray-100 justify-center">
+            <div className="px-5 py-5 w-full" style={{ maxWidth: '76rem', height: 'auto' }}>
                 <div className="flex pb-4 space-x-5">
                     <h1>Browsing Events in your area</h1>
                     <h1 className="text-gray-600">San Francisco, CA</h1>
@@ -32,12 +44,12 @@ export default function BrowseEvents() {
                 <div className="grid gap-5 grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
                     {Array.isArray(events) && events.length > 0 ? (
                         events.map((event) => {
-                            const organizer = events.find((user) => user.event_id === event.organizer);
+                            const organizer = events.find((user) => user.organizer === event.organizer);
                             const host = users.find((user) => organizer?.organizer === user.user_id);
-    
+                            
                             return (
                                 <Link
-                                    href={`/eventdetails/${event.event_id}`}
+                                    href={`/event-details/${event.event_id}`}
                                     key={event.event_id}
                                     className="bg-white border shadow-lg pb-5 overflow-hidden"
                                 >

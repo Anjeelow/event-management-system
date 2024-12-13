@@ -48,3 +48,14 @@ export type Category = {
   category_name: string;
   description: string;
 };
+
+export type Notification = {
+  notification_id: number;
+  user_id: number | null;
+  event_id: number;
+  notification_type: string | null;
+  message: string;
+  status: string;
+  sent_at: Date;
+  read_at: Date;
+}
