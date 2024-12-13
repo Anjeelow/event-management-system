@@ -4,14 +4,25 @@ import { useContext, useState } from 'react';
 import Link from 'next/link';
 import LoginModal from '../../components/login-modal'; 
 import SignUpModal from '../../components/signup-modal';  
-import { IoSearch, IoMenu, IoCalendarClearOutline, IoNotificationsOutline, IoPersonOutline, IoClose } from 'react-icons/io5';
+import { IoSearch, IoMenu, IoCalendarClearOutline, IoNotificationsOutline, IoPersonOutline, 
+        IoClose, IoPersonCircleOutline, IoAdd, IoLogOutOutline, IoSettingsOutline, IoPersonCircle,
+        IoPersonAddOutline, IoFileTray}
+        from 'react-icons/io5';
 import { AuthContext } from '../authContext';
+import Image from 'next/image';
 
 export default function Navbar() {
     const { isAuthenticated, handleLogout } = useContext(AuthContext);
     const [isSignUpModalOpen, setSignUpModalOpen] = useState(false);
     const [isLoginModalOpen, setLoginModalOpen] = useState(false);
     const [isMenuOpen, setMenuOpen] = useState(false);
+    const [isProfileDropdownOpen, setProfileDropdownOpen] = useState(false);
+
+    // Function to close all dropdowns
+    const closeAllDropdowns = () => {
+        setMenuOpen(false);
+        setProfileDropdownOpen(false);
+    };
 
     return (
         <div className="flex justify-center shadow-md relative z-50">
@@ -19,67 +30,6 @@ export default function Navbar() {
                 className="w-full px-5 py-4 bg-white shadow-b-md"
                 style={{ maxWidth: '76rem', height: 'auto' }}
             >
-                {/* Mobile dropdown */}
-                {isMenuOpen && (
-                <div
-                    className="z-10 absolute w-1/3 top-20 right-0 bg-white p-4 flex flex-col items-start gap-5 sm:hidden shadow-lg"
-                    style={{ 
-                        overflow: 'hidden', 
-                        zIndex: 10, 
-                        position: 'absolute' 
-                    }}
-                >              
-                    <Link className="flex gap-2 items-center text-sm font-medium" href="/events" onClick={() => setMenuOpen(false)}>
-                        <IoCalendarClearOutline/>
-                        Events
-                    </Link>
-                    {!isAuthenticated ? (
-                        <>
-                            <button
-                                onClick={() => {
-                                    setLoginModalOpen(true);
-                                    setMenuOpen(false);
-                                }}
-                                className="flex gap-2 items-center text-sm font-medium"
-                            >
-                                Log In
-                            </button>
-
-                            <button
-                                onClick={() => {
-                                    setSignUpModalOpen(true);
-                                    setMenuOpen(false);
-                                }}
-                                type="button"
-                                className="flex gap-2 items-center text-sm font-medium"
-                            >
-                                Sign Up
-                            </button>
-                        </>
-                    ) : (
-                        <>
-                            <Link className="flex gap-2 items-center text-sm font-medium" href="/notifications" onClick={() => setMenuOpen(false)}>
-                                <IoNotificationsOutline/>
-                                Notifications
-                            </Link>
-                            <Link className="flex gap-2 items-center text-sm font-medium" href="/profile" onClick={() => setMenuOpen(false)}>
-                                <IoPersonOutline/>
-                                Profile
-                            </Link>
-                            <button
-                                onClick={() => {
-                                    handleLogout();
-                                    setMenuOpen(false);
-                                }}
-                                type="button"
-                                className="flex gap-2 items-center text-sm font-medium text-white bg-blue-700 hover:bg-blue-800 focus:ring-blue-300 rounded-lg px-4 py-1.5 dark:bg-blue-600 dark:hover:bg-blue-700"
-                            >
-                                Sign Out
-                            </button>
-                        </>
-                    )}
-                </div>
-            )}
                 <div className="relative grid grid-cols-[1fr_0fr] sm:grid-cols-[4fr_5fr] space-x-2 items-center">
                     <div className='flex flex-row gap-5 items-center z-50'>
                         <h1 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-300">
@@ -101,51 +51,215 @@ export default function Navbar() {
                         </div>
                     </div>
                     {/* Full-size navigation */}
-                    <div className="hidden w-full sm:flex gap-6 text-black items-center sm:justify-end pr-2">
-                        <Link className="text-sm font-medium" href="/events">Events</Link>
+                    <div className="hidden w-full sm:flex gap-6 text-gray-700 items-center sm:justify-end pr-2 relative">
+                        <Link className="text-sm font-medium flex flex-col items-center" href="/events">
+                            <IoCalendarClearOutline size={20}/>
+                            Browse Events
+                        </Link>
                         {!isAuthenticated ? (
                             <>
                                 <button
                                     onClick={() => setLoginModalOpen(true)}
-                                    className="text-sm font-medium"
+                                    className="text-sm font-medium flex flex-col items-center"
                                 >
+                                    <IoPersonOutline size={18}/>
                                     Log In
                                 </button>
 
                                 <button
                                     onClick={() => setSignUpModalOpen(true)}
                                     type="button"
-                                    className="text-sm font-medium text-white bg-blue-700 hover:bg-blue-800 focus:ring-blue-300 rounded-lg px-4 py-1.5 dark:bg-blue-600 dark:hover:bg-blue-700"
+                                    className="text-sm font-medium flex flex-col items-center"
                                 >
+                                    <IoPersonAddOutline size={18}/>
                                     Sign Up
                                 </button>
                             </>
                         ) : (
                             <>
-                                <Link className="text-sm font-medium" href="/notifications">
+                                <Link className="text-sm font-medium flex flex-col items-center" href="/events">
+                                    <IoAdd size={18}/>
+                                    Create Event
+                                </Link>
+                                <Link className="text-sm font-medium flex flex-col items-center" href="/notifications">
+                                    <IoNotificationsOutline size={18}/>
                                     Notifications
                                 </Link>
-                                <Link className="text-sm font-medium" href={`/profile`}>Profile</Link>
-                                <button
-                                    onClick={handleLogout}
-                                    type="button"
-                                    className="text-sm font-medium text-white bg-blue-700 hover:bg-blue-800 focus:ring-blue-300 rounded-lg px-4 py-1.5 dark:bg-blue-600 dark:hover:bg-blue-700"
-                                >
-                                    Sign Out
-                                </button>
+                                <div className="relative">
+
+                                    {/*Account Image???????????? */}
+                                    <button 
+                                        onClick={() => setProfileDropdownOpen(!isProfileDropdownOpen)}
+                                        className="text-sm font-medium flex flex-col items-center"
+                                    >
+                                        <IoPersonOutline size={18}/>
+                                        <p>Profile</p>
+                                    </button>
+                                    {/**------------------------- */}
+
+                                    {isProfileDropdownOpen && (
+                                        <div className="absolute right-0 top-full mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+
+                                            <div className='border-b'>
+                                                <Link 
+                                                    href="/profile" 
+                                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                                                    onClick={() => setProfileDropdownOpen(false)}
+                                                >
+                                                    <IoFileTray size={18}/>
+                                                    Your Events
+                                                </Link>
+                                            </div>
+
+                                            <div>
+                                                <Link 
+                                                    href="/profile" 
+                                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                                                    onClick={() => setProfileDropdownOpen(false)}
+                                                >
+                                                    <IoPersonCircleOutline size={18}/>
+                                                    View Profile
+                                                </Link>
+                                                <Link 
+                                                    href="/profile" 
+                                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                                                    onClick={() => setProfileDropdownOpen(false)}
+                                                >
+                                                    <IoSettingsOutline size={18}/>
+                                                    Account Settings
+                                                </Link>
+                                                <button
+                                                    onClick={() => {
+                                                        handleLogout();
+                                                        setProfileDropdownOpen(false);
+                                                    }}
+                                                    className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                                                >
+                                                    <IoLogOutOutline size={18}/>
+                                                    Sign Out
+                                                </button>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
                             </>
                         )}
                     </div>
 
                     {/* Mobile menu icon */}
-                    <button
-                        className="sm:hidden text-black flex align-center justify-center z-50"
-                        onClick={() => {
-                            setMenuOpen(!isMenuOpen);
-                        }}
-                    >
-                        {isMenuOpen ?(<IoClose size={24} />):(<IoMenu size={24} />)}
-                    </button>
+                    <div className="relative sm:hidden">
+                        <button
+                            className="text-gray-700 flex align-center justify-center z-50"
+                            onClick={() => {
+                                setMenuOpen(!isMenuOpen);
+                                // Close profile dropdown if menu is opened
+                                setProfileDropdownOpen(false);
+                            }}
+                        >
+                            {isMenuOpen ? (<IoClose size={24} />) : (<IoMenu size={24} />)}
+                        </button>
+
+                        {/* Mobile dropdown */}
+                        {isMenuOpen && (
+                            <div className="absolute right-0 top-full mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+                                <Link 
+                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2" 
+                                    href="/events" 
+                                    onClick={closeAllDropdowns}
+                                >
+                                    <IoCalendarClearOutline size={18}/>
+                                    Browse Events
+                                </Link>
+                                {!isAuthenticated ? (
+                                    <>
+                                        <div className='border-b'>
+                                            <button
+                                                onClick={() => {
+                                                    closeAllDropdowns();
+                                                    setLoginModalOpen(true);
+                                                }}
+                                                className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                                            >
+                                                <IoPersonOutline size={18}/>
+                                                Log In
+                                            </button>
+                                        </div>
+
+                                        <button
+                                            onClick={() => {
+                                                closeAllDropdowns();
+                                                setSignUpModalOpen(true);
+                                            }}
+                                            type="button"
+                                            className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                                        >
+                                            <IoPersonAddOutline size={18}/>
+                                            Sign Up
+                                        </button>
+                                    </>
+                                ) : (
+                                    <>
+                                        <div className='border-b'>
+                                            <Link 
+                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2" 
+                                                href="/events" 
+                                                onClick={closeAllDropdowns}
+                                            >
+                                                <IoAdd size={18}/>
+                                                Create Event
+                                            </Link>
+                                            <Link 
+                                                href="/profile" 
+                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                                                onClick={() => setProfileDropdownOpen(false)}
+                                            >
+                                                <IoFileTray size={18}/>
+                                                Your Events
+                                            </Link>
+                                        </div>
+                                        <div className='border-b'>
+                                            <Link 
+                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2" 
+                                                href="/notifications" 
+                                                onClick={closeAllDropdowns}
+                                            >
+                                                <IoNotificationsOutline size={18}/>
+                                                Notifications
+                                            </Link>
+                                        </div>
+                                        <div>
+                                            <Link 
+                                                href="/profile" 
+                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                                                onClick={() => setProfileDropdownOpen(false)}
+                                            >
+                                                <IoPersonCircleOutline size={18}/>
+                                                View Profile
+                                            </Link>
+                                            <Link 
+                                                href="/profile" 
+                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                                                onClick={() => setProfileDropdownOpen(false)}
+                                            >
+                                                <IoSettingsOutline size={18}/>
+                                                Account Settings
+                                            </Link>
+                                            <button
+                                                onClick={() => {
+                                                    handleLogout();
+                                                    setProfileDropdownOpen(false);
+                                                }}
+                                                className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                                            >
+                                                <IoLogOutOutline size={18}/>
+                                                Sign Out
+                                            </button>
+                                        </div>
+                                    </>
+                                )}
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
 
