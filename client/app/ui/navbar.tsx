@@ -14,7 +14,7 @@ export default function Navbar() {
     const [isMenuOpen, setMenuOpen] = useState(false);
 
     return (
-        <div className="flex justify-center shadow-md relative z-50">
+        <div className="flex justify-center shadow-md relative z-10">
             <div
                 className="w-full px-5 py-4 bg-white shadow-b-md"
                 style={{ maxWidth: '76rem', height: 'auto' }}
@@ -82,9 +82,9 @@ export default function Navbar() {
             )}
                 <div className="relative grid grid-cols-[1fr_0fr] sm:grid-cols-[4fr_5fr] space-x-2 items-center">
                     <div className='flex flex-row gap-5 items-center z-50'>
-                        <h1 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-300">
+                        <Link href='/' className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-300">
                             LOGO
-                        </h1>
+                        </Link>
                       
                         <div className="relative w-full">
                             <input

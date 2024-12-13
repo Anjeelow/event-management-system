@@ -40,7 +40,12 @@ export default function MyEvents() {
           axios.get('http://localhost:8080/api/users'),
         ])
 
-        setEvents(eventsResponse.data.events)
+        const currentDate = new Date()
+
+        const activeEvents = eventsResponse.data.events.filter((event: any) => new Date(event.closed_at) >= currentDate)
+        console.log(eventsResponse.data.events)
+
+        setEvents(activeEvents)
         setUsers(usersResponse.data.users)
       } catch (error) {
         console.error('Error fetching data', error)
