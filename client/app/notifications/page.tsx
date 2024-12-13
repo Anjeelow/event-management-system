@@ -74,7 +74,7 @@ export default function Notifications() {
                                                 <h2 className="font-regular">{event?.title}</h2>
                                                 <p className="font-light">{notification.message}</p>
                                             </div>
-                                            <div className="md:justify-self-end pr-2">
+                                            <div className="md:justify-self-end">
                                                 <p className="text-sm text-gray-500">
                                                     {new Date(notification.sent_at).toLocaleString("en-PH", {
                                                         month: "short",

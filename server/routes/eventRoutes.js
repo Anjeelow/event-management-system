@@ -12,6 +12,23 @@ router.get("/api/events", async (req, res) => {
   }
 });
 
+router.post("/api/joined-events", async (req, res) => {
+  try {
+    const { userId } = req.body
+    console.log(userId)
+    const joinedEvents = await query(`
+      SELECT e.* 
+      FROM Event e
+      JOIN Rsvp r ON e.event_id = r.event_id
+      WHERE r.user_id = ?
+    `, [userId]);
+    res.status(200).json({ joinedEvents: joinedEvents })
+    
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
+})
+
 router.get("/api/rsvps", async (req, res) => {
   try {
     const data = await query("SELECT * FROM rsvp");
