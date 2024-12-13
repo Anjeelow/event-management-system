@@ -40,7 +40,7 @@ export default function Navbar() {
                             <input
                                 type="text"
                                 placeholder="Search"
-                                className="text-sm font-medium w-full px-4 py-2 pr-10 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                className="text-sm w-full px-4 py-2 pr-10 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                             />
                             <button
                                 onClick={() => {}}
@@ -52,7 +52,7 @@ export default function Navbar() {
                     </div>
                     {/* Full-size navigation */}
                     <div className="hidden w-full sm:flex gap-6 text-gray-700 items-center sm:justify-end pr-2 relative">
-                        <Link className="text-sm font-medium flex flex-col items-center" href="/events">
+                        <Link className="text-sm flex flex-col items-center" href="/events">
                             <IoCalendarClearOutline size={20}/>
                             Browse Events
                         </Link>
@@ -60,7 +60,7 @@ export default function Navbar() {
                             <>
                                 <button
                                     onClick={() => setLoginModalOpen(true)}
-                                    className="text-sm font-medium flex flex-col items-center"
+                                    className="text-sm flex flex-col items-center"
                                 >
                                     <IoPersonOutline size={18}/>
                                     Log In
@@ -69,7 +69,7 @@ export default function Navbar() {
                                 <button
                                     onClick={() => setSignUpModalOpen(true)}
                                     type="button"
-                                    className="text-sm font-medium flex flex-col items-center"
+                                    className="text-sm flex flex-col items-center"
                                 >
                                     <IoPersonAddOutline size={18}/>
                                     Sign Up
@@ -78,14 +78,14 @@ export default function Navbar() {
                         ) : (
                             <>
                                 <Link 
-                                    className="text-sm font-medium flex flex-col items-center" 
+                                    className="text-sm flex flex-col items-center" 
                                     href="/create-event"
                                 >
                                     <IoAdd size={18}/>
                                     Create Event
                                 </Link>
                                 <Link 
-                                    className="text-sm font-medium flex flex-col items-center" 
+                                    className="text-sm flex flex-col items-center" 
                                     href="/notifications"
                                     >
                                     <IoNotificationsOutline size={18}/>
@@ -96,7 +96,7 @@ export default function Navbar() {
                                     {/*Account Image???????????? */}
                                     <button 
                                         onClick={() => setProfileDropdownOpen(!isProfileDropdownOpen)}
-                                        className="text-sm font-medium flex flex-col items-center"
+                                        className="text-sm flex flex-col items-center"
                                     >
                                         <IoPersonOutline size={18}/>
                                         <p>Profile</p>
