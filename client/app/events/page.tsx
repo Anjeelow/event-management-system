@@ -49,7 +49,11 @@ export default function BrowseEvents() {
           axios.get('http://localhost:8080/api/category'),
         ])
 
-        setEvents(eventsResponse.data.events)
+        const currentDate = new Date()
+
+        const activeEvents = eventsResponse.data.events.filter((event: any) => new Date(event.closed_at) >= currentDate)
+
+        setEvents(activeEvents)
         setUsers(usersResponse.data.users)
         setCategories(categoriesResponse.data.category)
       } catch (error) {

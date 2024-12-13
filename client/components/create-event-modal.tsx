@@ -19,8 +19,10 @@ export default function CreateModal({
     const { userId } = useContext(AuthContext)
     const [title, setTitle] = useState<string>('')
     const [description, setDescription] = useState<string>('')
-    const [start, setStart] = useState<Date | null>(null)
-    const [end, setEnd] = useState<Date | null>(null)
+    const msIn30Min = 30 * 60 * 1000;
+    const roundedTime = new Date(Math.ceil(new Date().getTime() / msIn30Min) * msIn30Min);
+    const [start, setStart] = useState<Date | null>(roundedTime)
+    const [end, setEnd] = useState<Date | null>(roundedTime)
     const [address, setAddress] = useState<string>('')
     const [maxAttendees, setMaxAttendees] = useState<number>(1)
     const [attendeeCount, setAttendeeCount] = useState<number>(0)
