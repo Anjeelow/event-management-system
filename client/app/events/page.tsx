@@ -21,7 +21,6 @@ export default function BrowseEvents() {
   const [mounted, setMounted] = useState(false);
 
   const [users, setUsers] = useState<User[]>([]);
-  const [events, setEvents] = useState<Event[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
 
   const { isAuthenticated, userId } = useContext(AuthContext);
@@ -73,8 +72,10 @@ export default function BrowseEvents() {
   // };
   // todo: send an express query once search button is pressed
 
-  const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
+  const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setLocation(e.target.value);
     setFilters({ ...filters, location: e.target.value });
+  };
 
   const handleDateChange = (type: "month" | "day", value: string) =>
     setDate((prev) => ({ ...prev, [type]: value }));
@@ -99,74 +100,78 @@ export default function BrowseEvents() {
   return (
     <div className="flex bg-gray-100 justify-center min-h-screen">
       <div className="px-5 py-5 space-y-2 w-full" style={{ maxWidth: "76rem" }}>
-        <div className="border bg-white shadow-lg px-5 py-4 rounded-lg space-y-3">
-          <div className="">
-            {isAuthenticated && (
-              <h3 className="text-lg font-semibold">Browse Events</h3>
-            )}
-          </div>
-          <div className="bg-white rounded-t-lg">
-            <div className="grid gap-5">
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                  <select
-                    value={location}
-                    onChange={handleLocationChange}
-                    className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+        <div className="flex mb-4">
+          {isAuthenticated && (
+            <button
+              onClick={() => handleMyEventsClick()}
+              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700"
+            >
+              My Events
+            </button>
+          )}
+        </div>
+        <div className="p-5 bg-white rounded-t-lg">
+          <div className="grid gap-5">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+              <select
+                value={location}
+                onChange={handleLocationChange}
+                className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              >
+                <option> </option>
+                <option>San Francisco, CA</option>
+                <option>New York, NY</option>
+                <option>Los Angeles, CA</option>
+                <option>Chicago, IL</option>
+              </select>
+              <select
+                value={date.month}
+                onChange={(e) => handleDateChange("month", e.target.value)}
+                className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              >
+                <option>Month</option>
+                {Array.from({ length: 12 }, (_, i) => i + 1).map((month) => (
+                  <option key={month} value={month.toString()}>
+                    {month}
+                  </option>
+                ))}
+              </select>
+              <select
+                value={date.day}
+                onChange={(e) => handleDateChange("day", e.target.value)}
+                className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              >
+                <option>Day</option>
+                {Array.from({ length: 31 }, (_, i) => i + 1).map((month) => (
+                  <option key={month} value={month.toString()}>
+                    {month}
+                  </option>
+                ))}
+              </select>
+              <select
+                value={category}
+                onChange={handleCategoryChange}
+                className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              >
+                <option value="">Category</option>
+                {categories.map((category) => (
+                  <option
+                    key={category.category_id}
+                    value={category.category_name}
                   >
-                    <option> </option>
-                    <option>San Francisco, CA</option>
-                    <option>New York, NY</option>
-                    <option>Los Angeles, CA</option>
-                    <option>Chicago, IL</option>
-                  </select>
-                  <select
-                    value={date.month}
-                    onChange={(e) => handleDateChange("month", e.target.value)}
-                    className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  >
-                    <option>Month</option>
-                    {Array.from({ length: 12 }, (_, i) => i + 1).map((month) => (
-                      <option key={month} value={month.toString()}>
-                        {month}
-                      </option>
-                    ))}
-                  </select>
-                  <select
-                    value={date.day}
-                    onChange={(e) => handleDateChange("day", e.target.value)}
-                    className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  >
-                    <option>Day</option>
-                    {Array.from({ length: 31 }, (_, i) => i + 1).map((month) => (
-                      <option key={month} value={month.toString()}>
-                        {month}
-                      </option>
-                    ))}
-                  </select>
-                  <select
-                    value={category}
-                    onChange={handleCategoryChange}
-                    className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  >
-                    <option value="">Category</option>
-                    {categories.map((category) => (
-                      <option
-                        key={category.category_id}
-                        value={category.category_name}
-                      >
-                        {category.category_name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                    {category.category_name}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
-          <div className="flex flex-col bg-white pb-5 gap-2 justify-content align-center">
-            {Array.isArray(events) && events.length > 0 ? (
-              events.map((event) => {
-                const host = users?.find(
-                  (user) => user.user_id === event?.organizer
-                );
+        </div>
+        <div className="flex flex-col bg-white p-5 gap-5 justify-content align-center">
+          {Array.isArray(filteredEvents) && filteredEvents.length > 0 ? (
+            filteredEvents.map((event) => {
+              const host = users?.find(
+                (user) => user.user_id === event?.organizer
+              );
 
               return (
                 <Link
