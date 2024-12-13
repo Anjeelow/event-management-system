@@ -5,26 +5,44 @@ const router = express.Router();
 
 router.get("/api/events/search", async (req, res) => {
   const params = req.query;
-  var sql = "SELECT * FROM EVENT WHERE ";
-  if (req.query != {}) {
-    sql = !params.title
-      ? sql.concat("1 AND ")
-      : sql.concat("title LIKE '".concat(params.title.concat("%' AND ")));
-    sql = !params.location
-      ? sql.concat("1 AND ")
-      : sql.concat("address LIKE '".concat(params.location.concat("%' AND ")));
-    sql = !params.category
-      ? sql.concat("1 AND ")
-      : sql.concat("category_id = ".concat(params.category.concat(" AND ")));
-    sql = !params.userID
-      ? sql.concat("1 AND ")
-      : sql.concat("organizer = ".concat(params.userID.concat(" AND ")));
+  console.log("Query Params:", params);
+
+  let sql = "SELECT * FROM EVENT WHERE 1=1";
+  const values = [];
+
+  if (params.title) {
+    sql += " AND title LIKE ?";
+    values.push(`${params.title}%`);
   }
-  sql = sql.concat("1");
+
+  if (params.location) {
+    sql += " AND address LIKE ?";
+    values.push(`${params.location}%`);
+  }
+
+  if (
+    params.categoryID !== undefined &&
+    params.categoryID !== null &&
+    params.categoryID !== ""
+  ) {
+    sql += " AND category_id = ?";
+    values.push(params.categoryID);
+  }
+
+  if (params.userID) {
+    sql += " AND organizer = ?";
+    values.push(params.userID);
+  }
+
+  console.log("Constructed SQL:", sql);
+  console.log("Values:", values);
+
   try {
-    const data = await query(sql);
+    // Pass SQL and parameters to the query function
+    const data = await query(sql, values);
     res.json({ events: data });
   } catch (err) {
+    console.error("Error executing query:", err.message);
     res.status(500).json({ error: err.message });
   }
 });
