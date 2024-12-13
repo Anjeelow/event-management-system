@@ -10,7 +10,7 @@ router.post("/api/rsvp/attend", async (req, res) => {
             INSERT INTO Rsvp (user_id, event_id, rsvp_date)
             VALUES (?, ?, ?)
         `
-        const data = await query(sql, [userId, currentEvent, currentDay])
+        const data = await query(sql, [userId, currentEvent.event_id, currentDay])
         res.status(200).json({ message: 'RSVP added successfully' })
     } catch (err) {
         res.status(500).json({ message: 'Internal server error' })
@@ -23,7 +23,7 @@ router.post("/api/rsvp/leave", async (req, res) => {
         const sql = `
             DELETE FROM Rsvp WHERE event_id = ? AND user_id = ?
         `
-        const data = await query(sql, [currentEvent, userId])
+        const data = await query(sql, [currentEvent.event_id, userId])
         res.status(200).json({ message: 'RSVP removed successfully'})
     } catch (err) {
         res.status(500).json({ message: 'Internal server error' })

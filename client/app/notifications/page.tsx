@@ -2,13 +2,14 @@
 
 import { useContext, useEffect, useState } from "react";
 import { Notification } from "../../../server/lib/definitions";
-import { notifications, events } from "../../../server/placeholder-data";
 import axios from "axios";
 import { AuthContext } from "../authContext";
+import { Event } from "../../../server/lib/definitions";
 
 export default function Notifications() {
 
     const { userId } = useContext(AuthContext)
+    const [events, setEvents] = useState<Event[]>()
     const [notifications, setNotifications] = useState<Notification[]>()
     const filteredNotifications = notifications
         ?.filter((notification) => notification.user_id === userId)
@@ -17,8 +18,14 @@ export default function Notifications() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const notificationsResponse = await axios.get('http://localhost:8080/api/notifications')
+                // const notificationsResponse = await axios.get('http://localhost:8080/api/notifications')
+                const [notificationsResponse, eventsResponse] = await Promise.all([
+                    axios.get('http://localhost:8080/api/notifications'),
+                    axios.get('http://localhost:8080/api/events'),
+                ])
+
                 setNotifications(notificationsResponse.data.notifications)
+                setEvents(eventsResponse.data.events)
             } catch (error) {
                 console.error('Error fetching notifications', error)
             }
@@ -39,7 +46,7 @@ export default function Notifications() {
                         filteredNotifications?.map((notification, index) => {
 
                                 const event = events?.find(
-                                    (event) => event.event_id === notification?.event_id
+                                    (event) => event.event_id === notification.event_id
                                 );
 
                                 const bgClass =

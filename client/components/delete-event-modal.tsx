@@ -23,7 +23,13 @@ export default function DeleteModal({
         e.preventDefault()
 
         try {
-            const response = await axios.post('http://localhost:8080/api/events/delete', { eventId })
+            await Promise.all([
+                axios.post('http://localhost:8080/api/events/delete', { eventId }),
+                axios.post('http://localhost:8080/api/events/notify', {
+                    eventId,
+                    message: 'The event has been deleted.'
+                })
+            ])
             setDeleteModalOpen(false)
             setFetchTime(true)
             console.log('success')
