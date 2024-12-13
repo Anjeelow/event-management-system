@@ -62,9 +62,9 @@ router.post("/api/events/edit", async (req, res) => {
   try {
     const { eventId, title, description, start, end, address, maxAttendees } = req.body;
     const sql = `
-    UPDATE Event
-    SET title = ?, description = ?, start_time = ?, end_time = ?, address = ?, max_attendees = ?
-    WHERE event_id = ?
+      UPDATE Event
+      SET title = ?, description = ?, start_time = ?, end_time = ?, address = ?, max_attendees = ?
+      WHERE event_id = ?
     `;
 
     const data = await query(sql, [title, description, start, end, address, maxAttendees, eventId]);
