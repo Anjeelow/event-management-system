@@ -51,9 +51,9 @@ export type Category = {
 
 export type Notification = {
   notification_id: number;
-  user_id: number;
+  user_id: number | null;
   event_id: number;
-  notification_type: string;
+  notification_type: string | null;
   message: string;
   status: string;
   sent_at: Date;
