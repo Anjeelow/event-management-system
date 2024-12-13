@@ -12,11 +12,14 @@ export default function Notifications() {
     const { userId } = useContext(AuthContext)
     const [events, setEvents] = useState<Event[]>()
     const [notifications, setNotifications] = useState<Notification[]>()
-    const filteredNotifications = notifications
-        ?.filter((notification) => notification.user_id === userId)
-        .reverse()
+    // const filteredNotifications = notifications
+    //     ?.filter((notification) => notification.user_id === userId)
+    //     .reverse()
+    const [filteredNotifications, setFilteredNotifications] = useState<Notification[]>()
     const [loading, setLoading] = useState(true)
-
+    const [nextHourNotifications, setNextHourNotifications] = useState<Notification[]>()
+    const [nextDayNotifications, setNextDayNotifications] = useState<Notification[]>()
+    
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -37,6 +40,64 @@ export default function Notifications() {
 
         fetchData()
     }, [])
+
+    useEffect(() => {
+        if (events) {
+            const currentTime = new Date()
+            const nextHour = new Date(currentTime.getTime() + 60 * 60 * 1000)
+            const nextDay = new Date(currentTime.getTime() + 24 * 60 * 60 * 1000)
+
+            const filteredNotifications = notifications
+                ?.filter((notification) => notification.user_id === userId)
+                .reverse()
+
+            const hourNotifications: Notification[] = []
+            const dayNotifications: Notification[] = []
+
+            events.forEach((event) => {
+                const eventTime = event.start_time ? new Date(event.start_time) : new Date()
+
+                if (eventTime > currentTime && eventTime <= nextHour) {
+                    hourNotifications.push({
+                        notification_id: 0,
+                        user_id: userId,
+                        event_id: event.event_id,
+                        notification_type: null,
+                        message: 'Event is starting in the next hour!',
+                        status: 'unread',
+                        sent_at: currentTime,
+                        read_at: new Date('0000-00-00 00:00:00')
+                    })
+                }
+
+                else if (eventTime > currentTime && eventTime <= nextDay) {
+                    dayNotifications.push({
+                        notification_id: 0,
+                        user_id: userId,
+                        event_id: event.event_id,
+                        notification_type: null,
+                        message: 'Event is starting tomorrow!',
+                        status: 'unread',
+                        sent_at: currentTime,
+                        read_at: new Date('0000-00-00 00:00:00')
+                    });
+                  }
+                });
+          
+                setNextHourNotifications(hourNotifications);
+                setNextDayNotifications(dayNotifications);
+
+                let combinedNotifications = [
+                    ...(filteredNotifications || []),
+                    ...hourNotifications,
+                    ...dayNotifications
+                ]
+    
+                combinedNotifications = combinedNotifications.sort((a, b) => new Date(a.sent_at).getTime() - new Date(b.sent_at).getTime()).reverse()
+
+                setFilteredNotifications(combinedNotifications)
+        }
+    }, [events, userId])
 
     if (loading) {
         return <LoadingSpinner />
