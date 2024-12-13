@@ -121,7 +121,7 @@ export default function MyEvents() {
                         alt="event with many balloons"
                         width={250}
                         height={250}
-                        className="w-full sm:w-[250px] h-full object-cover rounded-lg"
+                        className="w-[200px] h-full object-cover rounded-lg"
                       />
                       <div className="px-2">
                         <p className="text-gray-700 font-light">
