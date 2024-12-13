@@ -47,11 +47,17 @@ export default function EditModal({
             return
         }
         
+        const currentDate = new Date()
         const startDate = new Date(start)
         const endDate = new Date(end)
 
         if (startDate >= endDate) {
             setError('Cannot end an event before it even started')
+            return
+        }
+
+        if (currentDate >= endDate) {
+            setError('Cannot set end date before this time')
             return
         }
 

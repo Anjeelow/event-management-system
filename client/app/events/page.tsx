@@ -7,6 +7,7 @@ import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../authContext";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import LoadingSpinner from "../ui/loadingSpinner";
 
 export default function BrowseEvents() {
   const [location, setLocation] = useState<string>("");
@@ -22,6 +23,7 @@ export default function BrowseEvents() {
   const [events, setEvents] = useState<Event[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [searchTitle, setSearchTitle] = useState<string>("");
+  const [loading, setLoading] = useState(true)
 
   const { isAuthenticated, userId } = useContext(AuthContext);
   const router = useRouter();
@@ -58,6 +60,8 @@ export default function BrowseEvents() {
         setCategories(categoriesResponse.data.category)
       } catch (error) {
         console.log('Error fetching data', error)
+      } finally {
+        setLoading(false)
       }
     }
 
@@ -108,6 +112,10 @@ export default function BrowseEvents() {
 
   if (!mounted) {
     return null;
+  }
+
+  if (loading) {
+    return <LoadingSpinner />
   }
 
   return (

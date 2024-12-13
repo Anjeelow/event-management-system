@@ -80,11 +80,11 @@ router.post("/api/events/edit", async (req, res) => {
     const { eventId, title, description, start, end, address, maxAttendees } = req.body;
     const sql = `
       UPDATE Event
-      SET title = ?, description = ?, start_time = ?, end_time = ?, address = ?, max_attendees = ?
+      SET title = ?, description = ?, start_time = ?, end_time = ?, address = ?, max_attendees = ?, closed_at = ?
       WHERE event_id = ?
     `;
 
-    const data = await query(sql, [title, description, start, end, address, maxAttendees, eventId]);
+    const data = await query(sql, [title, description, start, end, address, maxAttendees, end, eventId]);
     res.status(200).json({ message: "Event updated successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });

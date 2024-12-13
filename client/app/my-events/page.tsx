@@ -14,6 +14,7 @@ import EditModal from "@/components/edit-event-modal";
 import CreateModal from "@/components/create-event-modal";
 import DeleteModal from "@/components/delete-event-modal";
 import axios from "axios";
+import LoadingSpinner from "../ui/loadingSpinner";
 
 export default function MyEvents() {
   const [users, setUsers] = useState<User[]>([]);
@@ -23,6 +24,7 @@ export default function MyEvents() {
   const [createModalOpen, setCreateModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false)
   const [fetchTime, setFetchTime] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   const { isAuthenticated, userId } = useContext(AuthContext);
 
@@ -50,13 +52,20 @@ export default function MyEvents() {
             new Date(event.closed_at) >= currentDate && !joinedEventIds.has(event.event_id))
 
         const combinedEvents = [...joinedEvents, ...activeEvents]
+        const sortedEvents = combinedEvents.sort((a, b) => {
+          const startA = new Date(a.start_time).getTime(); 
+          const startB = new Date(b.start_time).getTime(); 
+          
+          return startA - startB
+        })
 
-        setEvents(combinedEvents)
+        setEvents(sortedEvents)
         setUsers(usersResponse.data.users)
       } catch (error) {
         console.error('Error fetching data', error)
       } finally {
         setFetchTime(false)
+        setLoading(false)
       }
     }
 
@@ -64,7 +73,10 @@ export default function MyEvents() {
   }, [fetchTime]);
 
   const myEvents = events.filter((event) => event.organizer === userId);
-  console.log(myEvents)
+  
+  if (loading) {
+    return <LoadingSpinner />
+  }
 
   return (
     <div className="flex bg-gray-100 justify-center min-h-screen">

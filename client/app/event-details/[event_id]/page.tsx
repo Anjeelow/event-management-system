@@ -11,6 +11,7 @@ import { Organizer } from "../../../components/organizer";
 import { Attendees } from "../../../components/attendees";
 import { AuthContext } from "@/app/authContext";
 import axios from "axios";
+import LoadingSpinner from "@/app/ui/loadingSpinner";
 
 export default function EventDetails() {
   const params = useParams();
@@ -19,6 +20,7 @@ export default function EventDetails() {
   const [users, setUsers] = useState<User[]>([])
   const [rsvps, setRsvps] = useState<Rsvp[]>([])
   const [fetchTime, setFetchTime] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,6 +38,7 @@ export default function EventDetails() {
         console.log('Error fetching data', error)
       } finally {
         setFetchTime(false)
+        setLoading(false)
       }
     }
 
@@ -80,6 +83,10 @@ export default function EventDetails() {
               minute: "numeric",
             }))
       : '';
+
+  if (loading) {
+    return <LoadingSpinner />
+  }
 
   if (!event) return (
     <div className="flex flex-col items-center p-5 gap-5">

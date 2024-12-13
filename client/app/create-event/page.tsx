@@ -14,6 +14,7 @@ import EditModal from "@/components/edit-event-modal";
 import CreateModal from "@/components/create-event-modal";
 import DeleteModal from "@/components/delete-event-modal";
 import axios from "axios";
+import LoadingSpinner from "../ui/loadingSpinner";
 
 export default function MyEvents() {
   const [users, setUsers] = useState<User[]>([]);
@@ -23,6 +24,7 @@ export default function MyEvents() {
   const [createModalOpen, setCreateModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false)
   const [fetchTime, setFetchTime] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   const { isAuthenticated, userId } = useContext(AuthContext);
 
@@ -35,41 +37,32 @@ export default function MyEvents() {
           userID: userId?.toString() || "",
         }).toString()
 
+        
         const [eventsResponse, usersResponse] = await Promise.all([
           axios.get(`http://localhost:8080/api/events/search?${userEventParams}`),
           axios.get('http://localhost:8080/api/users'),
         ])
+        
+        const currentDate = new Date()
+        const activeEvents = eventsResponse.data.events.filter(
+          (event: any) => 
+            new Date(event.closed_at) >= currentDate
+        )
 
-        setEvents(eventsResponse.data.events)
+        setEvents(activeEvents)
         setUsers(usersResponse.data.users)
       } catch (error) {
         console.error('Error fetching data', error)
       } finally {
         setFetchTime(false)
+        setLoading(false)
       }
     }
 
     fetchData()
   }, [fetchTime]);
 
-  // useEffect(() => {
-
-  //     })
-  //     fetch("http://localhost:8080/api/events")
-  //       .then((response) => response.json())
-  //       .then((data) => setEvents(data.events))
-  //       .catch((error) => console.error("Error fetching events:", error));
-  //     fetch("http://localhost:8080/api/users")
-  //       .then((response) => response.json())
-  //       .then((data) => setUsers(data.users))
-  //       .catch((error) => console.error("Error fetching users:", error));
-  // }, []);
-
   const myEvents = events.filter((event) => event.organizer === userId);
-
-  const handleGoBack = () => {
-    router.back();
-  };
 
   const handleCreate = (e: any) => {
     e.preventDefault();
@@ -86,6 +79,10 @@ export default function MyEvents() {
     e.preventDefault();
     setCurrentEvent(event)
     setDeleteModalOpen(true)
+  }
+
+  if (loading) {
+    return <LoadingSpinner />
   }
 
   return (
