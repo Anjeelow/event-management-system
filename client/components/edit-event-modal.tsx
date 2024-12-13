@@ -42,10 +42,30 @@ export default function EditModal({
     const handleEdit = async (e: React.FormEvent) => {
         e.preventDefault()
 
+        if (start === null || end === null) {
+            setError('Start and end times are required')
+            return
+        }
+        
+        const currentDate = new Date()
+        const startDate = new Date(start)
+        const endDate = new Date(end)
+
+        if (startDate >= endDate) {
+            setError('Cannot end an event before it even started')
+            return
+        }
+
+        if (currentDate >= endDate) {
+            setError('Cannot set end date before this time')
+            return
+        }
+
         try {
             // const response = await axios.post('http://localhost:8080/api/events/edit', { eventId, title, description, start, end, address, maxAttendees })
+            console.log(eventId)
             await Promise.all([
-                axios.post('http://localhost:8080/api/events/edit'), {
+                axios.post('http://localhost:8080/api/events/edit', {
                     eventId,
                     title,
                     description,
@@ -53,7 +73,7 @@ export default function EditModal({
                     end,
                     address,
                     maxAttendees
-                },
+                }),
                 axios.post('http://localhost:8080/api/events/notify', {
                     eventId,
                     message: `The event has been edited. Please check the updated details`,

@@ -5,6 +5,7 @@ import { Notification } from "../../../server/lib/definitions";
 import axios from "axios";
 import { AuthContext } from "../authContext";
 import { Event } from "../../../server/lib/definitions";
+import LoadingSpinner from "../ui/loadingSpinner";
 
 export default function Notifications() {
 
@@ -14,6 +15,7 @@ export default function Notifications() {
     const filteredNotifications = notifications
         ?.filter((notification) => notification.user_id === userId)
         .reverse()
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -28,11 +30,17 @@ export default function Notifications() {
                 setEvents(eventsResponse.data.events)
             } catch (error) {
                 console.error('Error fetching notifications', error)
+            } finally {
+                setLoading(false)
             }
         }
 
         fetchData()
     }, [])
+
+    if (loading) {
+        return <LoadingSpinner />
+    }
 
     return (
         <div className="flex bg-gray-100 justify-center min-h-screen">
@@ -74,7 +82,7 @@ export default function Notifications() {
                                                 <h2 className="font-regular">{event?.title}</h2>
                                                 <p className="font-light">{notification.message}</p>
                                             </div>
-                                            <div className="md:justify-self-end pr-2">
+                                            <div className="md:justify-self-end">
                                                 <p className="text-sm text-gray-500">
                                                     {new Date(notification.sent_at).toLocaleString("en-PH", {
                                                         month: "short",
