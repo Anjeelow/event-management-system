@@ -184,7 +184,7 @@ export default function BrowseEvents() {
 
               return (
                 <Link
-                  href={`/eventdetails/${event.event_id}`}
+                  href={`/event-details/${event.event_id}`}
                   key={event.event_id}
                   className="flex flex-col border sm:flex-row gap-2 bg-white p-2 shadow-lg rounded-lg overflow-hidden"
                 >

@@ -45,7 +45,7 @@ export default function BrowseEvents() {
                             
                             return (
                                 <Link
-                                    href={`/eventdetails/${event.event_id}`}
+                                    href={`/event-details/${event.event_id}`}
                                     key={event.event_id}
                                     className="bg-white border shadow-lg pb-5 overflow-hidden"
                                 >

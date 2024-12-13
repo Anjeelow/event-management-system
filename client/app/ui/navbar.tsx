@@ -77,11 +77,17 @@ export default function Navbar() {
                             </>
                         ) : (
                             <>
-                                <Link className="text-sm font-medium flex flex-col items-center" href="/events">
+                                <Link 
+                                    className="text-sm font-medium flex flex-col items-center" 
+                                    href="/create-event"
+                                >
                                     <IoAdd size={18}/>
                                     Create Event
                                 </Link>
-                                <Link className="text-sm font-medium flex flex-col items-center" href="/notifications">
+                                <Link 
+                                    className="text-sm font-medium flex flex-col items-center" 
+                                    href="/notifications"
+                                    >
                                     <IoNotificationsOutline size={18}/>
                                     Notifications
                                 </Link>
@@ -102,12 +108,12 @@ export default function Navbar() {
 
                                             <div className='border-b'>
                                                 <Link 
-                                                    href="/profile" 
+                                                    href="/my-events" 
                                                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
                                                     onClick={() => setProfileDropdownOpen(false)}
                                                 >
                                                     <IoFileTray size={18}/>
-                                                    Your Events
+                                                    My Events
                                                 </Link>
                                             </div>
 
@@ -121,7 +127,7 @@ export default function Navbar() {
                                                     View Profile
                                                 </Link>
                                                 <Link 
-                                                    href="/profile" 
+                                                    href="/account-settings" 
                                                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
                                                     onClick={() => setProfileDropdownOpen(false)}
                                                 >
@@ -173,17 +179,17 @@ export default function Navbar() {
                                 {!isAuthenticated ? (
                                     <>
                                         <div className='border-b'>
-                                            <button
-                                                onClick={() => {
-                                                    closeAllDropdowns();
-                                                    setLoginModalOpen(true);
-                                                }}
-                                                className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
-                                            >
-                                                <IoPersonOutline size={18}/>
-                                                Log In
-                                            </button>
                                         </div>
+                                        <button
+                                            onClick={() => {
+                                                closeAllDropdowns();
+                                                setLoginModalOpen(true);
+                                            }}
+                                            className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                                        >
+                                            <IoPersonOutline size={18}/>
+                                            Log In
+                                        </button>
 
                                         <button
                                             onClick={() => {
@@ -202,19 +208,19 @@ export default function Navbar() {
                                         <div className='border-b'>
                                             <Link 
                                                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2" 
-                                                href="/events" 
+                                                href="/createevent" 
                                                 onClick={closeAllDropdowns}
                                             >
                                                 <IoAdd size={18}/>
                                                 Create Event
                                             </Link>
                                             <Link 
-                                                href="/profile" 
+                                                href="/myevents" 
                                                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
                                                 onClick={() => setProfileDropdownOpen(false)}
                                             >
                                                 <IoFileTray size={18}/>
-                                                Your Events
+                                                My Events
                                             </Link>
                                         </div>
                                         <div className='border-b'>
@@ -237,7 +243,7 @@ export default function Navbar() {
                                                 View Profile
                                             </Link>
                                             <Link 
-                                                href="/profile" 
+                                                href="/account-settings" 
                                                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
                                                 onClick={() => setProfileDropdownOpen(false)}
                                             >
