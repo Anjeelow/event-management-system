@@ -87,49 +87,66 @@ export default function Profile() {
 
                     {/*PROFILE*/}
                     <div className="w-full flex flex-col py-5 px-5 gap-8">
-                        <h1 className="font-semibold text-lg">Profile</h1>
+                        <div className="border-b">
+                            <h1 className="font-semibold text-lg border-b pb-4">Profile</h1>
+                        </div>
                         {/*PROFILE PIC*/}
-                        <div className="flex gap-5 items-center">
-                            <div className="w-14 h-14 rounded-full overflow-hidden">
+                        <div className="flex items-center space-x-4">
+                            <div className="w-16 h-16 rounded-full overflow-hidden">
                                 <Image
                                     src="/main-events.png"
-                                    alt="event with many balloons"
-                                    width={250}
-                                    height={250}
+                                    alt="Profile"
+                                    width={80}
+                                    height={80}
                                     className="w-full h-full object-cover"
                                 />
                             </div>
                             <div>
-                                <h1 className="font-medium">{user.first_name} {user.last_name}</h1>
-                                <h1 className="text-gray-600 font-light">{user.email}</h1>
+                                <h2 className="text-xl font-semibold">{user.first_name} {user.last_name}</h2>
+                                <p className="text-gray-500">{user.email}</p>
                             </div>
                         </div>
 
                         {/*EVENTS*/}
                         <div className="grid grid-cols-2 justify-center gap-2">
-                            <div className="border shadow-sm rounded-lg px-2 flex flex-col items-center">
-                                <h1 className="text-gray-600">Created Events</h1>
-                                <p>60</p>
+                            <div className="bg-gray-50 p-4 rounded-lg text-center">
+                                <p className="text-gray-600">Created Events</p>
+                                <p className="text-2xl font-bold">60</p>
                             </div>
-                            <div className="border shadow-sm rounded-lg px-2 flex flex-col items-center">
-                                <h1 className="text-gray-600">Joined Events</h1>
-                                <p>60</p>
-                            </div>  
+                            <div className="bg-gray-50 p-4 rounded-lg text-center">
+                                <p className="text-gray-600">Joined Events</p>
+                                <p className="text-2xl font-bold">60</p>
+                            </div>
                         </div>
 
                         {/*PROFILE DETAILS*/}
                         <div className="flex flex-col gap-5">
                             <div className="space-y-2">
-                                <h1 className="text-gray-600">First Name</h1>
-                                <p className="p-2 border rounded-lg">{user.first_name}</p>
+                                <label className="block text-gray-600 mb-2">First Name</label>
+                                <input 
+                                    type="text" 
+                                    value={user.first_name} 
+                                    disabled 
+                                    className="w-full p-2 border rounded-lg bg-gray-100"
+                                />
                             </div>
                             <div className="space-y-2">
-                                <h1 className="text-gray-600">Last Name</h1>
-                                <p className="p-2 border rounded-lg">{user.last_name}</p>
+                                <label className="block text-gray-600 mb-2">Last Name</label>
+                                <input 
+                                    type="text" 
+                                    value={user.last_name} 
+                                    disabled 
+                                    className="w-full p-2 border rounded-lg bg-gray-100"
+                                />
                             </div>
                             <div className="space-y-2">
-                                <h1 className="text-gray-600">Email</h1>
-                                <p className="p-2 border rounded-lg">{user.email}</p>
+                                <label className="block text-gray-600 mb-2">Email</label>
+                                <input 
+                                    type="email" 
+                                    value={user.email} 
+                                    disabled 
+                                    className="w-full p-2 border rounded-lg bg-gray-100"
+                                />
                             </div>
                         </div>
                         <div className="flex">

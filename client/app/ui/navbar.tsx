@@ -25,13 +25,13 @@ export default function Navbar() {
     };
 
     return (
-        <div className="flex justify-center shadow-md relative z-10">
+        <div className="flex justify-center shadow-md relative z-30">
             <div
                 className="w-full px-5 py-4 bg-white shadow-b-md"
                 style={{ maxWidth: '76rem', height: 'auto' }}
             >
-                <div className="relative grid grid-cols-[1fr_0fr] sm:grid-cols-[4fr_5fr] space-x-2 items-center">
-                    <div className='flex flex-row gap-5 items-center z-50'>
+                <div className="relative grid grid-cols-[1fr_0fr] sm:grid-cols-[3fr_5fr] md:grid-cols-[4fr_5fr] space-x-2 items-center">
+                    <div className='flex flex-row gap-5 items-center z-40'>
                         <Link href='/' className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-300">
                             LOGO
                         </Link>
@@ -104,7 +104,7 @@ export default function Navbar() {
                                     {/**------------------------- */}
 
                                     {isProfileDropdownOpen && (
-                                        <div className="absolute right-0 top-full mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+                                        <div className="absolute right-0 top-full mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-40">
 
                                             <div className='border-b'>
                                                 <Link 
@@ -155,7 +155,7 @@ export default function Navbar() {
                     {/* Mobile menu icon */}
                     <div className="relative sm:hidden">
                         <button
-                            className="text-gray-700 flex align-center justify-center z-50"
+                            className="text-gray-700 flex align-center justify-center z-40"
                             onClick={() => {
                                 setMenuOpen(!isMenuOpen);
                                 // Close profile dropdown if menu is opened
@@ -167,7 +167,7 @@ export default function Navbar() {
 
                         {/* Mobile dropdown */}
                         {isMenuOpen && (
-                            <div className="absolute right-0 top-full mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+                            <div className="absolute right-0 top-full mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-40">
                                 <Link 
                                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2" 
                                     href="/events" 
