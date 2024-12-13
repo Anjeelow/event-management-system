@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import type { Metadata } from "next";
 import localFont from "next/font/local";
@@ -8,6 +8,7 @@ import { AuthProvider } from "./authContext";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import LoadingSpinner from "./ui/loadingSpinner";
+import { SearchProvider } from "./searchContext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -30,7 +31,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   const [isRouteLoading, setIsRouteLoading] = useState(false);
   const pathname = usePathname();
 
@@ -47,28 +47,33 @@ export default function RootLayout({
       setIsRouteLoading(false);
     };
 
-    window.addEventListener('routeChangeStart', handleRouteChangeStart);
-    window.addEventListener('routeChangeComplete', handleRouteChangeComplete);
-    window.addEventListener('routeChangeError', handleRouteChangeError);
+    window.addEventListener("routeChangeStart", handleRouteChangeStart);
+    window.addEventListener("routeChangeComplete", handleRouteChangeComplete);
+    window.addEventListener("routeChangeError", handleRouteChangeError);
 
     return () => {
-      window.removeEventListener('routeChangeStart', handleRouteChangeStart);
-      window.removeEventListener('routeChangeComplete', handleRouteChangeComplete);
-      window.removeEventListener('routeChangeError', handleRouteChangeError);
+      window.removeEventListener("routeChangeStart", handleRouteChangeStart);
+      window.removeEventListener(
+        "routeChangeComplete",
+        handleRouteChangeComplete
+      );
+      window.removeEventListener("routeChangeError", handleRouteChangeError);
     };
   }, [pathname]);
 
   return (
     <html lang="en">
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-          >
-          <AuthProvider>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        <AuthProvider>
+          <SearchProvider>
             <Navbar />
             {isRouteLoading && <LoadingSpinner />}
             {children}
-          </AuthProvider>
-        </body>
+          </SearchProvider>
+        </AuthProvider>
+      </body>
     </html>
   );
 }
