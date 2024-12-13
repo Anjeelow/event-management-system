@@ -35,8 +35,8 @@ router.post("/api/events/create", async (req, res) => {
     const { userId, title, description, start, end, duration, address, maxAttendees, attendeeCount, currentDay } =
       req.body;
     const sql = `
-      INSERT INTO Event (organizer, title, description, start_time, end_time, duration, address, max_attendees, attendee_count, created_at, updated_at)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO Event (organizer, title, description, start_time, end_time, duration, address, max_attendees, attendee_count, created_at, updated_at, closed_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
     const data = await query(sql, [
       userId,
@@ -49,7 +49,8 @@ router.post("/api/events/create", async (req, res) => {
       maxAttendees,
       attendeeCount,
       currentDay,
-      currentDay
+      currentDay,
+      end
     ]);
     res.status(200).json({ message: "Event added successfully" });
   } catch (err) {
@@ -77,9 +78,10 @@ router.post("/api/events/delete", async (req, res) => {
   try {
     const { eventId } = req.body
     const sql = `
-      DELETE FROM Event WHERE event_id = ?
+      UPDATE Event SET closed_at = ? WHERE event_id = ?
     `
-    const data = await query(sql, [eventId])
+    const currentDay = new Date()
+    const data = await query(sql, [currentDay, eventId])
     console.log(data)
     res.status(200).json({ message: 'Event successfully deleted' })
   } catch (err) {

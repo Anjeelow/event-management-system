@@ -18,7 +18,9 @@ export default function CalendarInput({
         if (date) {
             setDefaultDate(new Date(date));
         } else {
-            setDefaultDate(null);
+            const msIn30Min = 30 * 60 * 1000;
+            const roundedTime = new Date(Math.ceil(new Date().getTime() / msIn30Min) * msIn30Min);
+            setDefaultDate(roundedTime);
         }
     }, [date]);
 
@@ -38,7 +40,7 @@ export default function CalendarInput({
                     onChange={newDate => {handleClick(newDate)}}
                     selected={defaultDate}
                 />
-                <CiCalendar className="opacity-40 ml-2 cursor-pointer" size={30} />
+                {/* <CiCalendar className="opacity-40 ml-2 cursor-pointer" size={30} /> */}
             </label>
         </div>
     )

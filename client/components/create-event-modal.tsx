@@ -5,6 +5,8 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import CalendarInput from "./date-picker";
 import { Event } from "../../server/lib/definitions";
+import { RxCross1 } from "react-icons/rx";
+import { LiaEdit } from "react-icons/lia";
 
 export default function CreateModal({ 
     setCreateModalOpen,
@@ -17,8 +19,10 @@ export default function CreateModal({
     const { userId } = useContext(AuthContext)
     const [title, setTitle] = useState<string>('')
     const [description, setDescription] = useState<string>('')
-    const [start, setStart] = useState<Date | null>(null)
-    const [end, setEnd] = useState<Date | null>(null)
+    const msIn30Min = 30 * 60 * 1000;
+    const roundedTime = new Date(Math.ceil(new Date().getTime() / msIn30Min) * msIn30Min);
+    const [start, setStart] = useState<Date | null>(roundedTime)
+    const [end, setEnd] = useState<Date | null>(roundedTime)
     const [address, setAddress] = useState<string>('')
     const [maxAttendees, setMaxAttendees] = useState<number>(1)
     const [attendeeCount, setAttendeeCount] = useState<number>(0)
@@ -72,9 +76,12 @@ export default function CreateModal({
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center px-5 z-50">
-            <div className="bg-white p-6 shadow-lg w-96 flex flex-col gap-5">
+            <div className="bg-white p-6 pb-12 shadow-lg w-96 flex flex-col">
+                <div className="flex justify-end cursor-pointer">
+                    <RxCross1 onClick={() => setCreateModalOpen(false)} />
+                </div>
                 <div className="w-full flex flex-col items-center">
-                    <h2 className="text-xl font-bold mb-2">Create New Event</h2>
+                    <LiaEdit size={35} className="text-xl font-bold mb-2">Edit</LiaEdit>
                 </div>
                 <form className="flex flex-col gap-2" onSubmit={handleCreate}>
                     <div>
@@ -95,25 +102,27 @@ export default function CreateModal({
                             name="description"
                             value={description}
                             placeholder="Description"
-                            className="w-full mb-3 p-2 border rounded"
+                            className="w-full p-2 border rounded"
                             style={{maxHeight: "150px"}}
                             required
                             onChange={(e) => setDescription(e.target.value)}
                         />
                     </div>
-                    <div>
-                        <h4 className="font-bold">Start</h4>
-                        <CalendarInput 
-                            date={start}
-                            setDate={setStart}
-                        />
-                    </div>
-                    <div>
-                        <h4 className="font-bold">End</h4>
-                        <CalendarInput 
-                            date={end} 
-                            setDate={setEnd} 
-                        />
+                    <div className="flex gap-4 text-sm">
+                        <div>
+                            <h4 className="font-bold">Start</h4>
+                            <CalendarInput 
+                                date={start}
+                                setDate={setStart}
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <h4 className="font-bold">End</h4>
+                            <CalendarInput 
+                                date={end} 
+                                setDate={setEnd} 
+                            />
+                        </div>
                     </div>
                     <div>
                         <h4 className="font-bold">Address</h4>
@@ -146,15 +155,9 @@ export default function CreateModal({
                         type="submit"
                         className="bg-blue-700 text-white px-4 py-2 rounded-lg w-full"
                     >
-                        Submit
+                        Create
                     </button>
                 </form>
-                <button
-                    onClick={() => setCreateModalOpen(false)}
-                    className="mt-4 text-red-600 underline"
-                >
-                    Close
-                </button>
             </div>
         </div>
     );
