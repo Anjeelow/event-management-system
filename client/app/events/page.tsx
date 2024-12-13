@@ -21,9 +21,9 @@ export default function BrowseEvents() {
   const [mounted, setMounted] = useState(false);
 
   const [users, setUsers] = useState<User[]>([]);
-
+  const [location, setLocation] = useState<string>("");
   const [categories, setCategories] = useState<Category[]>([]);
-
+  const [category, setCategory] = useState<string>("");
   const [loading, setLoading] = useState(true);
 
   const { isAuthenticated, userId } = useContext(AuthContext);
