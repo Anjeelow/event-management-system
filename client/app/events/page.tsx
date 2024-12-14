@@ -9,14 +9,13 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import LoadingSpinner from "../ui/loadingSpinner";
 import { useSearch } from "../searchContext";
+import CalendarInput from "../../components/date-picker";
 
 export default function BrowseEvents() {
   const { filters, setFilters, filteredEvents, updateEvents } = useSearch();
 
-  const [date, setDate] = useState<{ month: string; day: string }>({
-    month: "",
-    day: "",
-  });
+  const [fromDate, setFromDate] = useState<Date | null>(null);
+  const [toDate, setToDate] = useState<Date | null>(null);
 
   const [mounted, setMounted] = useState(false);
 
@@ -90,26 +89,35 @@ export default function BrowseEvents() {
   };
 
   const handleSearchPress = () => {
-    const fetchEvents = async () => {
-      const queryParams = new URLSearchParams({
-        title: filters.title || "",
-        location: filters.location || "",
-        date: date ? date.toString() : "",
-        categoryID: filters.categoryID ? filters.categoryID.toString() : "",
-      });
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      toDate: toDate,
+    }));
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      fromDate: fromDate,
+    }));
+    // const fetchEvents = async () => {
+    //   const queryParams = new URLSearchParams({
+    //     title: filters.title || "",
+    //     location: filters.location || "",
+    //     fromDate: fromDate?.toISOString() || "",
+    //     toDate: toDate?.toISOString() || "",
+    //     categoryID: filters.categoryID ? filters.categoryID.toString() : "",
+    //   });
 
-      try {
-        const response = await axios.get(
-          `http://localhost:8080/api/events/search?${queryParams.toString()}`
-        );
-        const events = response.data.events || [];
-        updateEvents(events);
-      } catch (error) {
-        console.log("Error fetching events:", error);
-      }
-    };
+    //   try {
+    //     const response = await axios.get(
+    //       `http://localhost:8080/api/events/search?${queryParams.toString()}`
+    //     );
+    //     const events = response.data.events || [];
+    //     updateEvents(events);
+    //   } catch (error) {
+    //     console.log("Error fetching events:", error);
+    //   }
+    // };
 
-    fetchEvents();
+    // fetchEvents();
   };
 
   const handleMyEventsClick = () => {
@@ -142,67 +150,38 @@ export default function BrowseEvents() {
               >
                 <option value="">All Categories</option>
                 {categories.map((cat) => (
-                  <option key={cat.category_id} value={cat.name}>
-                    {cat.name}
+                  <option key={cat.category_id} value={cat.category_name}>
+                    {cat.category_name}
                   </option>
                 ))}
               </select>
             </div>
-
-            <div className="space-y-2 sm:space-y-2 max-sm:min-w-[250px]">
+            <div className="space-y-2 sm:space-y-2 max-sm:min-w-[200px]">
               <label className="block text-sm font-medium text-gray-700">
-                Date
+                From
               </label>
               <div className="flex space-x-2">
-                <select
-                  className="w-1/2 p-2 border rounded-md"
-                  onChange={(e) => handleDateChange("month", e.target.value)}
-                >
-                  <option value="">Month</option>
-                  {[
-                    "January",
-                    "February",
-                    "March",
-                    "April",
-                    "May",
-                    "June",
-                    "July",
-                    "August",
-                    "September",
-                    "October",
-                    "November",
-                    "December",
-                  ].map((month, index) => (
-                    <option key={month} value={month}>
-                      {month}
-                    </option>
-                  ))}
-                </select>
-                <select
-                  className="w-1/2 p-2 border rounded-md"
-                  onChange={(e) => handleDateChange("day", e.target.value)}
-                >
-                  <option value="">Day</option>
-                  {Array.from({ length: 31 }, (_, i) => i + 1).map((day) => (
-                    <option key={day} value={day.toString()}>
-                      {day}
-                    </option>
-                  ))}
-                </select>
+                <CalendarInput date={fromDate} setDate={setFromDate} />
               </div>
             </div>
-
+            <div className="space-y-2 sm:space-y-2 max-sm:min-w-[200px]">
+              <label className="block text-sm font-medium text-gray-700">
+                To
+              </label>
+              <div className="flex space-x-2">
+                <CalendarInput date={toDate} setDate={setToDate} />
+              </div>
+            </div>
             <div className="space-y-2 sm:space-y-2 max-sm:min-w-[200px]">
               <label className="block text-sm font-medium text-gray-700">
                 Location
               </label>
-              <select
-                className="w-full p-2 border rounded-md"
+              <input
+                type="text"
+                placeholder="Location"
                 onChange={handleLocationChange}
-              >
-                <option value="">All Locations</option>
-                {/* NO DATA :( */}
-              </select>
+                className="w-full p-2 border rounded-md"
+              />
             </div>
 
             <div className="w-full self-end">

@@ -40,14 +40,18 @@ export default function Navbar() {
     setFilters({ ...filters, title: e.target.value });
   };
 
-  const date = 2;
-
   const handleSearchPress = () => {
+    console.log(filters);
     const fetchEvents = async () => {
       const queryParams = new URLSearchParams({
         title: filters.title || "",
         location: filters.location || "",
-        date: date ? date.toString() : "",
+        fromDate:
+          filters.fromDate instanceof Date
+            ? filters.fromDate.toISOString()
+            : "",
+        toDate:
+          filters.toDate instanceof Date ? filters.toDate.toISOString() : "",
         categoryID: filters.categoryID ? filters.categoryID.toString() : "",
       });
 
@@ -87,12 +91,14 @@ export default function Navbar() {
                 onChange={handleSearchChange}
                 className="text-sm w-full px-4 py-2 pr-10 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
-              <button
-                onClick={handleSearchPress}
-                className="absolute inset-y-0 right-2 flex items-center text-gray-400"
-              >
-                <IoSearch size={20} />
-              </button>
+              <Link href="/events">
+                <button
+                  onClick={handleSearchPress}
+                  className="absolute inset-y-0 right-2 flex items-center text-gray-400"
+                >
+                  <IoSearch size={20} />
+                </button>
+              </Link>
             </div>
           </div>
           {/* Full-size navigation */}

@@ -34,11 +34,20 @@ router.get("/api/events/search", async (req, res) => {
     values.push(params.userID);
   }
 
+  if (params.fromDate) {
+    sql += " AND date >= ?";
+    values.push(params.fromDate);
+  }
+
+  if (params.toDate) {
+    sql += " AND date <= ?";
+    values.push(params.toDate);
+  }
+
   console.log("Constructed SQL:", sql);
   console.log("Values:", values);
 
   try {
-    // Pass SQL and parameters to the query function
     const data = await query(sql, values);
     res.json({ events: data });
   } catch (err) {
