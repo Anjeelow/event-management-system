@@ -30,12 +30,14 @@ export default function CalendarInput({
     }
 
     return (
-        <div className="flex items-center">
-            <label className="flex items-center">
+        <div className="w-full">
+            <label className="w-full block">
                 <TimePicker  
                     showTimeSelect 
                     dateFormat='Pp'
-                    className="p-2 w-full border-2 border-gray-100" 
+                    className="p-2 w-full border-2 border-gray-100 box-border" 
+                    wrapperClassName="w-full"
+                    calendarClassName="w-full"
                     minDate={new Date()}
                     onChange={newDate => {handleClick(newDate)}}
                     selected={defaultDate}

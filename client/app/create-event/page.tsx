@@ -121,7 +121,7 @@ export default function MyEvents() {
                         alt="event with many balloons"
                         width={250}
                         height={250}
-                        className="w-[200px] h-full object-cover rounded-lg"
+                        className="w-full sm:w-[200px] h-full object-cover rounded-lg"
                       />
                       <div className="px-2">
                         <p className="text-gray-700 font-light">
@@ -145,16 +145,16 @@ export default function MyEvents() {
                         </p>
                       </div>
                       
-                      <div className="flex ml-auto gap-2">
+                      <div className="flex sm:ml-auto">
                         <MdOutlineModeEdit
                           onClick={(e) => handleEdit(e, event)}
                           size={25}
-                          className="ml-auto cursor-pointer m-2"
+                          className="sm:ml-auto cursor-pointer m-2"
                         />
                         <MdDeleteOutline 
                           onClick={(e) => handleDelete(e, event)}
                           size={25}
-                          className="ml-auto cursor-pointer m-2"
+                          className="sm:ml-auto cursor-pointer m-2"
                         />
                       </div>
                     </Link>

@@ -102,14 +102,14 @@ export default function MyEvents() {
                         <Link
                         href={`/event-details/${event.event_id}`}
                         key={event.event_id}
-                        className="flex flex-row border gap-2 bg-white p-2 shadow-lg rounded-lg mb-3"
+                        className="flex flex-col sm:flex-row border gap-2 bg-white p-2 shadow-lg rounded-lg mb-3"
                         >
                         <Image
                           src="/main-events.png"
                           alt="event with many balloons"
                           width={250}
                           height={250}
-                          className="w-[200px] h-full object-cover rounded-lg"
+                          className="w-full sm:w-[200px] h-full object-cover rounded-lg"
                         />
                         <div className="px-2 flex flex-col flex-grow">
                           <p className="text-gray-700 font-light">
@@ -170,14 +170,14 @@ export default function MyEvents() {
                         <Link
                           href={`/event-details/${event.event_id}`}
                           key={event.event_id}
-                          className="flex flex-row border gap-2 bg-white p-2 shadow-lg rounded-lg mb-3"
+                          className="flex flex-col sm:flex-row border gap-2 bg-white p-2 shadow-lg rounded-lg mb-3"
                         >
                           <Image
                             src="/main-events.png"
                             alt="event with many balloons"
                             width={250}
                             height={250}
-                            className="w-[200px] h-full object-cover rounded-lg"
+                            className="w-full sm:w-[200px] h-full object-cover rounded-lg"
                           />
                           <div className="px-2 flex flex-col flex-grow">
                             <p className="text-gray-700 font-light">
