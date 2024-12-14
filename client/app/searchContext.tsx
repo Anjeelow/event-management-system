@@ -7,7 +7,8 @@ interface Filters {
   userID: number | null;
   title: string | "";
   location: string | "";
-  date: Date | "";
+  fromDate: Date | null;
+  toDate: Date | null;
   categoryID: number | null;
 }
 
@@ -23,7 +24,8 @@ const SearchContext = createContext<SearchContextType>({
     userID: null,
     title: "",
     location: "",
-    date: "",
+    fromDate: null,
+    toDate: null,
     categoryID: null,
   },
   filteredEvents: [],
@@ -37,7 +39,8 @@ export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
     userID: null,
     title: "",
     location: "",
-    date: "",
+    fromDate: null,
+    toDate: null,
     categoryID: null,
   }); // Ensure the initial state matches the Filters interface
 
