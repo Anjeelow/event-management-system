@@ -3,7 +3,7 @@ import BrowseEvents from "@/components/browse-events";
 
 export default function Page() {
   return (
-    <div className="h-auto">
+    <div className="h-full bg-gray-100">
       <main className="">
         <div className="bg-black flex justify-center">
           <div className="w-full flex flex-col-reverse md:items-center gap-3 px-5 py-10 md:grid md:grid-cols-2" style={{maxWidth: '76rem'}}>

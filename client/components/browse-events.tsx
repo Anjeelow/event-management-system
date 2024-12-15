@@ -35,7 +35,7 @@ export default function BrowseEvents() {
     }, [])
 
     return (
-        <div className="flex bg-gray-100 justify-center">
+        <div className="flex justify-center">
             <div className="px-5 py-5 w-full" style={{ maxWidth: '76rem', height: 'auto' }}>
                 <div className="flex pb-4 space-x-5">
                     <h1>Browsing Events in your area</h1>

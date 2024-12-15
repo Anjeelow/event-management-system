@@ -31,12 +31,12 @@ export default function CalendarInput({
   };
 
   return (
-    <div className="flex items-center">
-      <label className="flex items-center">
+    <div className="w-full">
         <TimePicker
           showTimeSelect
           dateFormat="Pp"
-          className="p-2 w-full border-2 border-gray-100"
+          wrapperClassName="w-full"
+          className="p-2 w-full border rounded-md"
           minDate={new Date()}
           onChange={(newDate) => {
             handleClick(newDate);
@@ -44,7 +44,6 @@ export default function CalendarInput({
           selected={defaultDate}
         />
         {/* <CiCalendar className="opacity-40 ml-2 cursor-pointer" size={30} /> */}
-      </label>
     </div>
   );
 }

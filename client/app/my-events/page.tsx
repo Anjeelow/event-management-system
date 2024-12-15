@@ -140,7 +140,7 @@ export default function MyEvents() {
                           No events available
                         </h2>
                         <p className="text-gray-600">
-                          Check back later for more events in your area.
+                          Explore and join available events
                         </p>
                       </div>
                     )}
@@ -209,7 +209,7 @@ export default function MyEvents() {
                           No events available
                         </h2>
                         <p className="text-gray-600">
-                          Check back later for more events in your area.
+                          Bring your ideas to life and create an event today
                         </p>
                       </div>
                     )}
