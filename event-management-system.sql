@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Dec 06, 2024 at 08:55 AM
+-- Host: 127.0.0.1
+-- Generation Time: Dec 16, 2024 at 04:20 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -75,26 +75,12 @@ CREATE TABLE `event` (
 --
 
 INSERT INTO `event` (`event_id`, `organizer`, `title`, `description`, `date`, `start_time`, `end_time`, `duration`, `address`, `max_attendees`, `attendee_count`, `is_public`, `event_image_url`, `event_icon_url`, `category_id`, `created_at`, `updated_at`, `closed_at`, `status`) VALUES
-(1, 2, 'Angelo Pumar Wedding', 'Wedding of Angelo Pumar and his fiancee.', '2025-01-15T07:30:00.000Z', '2025-01-15T07:30:00.000Z', '2025-01-15T14:45:00.000Z', 435, 'Shangri-La Mactan', 100, 27, 0, '', '', 2, '2024-11-23 11:55:12', '2024-11-23 11:55:12', '2024-12-15 11:30:00', 'Open'),
+(1, 2, 'Angelo Pumar Wedding', 'Wedding of Angelo Pumar and his fiancee.', '2025-01-15T07:30:00.000Z', '2025-01-15T07:30:00.000Z', '2025-01-15T14:45:00.000Z', 435, 'Shangri', 150, 27, 0, '', '', 2, '2024-11-23 11:55:12', '2024-11-23 11:55:12', '2025-01-15T14:45:00.000Z', 'Open'),
 (2, 1, 'Reeces Pieces', 'Monthly Podcast by Reece Sergei Lim', '2024-12-10T11:00:00.000Z', '2024-12-10T11:00:00.000Z', '2024-12-10T12:30:00.000Z', 90, 'MR Hall, University of San Carlos Talamban Campus', 500, 493, 1, '', '', 3, '2024-11-25 11:55:12', '2024-11-25 11:55:12', '2024-11-30 12:30:00', 'Closed'),
 (3, 3, 'Fitness Bootcamp with Philip Go', 'An intensive fitness bootcamp to help you achieve your health goals.', '2024-12-19T22:00:00.000Z', '2024-12-19T22:00:00.000Z', '2024-12-20T01:00:00.000Z', 180, 'Cebu City Sports Complex', 150, 80, 1, '', '', 1, '2024-11-26 02:00:00', '2024-11-26 02:00:00', '2024-12-15 15:59:00', 'Open'),
 (4, 2, 'Angelo & Reece Anniversary Party', 'Celebrating a year of love and happiness.', '2024-12-05T10:00:00.000Z', '2024-12-05T10:00:00.000Z', '2024-12-05T15:00:00.000Z', 300, 'Radisson Blu Cebu', 200, 180, 0, '', '', 2, '2024-11-24 01:00:00', '2024-11-24 01:00:00', '2024-11-30 15:59:00', 'Open'),
-(5, 1, 'Tech Talk by Reece Lim', 'Join Reece Lim as he shares insights on emerging technologies.', '2025-01-05T06:00:00.000Z', '2025-01-05T06:00:00.000Z', '2025-01-05T08:00:00.000Z', 120, 'USC Main Auditorium', 300, 290, 1, '', '', 3, '2024-11-27 03:00:00', '2024-11-27 03:00:00', '2025-01-01 15:59:00', 'Open'),
-(6, 3, 'January Networking Event', 'A networking event to kick off 2025 with industry leaders.', '2025-01-15T01:00:00.000Z', '2025-01-15T01:00:00.000Z', '2025-01-16T09:00:00.000Z', 1920, '456 Business Park, Cityville', 200, 150, 1, 'https://example.com/january_event.jpg', 'https://example.com/january_icon.png', 2, '2025-01-10 09:00:00', '2025-01-10 09:00:00', '2025-01-17 10:00:00', 'Open');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `integratedcalendar`
---
-
-CREATE TABLE `integratedcalendar` (
-  `integration_id` int(11) NOT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `calendar_type` varchar(255) DEFAULT NULL,
-  `calendar_sync_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `sync_status` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+(5, 1, 'Tech Talk by Reece Lim', 'Join Reece Lim as he shares insights on emerging technologies.', '2025-01-05T06:00:00.000Z', '2025-01-05T06:00:00.000Z', '2025-01-05T08:00:00.000Z', 120, 'USC Main Auditorium', 300, 291, 1, '', '', 3, '2024-11-27 03:00:00', '2024-11-27 03:00:00', '2025-01-01 15:59:00', 'Open'),
+(6, 3, 'January Networking Event', 'A networking event to kick off 2025 with industry leaders.', '2025-01-15T01:00:00.000Z', '2025-01-15T01:00:00.000Z', '2025-01-16T09:00:00.000Z', 1920, '456 Business Park, Cityville', 200, 151, 1, 'https://example.com/january_event.jpg', 'https://example.com/january_icon.png', 2, '2025-01-10 09:00:00', '2024-12-16 22:39:17', '2025-01-17 10:00:00', 'Open');
 
 -- --------------------------------------------------------
 
@@ -110,19 +96,41 @@ CREATE TABLE `notification` (
   `message` text DEFAULT NULL,
   `status` varchar(255) DEFAULT 'unread',
   `sent_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `read_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+  `read_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `notification_user`
+-- Dumping data for table `notification`
 --
 
-CREATE TABLE `notification_user` (
-  `user_id` int(11) NOT NULL,
-  `event_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+INSERT INTO `notification` (`notification_id`, `user_id`, `event_id`, `notification_type`, `message`, `status`, `sent_at`, `read_at`) VALUES
+(1, 3, 1, NULL, 'The event has been edited. Please check the updated details', 'unread', '2024-12-16 15:18:13', NULL),
+(2, 1, 1, NULL, 'The event has been edited. Please check the updated details', 'unread', '2024-12-16 15:18:13', NULL),
+(3, 4, 1, NULL, 'The event has been edited. Please check the updated details', 'unread', '2024-12-16 15:18:13', NULL),
+(4, 6, 1, NULL, 'The event has been edited. Please check the updated details', 'unread', '2024-12-16 15:18:13', NULL),
+(5, 7, 1, NULL, 'The event has been edited. Please check the updated details', 'unread', '2024-12-16 15:18:13', NULL),
+(6, 9, 1, NULL, 'The event has been edited. Please check the updated details', 'unread', '2024-12-16 15:18:13', NULL);
+
+--
+-- Triggers `notification`
+--
+DELIMITER $$
+CREATE TRIGGER `before_notification_insert` BEFORE INSERT ON `notification` FOR EACH ROW BEGIN
+  IF NEW.notification_type = 'event_reminder' THEN
+    IF EXISTS (
+      SELECT 1
+      FROM notification
+      WHERE user_id = NEW.user_id
+        AND event_id = NEW.event_id
+        AND notification_type = 'event_reminder'
+    ) THEN
+      SIGNAL SQLSTATE '45000'
+      SET MESSAGE_TEXT = 'Duplicate event_reminder notification not allowed';
+    END IF;
+  END IF;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -134,23 +142,25 @@ CREATE TABLE `rsvp` (
   `rsvp_id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
   `event_id` int(11) DEFAULT NULL,
-  `status` varchar(255) DEFAULT 'attending',
+  `status` varchar(255) DEFAULT 'pending',
   `rsvp_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `notes` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `rsvp`
--- 2025-01-15T07:30:00.000Z
+--
 
 INSERT INTO `rsvp` (`rsvp_id`, `user_id`, `event_id`, `status`, `rsvp_date`, `notes`) VALUES
-(1, 3, 1, 'attending', '2024-11-26T11:00:10.000Z', 'unlimited food please'),
-(2, 3, 2, 'attending', '2024-11-26T11:12:24.000Z', 'Hi Reece.'),
-(3, 1, 1, 'attending', '2024-11-28T06:23:30.000Z', 'Hi Angelo.'),
-(4, 4, 1, 'attending', '2024-11-29T06:23:30.000Z', 'Hi Angelo.'),
-(5, 6, 1, 'attending', '2024-11-30T06:23:30.000Z', 'Hi Angelo.'),
-(6, 7, 1, 'attending', '2024-12-01T06:23:30.000Z', 'Hi Angelo.'),
-(7, 9, 1, 'attending', '2024-12-01T06:23:30.000Z', 'Hi Angelo.');
+(1, 3, 1, 'Attending', '2024-11-26 11:00:10', 'unlimited food please'),
+(2, 3, 2, 'Attending', '2024-11-26 11:12:24', 'Hi Reece.'),
+(3, 1, 1, 'Attending', '2024-11-28 06:23:30', 'Hi Angelo.'),
+(4, 4, 1, 'Attending', '2024-11-29 06:23:30', 'Hi Angelo.'),
+(5, 6, 1, 'Attending', '2024-11-30 06:23:30', 'Hi Angelo.'),
+(6, 7, 1, 'Attending', '2024-12-01 06:23:30', 'Hi Angelo.'),
+(7, 9, 1, 'Attending', '2024-12-01 06:23:30', 'Hi Angelo.'),
+(0, 2, 6, 'pending', '2024-12-16 06:05:58', NULL),
+(0, 2, 5, 'pending', '2024-12-16 07:17:56', NULL);
 
 -- --------------------------------------------------------
 
@@ -184,7 +194,8 @@ INSERT INTO `user` (`user_id`, `first_name`, `last_name`, `email`, `password_has
 (6, 'Alice', 'Johnson', 'alice@gmail.com', '$2b$10$pKk/3TCm5DW8UHVRPPdXR.q1ZROtObFHowgONbLU7ySI1C5lmXU6S', NULL, NULL, '2024-12-06 07:53:12', '2024-12-06 07:53:12', 'active'),
 (7, 'Michael', 'Brown', 'michael@gmail.com', '$2b$10$qjqy6dxijLe4wPjas/uVUOZ/dgC/ksCoojijLVqEsdd1EMA./5gz.', NULL, NULL, '2024-12-06 07:53:44', '2024-12-06 07:53:44', 'active'),
 (8, 'Emily', 'Davis', 'emily@gmail.com', '$2b$10$l4cOev/sMdRIvdQweDMlRuq/0Sgz2.sokhNcLTdnVuVgXTS8A5WAO', NULL, NULL, '2024-12-06 07:53:58', '2024-12-06 07:53:58', 'active'),
-(9, 'Chris', 'Taylor', 'chris@gmail.com', '$2b$10$L1vnQ/8JKsprZWlN7Q1l6uzT1w7C.D1kdt7uL9BuV3JjspHsjjY9G', NULL, NULL, '2024-12-06 07:54:13', '2024-12-06 07:54:13', 'active');
+(9, 'Chris', 'Taylor', 'chris@gmail.com', '$2b$10$L1vnQ/8JKsprZWlN7Q1l6uzT1w7C.D1kdt7uL9BuV3JjspHsjjY9G', NULL, NULL, '2024-12-06 07:54:13', '2024-12-06 07:54:13', 'active'),
+(10, 'philip', 'go', 'troll@gmail.com', '$2b$10$PsQahvBUKbaLpJUHiTmmd.kNtgsDF.nMpyDdEphqZEbTS9L.IYYKS', NULL, NULL, '2024-12-10 20:39:14', '2024-12-10 20:39:14', 'active');
 
 --
 -- Indexes for dumped tables
@@ -197,40 +208,44 @@ ALTER TABLE `category`
   ADD PRIMARY KEY (`category_id`);
 
 --
+-- Indexes for table `event`
+--
+ALTER TABLE `event`
+  ADD PRIMARY KEY (`event_id`);
+
+--
+-- Indexes for table `notification`
+--
+ALTER TABLE `notification`
+  ADD PRIMARY KEY (`notification_id`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`user_id`);
 
-ALTER TABLE `event`
-  ADD PRIMARY KEY (`event_id`);
-
-ALTER TABLE `rsvp`
-  ADD PRIMARY KEY (`rsvp_id`);
-
-ALTER TABLE `notification`
-  ADD PRIMARY KEY (`notification_id`);
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
+-- AUTO_INCREMENT for table `event`
+--
+ALTER TABLE `event`
+  MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `notification`
+--
+ALTER TABLE `notification`
+  MODIFY `notification_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-COMMIT;
-
-ALTER TABLE `event`
- MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-COMMIT;
-
-ALTER TABLE `rsvp`
-  MODIFY `rsvp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-COMMIT;
-
-ALTER TABLE `notification`
-  MODIFY `notification_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
