@@ -48,6 +48,22 @@ export default function BottomNavbar({
         setEditModalOpen(true)
     }
 
+    const handleShare = async () => {
+        try {
+          // Get the current page URL
+          const currentUrl = window.location.href;
+      
+          // Use the Clipboard API to copy the URL
+          await navigator.clipboard.writeText(currentUrl);
+      
+          // Optional: Show a temporary feedback to the user
+          alert('Event link copied to clipboard!');
+        } catch (err) {
+          console.error('Failed to copy: ', err);
+          alert('Failed to copy the link');
+        }
+      };
+
     return (
         <div className="border bg-white flex justify-center fixed bottom-0 w-full z-40">
             <div
@@ -62,6 +78,7 @@ export default function BottomNavbar({
                                 <button
                                     type="button"
                                     className="w-full border border-blue-700 text-blue-700 bg-white hover:bg-blue-800 hover:text-white font-medium rounded-lg text-sm px-5 py-2.5"
+                                    onClick={handleShare}
                                 >
                                     Share
                                 </button>
@@ -98,6 +115,7 @@ export default function BottomNavbar({
                                 <button
                                     type="button"
                                     className="w-full border border-blue-700 text-blue-700 bg-white hover:bg-blue-800 hover:text-white font-medium rounded-lg text-sm px-5 py-2.5"
+                                    onClick={handleShare}
                                 >
                                     Share
                                 </button>
