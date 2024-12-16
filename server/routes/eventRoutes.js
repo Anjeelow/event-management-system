@@ -12,23 +12,6 @@ router.get("/api/events", async (req, res) => {
   }
 });
 
-router.post("/api/joined-events", async (req, res) => {
-  try {
-    const { userId } = req.body
-    console.log(userId)
-    const joinedEvents = await query(`
-      SELECT e.* 
-      FROM Event e
-      JOIN Rsvp r ON e.event_id = r.event_id
-      WHERE r.user_id = ?
-    `, [userId]);
-    res.status(200).json({ joinedEvents: joinedEvents })
-    
-  } catch (err) {
-    res.status(500).json({ error: err.message })
-  }
-})
-
 router.get("/api/rsvps", async (req, res) => {
   try {
     const data = await query("SELECT * FROM rsvp");
@@ -49,8 +32,18 @@ router.get("/api/category", async (req, res) => {
 
 router.post("/api/events/create", async (req, res) => {
   try {
-    const { userId, title, description, start, end, duration, address, maxAttendees, attendeeCount, currentDay } =
-      req.body;
+    const {
+      userId,
+      title,
+      description,
+      start,
+      end,
+      duration,
+      address,
+      maxAttendees,
+      attendeeCount,
+      currentDay,
+    } = req.body;
     const sql = `
       INSERT INTO Event (organizer, title, description, start_time, end_time, duration, address, max_attendees, attendee_count, created_at, updated_at, closed_at)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -67,7 +60,7 @@ router.post("/api/events/create", async (req, res) => {
       attendeeCount,
       currentDay,
       currentDay,
-      end
+      end,
     ]);
     res.status(200).json({ message: "Event added successfully" });
   } catch (err) {
@@ -77,14 +70,24 @@ router.post("/api/events/create", async (req, res) => {
 
 router.post("/api/events/edit", async (req, res) => {
   try {
-    const { eventId, title, description, start, end, address, maxAttendees } = req.body;
+    const { eventId, title, description, start, end, address, maxAttendees } =
+      req.body;
     const sql = `
       UPDATE Event
       SET title = ?, description = ?, start_time = ?, end_time = ?, address = ?, max_attendees = ?, closed_at = ?
       WHERE event_id = ?
     `;
 
-    const data = await query(sql, [title, description, start, end, address, maxAttendees, end, eventId]);
+    const data = await query(sql, [
+      title,
+      description,
+      start,
+      end,
+      address,
+      maxAttendees,
+      end,
+      eventId,
+    ]);
     res.status(200).json({ message: "Event updated successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -93,29 +96,17 @@ router.post("/api/events/edit", async (req, res) => {
 
 router.post("/api/events/delete", async (req, res) => {
   try {
-    const { eventId } = req.body
+    const { eventId } = req.body;
     const sql = `
       UPDATE Event SET closed_at = ? WHERE event_id = ?
-    `
-    const currentDay = new Date()
-    const data = await query(sql, [currentDay, eventId])
-    console.log(data)
-    res.status(200).json({ message: 'Event successfully deleted' })
+    `;
+    const currentDay = new Date();
+    const data = await query(sql, [currentDay, eventId]);
+    console.log(data);
+    res.status(200).json({ message: "Event successfully deleted" });
   } catch (err) {
-    res.status(500).json({ message: err.message} )
+    res.status(500).json({ message: err.message });
   }
-})
-
-// router.get("api/events?filters*", async (req, res) => {
-//   try {
-//     const userquery = req.query;
-
-//     const data = await query("SELECT * FROM event");
-
-//     res.json({ events: data });
-//   } catch (err) {
-//     res.status(500).json({ error: err.message });
-//   }
-// })
+});
 
 export default router;
