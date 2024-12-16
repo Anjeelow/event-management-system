@@ -14,6 +14,20 @@ router.get("/api/users", async (req, res) => {
   }
 });
 
+router.post("/api/users/edit", async (req, res) => {
+  try {
+    const { userId, firstName, lastName, email } = req.body
+    const sql = `
+      UPDATE User SET first_name = ?, last_name = ?, email = ?
+      WHERE user_id = ?
+    `
+    const data = await query(sql, [firstName, lastName, email, userId])
+    res.status(200).json({ message: 'User details updated successfully'})
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
+})
+
 router.get("/api/users/:id", authenticateToken, async (req, res) => {
   try {
     const user_id = req.params.id;
