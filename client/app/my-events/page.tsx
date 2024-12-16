@@ -44,11 +44,8 @@ export default function MyEvents() {
               `http://localhost:8080/api/events/search?${userEventParams}`
             ),
             axios.get("http://localhost:8080/api/users"),
-            axios.get(
-              `http://localhost:8080/api/user/events?${userEventParams}`
-            ),
+            axios.post("http://localhost:8080/api/user/events", { userId }),
           ]);
-
         const currentDate = new Date();
 
         const joinedEvents = joinedEventsResponse.data.joinedEvents;
@@ -63,20 +60,18 @@ export default function MyEvents() {
         );
 
         const combinedEvents = joinedEvents.concat(activeEvents);
-        console.log(combinedEvents);
-        const sortedEvents = combinedEvents.sort((a, b) => {
+        const sortedEvents = combinedEvents.sort((a: any, b: any) => {
           const startA = new Date(a.start_time).getTime();
           const startB = new Date(b.start_time).getTime();
 
           return startA - startB;
         });
 
-        console.log(sortedEvents);
-        setJoinedEvents(sortedEvents);
+        setJoinedEvents(joinedEvents);
         setCreatedEvents(eventsResponse.data.events);
         setUsers(usersResponse.data.users);
       } catch (error) {
-        console.error("Error fetching data", error);
+        console.log("Error fetching data", error);
       } finally {
         setFetchTime(false);
         setLoading(false);

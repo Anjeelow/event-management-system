@@ -3,18 +3,16 @@ import { query } from "../db-service.js";
 
 const router = express.Router();
 
-router.get("/api/user/events", async (req, res) => {
+router.post("/api/user/events", async (req, res) => {
   try {
-    const { userID } = req.query;
-    const joinedEvents = await query(
-      `
-      SELECT e.*
-      FROM event e
-      JOIN rsvp r ON e.event_id = r.event_id
+    const { userId } = req.body;
+    const joinedEvents = await query(`
+      SELECT e.* 
+      FROM Event e
+      JOIN Rsvp r ON e.event_id = r.event_id
       WHERE r.user_id = ?
-    `,
-      [userID]
-    );
+    `, [userId]);
+    console.log(userId)
     res.status(200).json({ joinedEvents: joinedEvents });
   } catch (err) {
     res.status(500).json({ error: err.message });
