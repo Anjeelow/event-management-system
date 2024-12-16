@@ -39,7 +39,6 @@ export default function BrowseEvents() {
             <div className="px-5 py-5 w-full" style={{ maxWidth: '76rem', height: 'auto' }}>
                 <div className="flex pb-4 space-x-5">
                     <h1>Browsing Events in your area</h1>
-                    <h1 className="text-gray-600">San Francisco, CA</h1>
                 </div>
                 <div className="grid gap-5 grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
                     {Array.isArray(events) && events.length > 0 ? (
