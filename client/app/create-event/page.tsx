@@ -22,9 +22,9 @@ export default function MyEvents() {
   const [currentEvent, setCurrentEvent] = useState<Event[]>([]);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [createModalOpen, setCreateModalOpen] = useState(false);
-  const [deleteModalOpen, setDeleteModalOpen] = useState(false)
-  const [fetchTime, setFetchTime] = useState(false)
-  const [loading, setLoading] = useState(true)
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [fetchTime, setFetchTime] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const { isAuthenticated, userId } = useContext(AuthContext);
 
@@ -35,31 +35,31 @@ export default function MyEvents() {
       try {
         const userEventParams = new URLSearchParams({
           userID: userId?.toString() || "",
-        }).toString()
+        }).toString();
 
-        
         const [eventsResponse, usersResponse] = await Promise.all([
-          axios.get(`http://localhost:8080/api/events/search?${userEventParams}`),
-          axios.get('http://localhost:8080/api/users'),
-        ])
-        
-        const currentDate = new Date()
+          axios.get(
+            `http://localhost:8080/api/events/search?${userEventParams}`
+          ),
+          axios.get("http://localhost:8080/api/users"),
+        ]);
+
+        const currentDate = new Date();
         const activeEvents = eventsResponse.data.events.filter(
-          (event: any) => 
-            new Date(event.closed_at) >= currentDate
-        )
+          (event: any) => new Date(event.closed_at) >= currentDate
+        );
 
-        setEvents(activeEvents)
-        setUsers(usersResponse.data.users)
+        setEvents(activeEvents);
+        setUsers(usersResponse.data.users);
       } catch (error) {
-        console.error('Error fetching data', error)
+        console.error("Error fetching data", error);
       } finally {
-        setFetchTime(false)
-        setLoading(false)
+        setFetchTime(false);
+        setLoading(false);
       }
-    }
+    };
 
-    fetchData()
+    fetchData();
   }, [fetchTime]);
 
   const myEvents = events.filter((event) => event.organizer === userId);
@@ -77,12 +77,12 @@ export default function MyEvents() {
 
   const handleDelete = (e: any, event: any) => {
     e.preventDefault();
-    setCurrentEvent(event)
-    setDeleteModalOpen(true)
-  }
+    setCurrentEvent(event);
+    setDeleteModalOpen(true);
+  };
 
   if (loading) {
-    return <LoadingSpinner />
+    return <LoadingSpinner />;
   }
 
   return (
@@ -90,10 +90,7 @@ export default function MyEvents() {
       <div className="px-5 py-5 space-y-2 w-full" style={{ maxWidth: "76rem" }}>
         <div className="border bg-white shadow-lg px-5 py-4 rounded-lg">
           {isAuthenticated ? (
-            <div
-              className="space-y-2 w-full"
-              style={{ maxWidth: "76rem" }}
-            >
+            <div className="space-y-2 w-full" style={{ maxWidth: "76rem" }}>
               <div className="flex justify-between">
                 <h3 className="text-lg font-semibold">Create Events</h3>
                 <FaRegSquarePlus
@@ -144,14 +141,14 @@ export default function MyEvents() {
                           {event.attendee_count} going
                         </p>
                       </div>
-                      
+
                       <div className="flex ml-auto gap-2">
                         <MdOutlineModeEdit
                           onClick={(e) => handleEdit(e, event)}
                           size={25}
                           className="ml-auto cursor-pointer m-2"
                         />
-                        <MdDeleteOutline 
+                        <MdDeleteOutline
                           onClick={(e) => handleDelete(e, event)}
                           size={25}
                           className="ml-auto cursor-pointer m-2"
@@ -184,15 +181,15 @@ export default function MyEvents() {
           )}
 
           {createModalOpen && (
-            <CreateModal 
-              setCreateModalOpen={setCreateModalOpen} 
+            <CreateModal
+              setCreateModalOpen={setCreateModalOpen}
               setFetchTime={setFetchTime}
             />
           )}
 
           {deleteModalOpen && (
-            <DeleteModal 
-              setDeleteModalOpen={setDeleteModalOpen} 
+            <DeleteModal
+              setDeleteModalOpen={setDeleteModalOpen}
               currentEvent={currentEvent}
               setFetchTime={setFetchTime}
             />
