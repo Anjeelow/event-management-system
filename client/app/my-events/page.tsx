@@ -44,7 +44,9 @@ export default function MyEvents() {
               `http://localhost:8080/api/events/search?${userEventParams}`
             ),
             axios.get("http://localhost:8080/api/users"),
-            axios.post("http://localhost:8080/api/joined-events", { userId }),
+            axios.get(
+              `http://localhost:8080/api/user/events?${userEventParams}`
+            ),
           ]);
 
         const currentDate = new Date();
