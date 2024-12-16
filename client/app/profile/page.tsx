@@ -16,6 +16,10 @@ export default function Profile() {
     const params = useParams()
     const router = useRouter()
     const [user, setUser] = useState<any>(null)
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
+    const [email, setEmail] = useState('')
+    const [isEditing, setIsEditing] = useState(false)
     const [joinedEvents, setJoinedEvents] = useState();
     const [createdEvents, setCreatedEvents] = useState();
     const [error, setError] = useState<string | null>(null)
@@ -68,6 +72,9 @@ export default function Profile() {
 
             if (response.ok) {
                 setUser(data.user)
+                setFirstName(data.user.first_name)
+                setLastName(data.user.last_name)
+                setEmail(data.user.email)
             } else {
                 setError(data.message)
             }
@@ -78,8 +85,24 @@ export default function Profile() {
         }
     }
 
-    const handleResetPassword = () => {
-        router.push('/reset-password')
+    const handleCancel = () => {
+        setIsEditing(false)
+        setFirstName(user.first_name)
+        setLastName(user.last_name)
+        setEmail(user.email)
+    }
+
+    const handleEdit = async () => {
+        try {
+            await axios.post('http://localhost:8080/api/users/edit', {userId, firstName, lastName, email})
+            setFirstName(firstName)
+            setLastName(lastName)
+            setEmail(email)
+            setUser(user)
+            setIsEditing(false)
+        } catch (error) {
+            console.log('Cannot edit profile details', error)
+        }
     }
 
     if (loading) {
@@ -148,40 +171,86 @@ export default function Profile() {
                         <div className="flex flex-col gap-5">
                             <div className="space-y-2">
                                 <label className="block text-gray-600 mb-2">First Name</label>
-                                <input 
-                                    type="text" 
-                                    value={user.first_name} 
-                                    disabled 
-                                    className="w-full p-2 border rounded-lg bg-gray-100"
-                                />
+                                { !isEditing ? (
+                                    <input 
+                                        type="text" 
+                                        value={firstName} 
+                                        disabled 
+                                        className="w-full p-2 border rounded-lg bg-gray-100"
+                                    />
+                                ) : (
+                                    <input 
+                                        type="text" 
+                                        value={firstName} 
+                                        onChange={(e) => setFirstName(e.target.value)}
+                                        className="w-full p-2 border rounded-lg"
+                                    />
+                                )}
                             </div>
                             <div className="space-y-2">
                                 <label className="block text-gray-600 mb-2">Last Name</label>
-                                <input 
-                                    type="text" 
-                                    value={user.last_name} 
-                                    disabled 
-                                    className="w-full p-2 border rounded-lg bg-gray-100"
-                                />
+                                { !isEditing ? (
+                                    <input 
+                                        type="text" 
+                                        value={lastName} 
+                                        disabled 
+                                        className="w-full p-2 border rounded-lg bg-gray-100"
+                                    />
+                                ) : (
+                                    <input 
+                                        type="text" 
+                                        value={lastName} 
+                                        onChange={(e) => setLastName(e.target.value)}
+                                        className="w-full p-2 border rounded-lg"
+                                    />
+                                )}
                             </div>
                             <div className="space-y-2">
                                 <label className="block text-gray-600 mb-2">Email</label>
-                                <input 
-                                    type="email" 
-                                    value={user.email} 
-                                    disabled 
-                                    className="w-full p-2 border rounded-lg bg-gray-100"
-                                />
+                                { !isEditing ? (
+                                    <input 
+                                        type="text" 
+                                        value={email} 
+                                        disabled 
+                                        className="w-full p-2 border rounded-lg bg-gray-100"
+                                    />
+                                ) : (
+                                    <input 
+                                        type="text" 
+                                        value={email} 
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        className="w-full p-2 border rounded-lg"
+                                    />
+                                )}
                             </div>
                         </div>
                         <div className="flex">
+                            { !isEditing ? (
                             <button
-                                onClick={handleResetPassword}
                                 className="flex gap-2 items-center w-sm text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5"
+                                onClick={() => setIsEditing(true)}
                             >
                                 <IoCreateOutline className="text-lg text-white"/>
                                 Edit
                             </button>
+                            ) : (
+                                <div className="flex gap-2">
+                                    <button
+                                        className="flex gap-2 items-center w-sm text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5"
+                                        onClick={handleCancel}
+                                    >
+                                        <IoCreateOutline className="text-lg text-white"/>
+                                        Cancel
+                                    </button>
+                                    <button
+                                        className="flex gap-2 items-center w-sm text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5"
+                                        onClick={handleEdit}
+                                    >
+                                        <IoCreateOutline className="text-lg text-white"/>
+                                        Save
+                                    </button>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
