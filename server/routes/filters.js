@@ -6,20 +6,14 @@ const router = express.Router();
 router.get("/api/user/events", async (req, res) => {
   try {
     const { userID } = req.query;
-    const userEvents = await query(
+    const joinedEvents = await query(
       `
       SELECT e.*
       FROM event e
       JOIN rsvp r ON e.event_id = r.event_id
       WHERE r.user_id = ?
-
-      UNION
-
-      SELECT e.*
-      FROM event e
-      WHERE e.organizer = ?;
     `,
-      [userID, userID]
+      [userID]
     );
     res.status(200).json({ joinedEvents: joinedEvents });
   } catch (err) {
