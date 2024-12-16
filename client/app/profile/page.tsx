@@ -8,6 +8,7 @@ import { MdHeight } from "react-icons/md"
 import Image from "next/image"
 import { IoCreateOutline } from "react-icons/io5"
 import LoadingSpinner from "../ui/loadingSpinner"
+import { Event } from "../../../server/lib/definitions"
 
 export default function Profile() {
 
@@ -15,6 +16,8 @@ export default function Profile() {
     const params = useParams()
     const router = useRouter()
     const [user, setUser] = useState<any>(null)
+    const [joinedEvents, setJoinedEvents] = useState();
+    const [createdEvents, setCreatedEvents] = useState();
     const [error, setError] = useState<string | null>(null)
     const [loggedInUser, setLoggedInUser] = useState<string | null>(null)
     const [loading, setLoading] = useState(true)
@@ -40,7 +43,29 @@ export default function Profile() {
                     'Authorization': `Bearer ${token}`
                 }
             })
+            
             const data = await response.json()
+
+            const userEventParams = new URLSearchParams({
+                userID: userId?.toString() || "",
+              }).toString();
+            const [eventsResponse, usersResponse, joinedEventsResponse] =
+            await Promise.all([
+                axios.get(
+                    `http://localhost:8080/api/events/search?${userEventParams}`
+                  ),
+                axios.get("http://localhost:8080/api/users"),
+                axios.post("http://localhost:8080/api/user/events", { userId }),
+            ]);
+
+            const currentDate = new Date()
+            const joinedEvents = joinedEventsResponse.data.joinedEvents.length;
+
+            const joinedEventsCount = joinedEvents || 0
+            const createdEventsCount = eventsResponse.data.events.length || 0
+            setJoinedEvents(joinedEventsCount);
+            setCreatedEvents(createdEventsCount);
+
             if (response.ok) {
                 setUser(data.user)
             } else {
@@ -111,11 +136,11 @@ export default function Profile() {
                         <div className="grid grid-cols-2 justify-center gap-2">
                             <div className="bg-gray-50 p-4 rounded-lg text-center">
                                 <p className="text-gray-600">Created Events</p>
-                                <p className="text-2xl font-bold">60</p>
+                                <p className="text-2xl font-bold">{createdEvents}</p>
                             </div>
                             <div className="bg-gray-50 p-4 rounded-lg text-center">
                                 <p className="text-gray-600">Joined Events</p>
-                                <p className="text-2xl font-bold">60</p>
+                                <p className="text-2xl font-bold">{joinedEvents}</p>
                             </div>
                         </div>
 
