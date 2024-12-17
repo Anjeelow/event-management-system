@@ -81,7 +81,7 @@ export default function Navbar() {
               href="/"
               className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-300"
             >
-              LOGO
+              EVE
             </Link>
 
             <div className="relative w-full">
