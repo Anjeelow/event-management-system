@@ -6,13 +6,16 @@ const router = express.Router();
 router.post("/api/user/events", async (req, res) => {
   try {
     const { userId } = req.body;
-    const joinedEvents = await query(`
+    const joinedEvents = await query(
+      `
       SELECT e.* 
       FROM Event e
       JOIN Rsvp r ON e.event_id = r.event_id
       WHERE r.user_id = ?
-    `, [userId]);
-    console.log(userId)
+    `,
+      [userId]
+    );
+    console.log(userId);
     res.status(200).json({ joinedEvents: joinedEvents });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -23,7 +26,7 @@ router.get("/api/events/search", async (req, res) => {
   const params = req.query;
   console.log("Query Params:", params);
 
-  let sql = "SELECT * FROM EVENT WHERE 1=1";
+  let sql = "SELECT * FROM EVENT WHERE status = 'Open'";
   const values = [];
 
   if (params.title) {
