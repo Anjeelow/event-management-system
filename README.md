@@ -1,38 +1,67 @@
 # Event Management System
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+This is a full-stack **Event Management System** with both a **client-side** (frontend) and a **server-side** (backend).
 
-## Getting Started
+---
 
-First, run the development server:
+## 📂 Project Structure
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **`client`** - Frontend (Next.js)  
+- **`server`** - Backend (Express.js)  
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🚀 How to Run the Project
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 1. Start the MySQL Database
 
-## Learn More
+1. Open **XAMPP**.  
+2. Start the **Apache** and **MySQL** services.  
+3. Go to **phpMyAdmin** (usually at `http://localhost/phpmyadmin`).  
+4. Create a new database named **`event-management-system`**.  
+5. Import the provided SQL file:
+   - Click on the **Import** tab.  
+   - Select the SQL file (e.g., `event-management-system.sql`).  
+   - Click **Go** to execute the import.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 2. Run the Server (Backend)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Open a terminal and navigate to the `server` folder:  
+   ```bash
+   cd server
+   ```
 
-## Deploy on Vercel
+2. Start the backend server:  
+   ```bash
+   node index.js
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 3. Run the Client (Frontend)
+
+1. Open a new terminal and navigate to the `client` folder:  
+   ```bash
+   cd client
+   ```
+
+2. Start the frontend development server:  
+   ```bash
+   npm run dev
+   ```
+
+The client will run on **`http://localhost:3000`**.
+
+---
+
+## 🌐 Access the Application
+
+1. Open your browser and go to:  
+   **`http://localhost:3000`**  
+
+---
+
+## 🎉 You're all set!  
+Now you can explore the Event Management System.
