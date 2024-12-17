@@ -32,10 +32,14 @@ This is a full-stack **Event Management System** with both a **client-side** (fr
    ```bash
    cd server
    ```
-
-2. Start the backend server:  
+2. Install the dependencies
    ```bash
-   node index.js
+   npm install
+   ```
+
+3. Start the backend server:  
+   ```bash
+   npm run dev
    ```
 
 ---
@@ -47,7 +51,12 @@ This is a full-stack **Event Management System** with both a **client-side** (fr
    cd client
    ```
 
-2. Start the frontend development server:  
+2. Install the dependencies (--legacy-peer-deps is required because of the date picker)
+   ```bash
+   npm install --legacy-peer-deps
+   ```
+
+3. Start the frontend development server:  
    ```bash
    npm run dev
    ```
